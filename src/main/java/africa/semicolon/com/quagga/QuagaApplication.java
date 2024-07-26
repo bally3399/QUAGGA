@@ -1,4 +1,4 @@
-package africa.semicolon.com.quaga;
+package africa.semicolon.com.quagga;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

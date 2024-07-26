@@ -1,4 +1,4 @@
-package africa.semicolon.com.quaga;
+package africa.semicolon.com.quagga;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

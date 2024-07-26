@@ -1,11 +1,10 @@
-package africa.semicolon.com.quaga.models;
+package africa.semicolon.com.quagga.models;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,18 +14,24 @@ import static java.time.LocalDateTime.now;
 
 @Setter
 @Getter
-@Table(name = "messages")
-public class Message {
-    private Long id;
-    private Long senderId;
-    private Long receiverId;
-    private String content;
+@Table(name = "orders")
+public class Order {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long orderId;
+    private Long userId;
+    private Long productId;
+    private int quantity;
+    private double totalPrice;
+    private String address;
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDateTime date;
+
 
     @PrePersist
     private void setDate() {
         this.date = now();
     }
+
 }

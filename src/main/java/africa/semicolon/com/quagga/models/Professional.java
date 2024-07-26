@@ -1,7 +1,6 @@
-package africa.semicolon.com.quaga.models;
+package africa.semicolon.com.quagga.models;
 
 import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;

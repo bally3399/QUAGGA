@@ -1,10 +1,11 @@
-package africa.semicolon.com.quaga.models;
+package africa.semicolon.com.quagga.models;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-import jakarta.persistence.*;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,13 +15,12 @@ import static java.time.LocalDateTime.now;
 
 @Setter
 @Getter
-@Table(name = "reports")
-public class Report {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long reportId;
-    private Long userId;
-    private String context;
+@Table(name = "messages")
+public class Message {
+    private Long id;
+    private Long senderId;
+    private Long receiverId;
+    private String content;
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDateTime date;

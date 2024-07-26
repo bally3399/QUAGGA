@@ -1,4 +1,4 @@
-package africa.semicolon.com.quaga.models;
+package africa.semicolon.com.quagga.models;
 
 public enum Role {
     PROFESSIONAL,

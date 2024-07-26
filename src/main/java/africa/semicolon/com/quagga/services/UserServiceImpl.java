@@ -1,4 +1,4 @@
-package africa.semicolon.com.quaga.services;
+package africa.semicolon.com.quagga.services;
 
 import org.springframework.stereotype.Service;
 

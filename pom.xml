@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>africa.semicolon.com</groupId>
-    <artifactId>Quaga</artifactId>
+    <artifactId>Quagga</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Quaga</name>
-    <description>Quaga</description>
+    <name>Quagga</name>
+    <description>Quagga</description>
     <url/>
     <licenses>
         <license/>
