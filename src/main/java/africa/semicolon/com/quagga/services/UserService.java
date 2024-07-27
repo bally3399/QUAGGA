@@ -1,5 +1,5 @@
 package africa.semicolon.com.quagga.services;
 
 
-public interface UserServices {
+public interface UserService {
 }
