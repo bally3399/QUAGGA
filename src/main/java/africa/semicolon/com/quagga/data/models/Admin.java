@@ -1,4 +1,4 @@
-package africa.semicolon.com.quagga.models;
+package africa.semicolon.com.quagga.data.models;
 
 import jakarta.persistence.Table;
 import lombok.Getter;

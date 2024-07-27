@@ -1,4 +1,4 @@
-package africa.semicolon.com.quagga.models;
+package africa.semicolon.com.quagga.data.models;
 
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -10,10 +10,14 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Setter
 @Getter
-@Table(name = "professionals")
-public class Professional {
+@Table(name = "products")
+public class Product {
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private Long id;
-    private Long profileId;
+    private Long projectId;
+    private Long userId;
+    private String title;
+    private String description;
+    private String status;
+    private String vr;
 }
