@@ -1,4 +1,4 @@
-package africa.semicolon.com.quagga.models;
+package africa.semicolon.com.quagga.data.models;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -14,19 +14,24 @@ import static java.time.LocalDateTime.now;
 
 @Setter
 @Getter
-@Table(name = "reports")
-public class Report {
+@Table(name = "orders")
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long reportId;
+    private Long orderId;
     private Long userId;
-    private String context;
+    private Long productId;
+    private int quantity;
+    private double totalPrice;
+    private String address;
     @JsonSerialize(using = LocalDateSerializer.class)
     @JsonDeserialize(using = LocalDateDeserializer.class)
     private LocalDateTime date;
+
 
     @PrePersist
     private void setDate() {
         this.date = now();
     }
+
 }
