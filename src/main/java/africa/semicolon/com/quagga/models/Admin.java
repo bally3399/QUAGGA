@@ -9,6 +9,5 @@ import lombok.Setter;
 @Table(name = "admins")
 public class Admin {
     private User user;
-    //hi
 
 }
