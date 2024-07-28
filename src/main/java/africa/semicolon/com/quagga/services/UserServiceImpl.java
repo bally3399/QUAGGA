@@ -2,6 +2,7 @@ package africa.semicolon.com.quagga.services;
 
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.data.repositories.UserRepository;
+import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 import africa.semicolon.com.quagga.dtos.request.RegisterUserRequest;
 import africa.semicolon.com.quagga.dtos.Response.RegisterUserResponse;
 import org.modelmapper.ModelMapper;
@@ -18,7 +19,7 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
     @Override
-    public RegisterUserResponse register(RegisterUserRequest request) {
+    public RegisterUserResponse register(RegisterRequest request) {
         User newUser = modelMapper.map(request, User.class);
         User savedUser = userRepository.save(newUser);
         RegisterUserResponse response = modelMapper.map(savedUser, RegisterUserResponse.class);

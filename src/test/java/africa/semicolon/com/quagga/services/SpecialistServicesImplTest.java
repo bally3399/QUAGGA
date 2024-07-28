@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static africa.semicolon.com.quagga.data.models.Role.SPECIALIST;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class SpecialistServicesImplTest {
@@ -21,15 +22,14 @@ public class SpecialistServicesImplTest {
         request.setEmail("sulaimabaliqis@gmail.com");
         request.setPassword("123456");
         request.setAddress("sabo yaba");
-        request.setComment("I love the work");
         request.setRole(SPECIALIST);
-        request.setRating(2);
         request.setCompanyName("Semicolon");
         request.setCompanyRegNo("abcd");
         request.setUsername("bally");
         request.setProfessionalSkills("Construction");
         RegisterSpecialistResponse response = specialistService.registerSpecialist(request);
-
+        assertThat(response).isNotNull();
+        assertThat(response.getMessage()).isEqualTo("Specialist registered successfully");
 
     }
 }
