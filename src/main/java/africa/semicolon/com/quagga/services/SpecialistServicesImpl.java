@@ -21,7 +21,7 @@ public class SpecialistServicesImpl implements SpecialistService{
         String email = request.getEmail().toLowerCase();
         validate(email);
         validateRegistration(request);
-//        userService.register(request);
+        userService.register(request);
         Specialist specialist = modelMapper.map(request, Specialist.class);
         specialist = specialistRepository.save(specialist);
         var response = modelMapper.map(specialist, RegisterSpecialistResponse.class);
