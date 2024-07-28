@@ -20,5 +20,4 @@ public class RegisterUserRequest {
     private String address;
     private String phoneNumber;
     private Role role;
-    private List<Order> orders;
 }

@@ -1,6 +1,5 @@
 package africa.semicolon.com.quagga.services;
 
-
 import africa.semicolon.com.quagga.data.models.Role;
 import africa.semicolon.com.quagga.dtos.Request.RegisterUserRequest;
 import africa.semicolon.com.quagga.dtos.Response.RegisterUserResponse;
@@ -29,5 +28,7 @@ public class UserServiceTest {
         assertThat(response).isNotNull();
         assertThat(response.getMessage()).isEqualTo("Registration successful");
     }
+
+
 
 }
