@@ -1,7 +1,7 @@
 package africa.semicolon.com.quagga.dtos.request;
 
-import africa.semicolon.com.quagga.models.Role;
 
+import africa.semicolon.com.quagga.data.models.Role;
 import lombok.Getter;
 import lombok.Setter;
 

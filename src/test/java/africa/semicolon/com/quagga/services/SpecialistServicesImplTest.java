@@ -6,7 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static africa.semicolon.com.quagga.models.Role.SPECIALIST;
+import static africa.semicolon.com.quagga.data.models.Role.SPECIALIST;
+
 @SpringBootTest
 public class SpecialistServicesImplTest {
     @Autowired
