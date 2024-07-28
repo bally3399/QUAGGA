@@ -3,7 +3,7 @@ package africa.semicolon.com.quagga.services;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.data.repositories.UserRepository;
 import africa.semicolon.com.quagga.dtos.request.RegisterUserRequest;
-import africa.semicolon.com.quagga.dtos.Response.RegisterUserResponse;
+import africa.semicolon.com.quagga.dtos.response.RegisterUserResponse;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
