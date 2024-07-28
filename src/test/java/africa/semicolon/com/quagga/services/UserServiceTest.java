@@ -1,12 +1,13 @@
 package africa.semicolon.com.quagga.services;
 
 
+import africa.semicolon.com.quagga.data.models.Role;
+import africa.semicolon.com.quagga.dtos.Request.RegisterUserRequest;
+import africa.semicolon.com.quagga.dtos.Response.RegisterUserResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class UserServiceTest {
@@ -16,15 +17,17 @@ public class UserServiceTest {
 
     @Test
     public void testRegisterUser(){
-        CreateUserRequest request = new CreateUserRequest();
-        request.setEmail("DummyTwoEmail@gmail.com");
+        RegisterUserRequest request = new RegisterUserRequest();
+        request.setFirstName("username");
+        request.setLastName("lastname");
         request.setPassword("password");
-        request.setFirstName("Dummy");
-        request.setLastName("Two");
-
-        CreateUserResponse response = userService.register(request);
+        request.setEmail("username@gmail.com");
+        request.setAddress("No 30, Helen Street, Idumota, Lagos");
+        request.setPhoneNumber("08123456789");
+        request.setRole(Role.CLIENT);
+        RegisterUserResponse response = userService.register(request);
         assertThat(response).isNotNull();
-        assertTrue(response.getMessage().contains("Registration successful"));
+        assertThat(response.getMessage()).isEqualTo("Registration successful");
     }
 
 }

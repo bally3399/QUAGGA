@@ -4,10 +4,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
+@Entity
 @Setter
 @Getter
 @Table(name = "users")
@@ -20,9 +22,9 @@ public class User {
     @Column(unique = true)
     private String email;
     private String password;
-    private String username;
     private String address;
+    private String phoneNumber;
     @Enumerated(EnumType.STRING)
     private Role role;
-    private List<Order> orders;
+
 }
