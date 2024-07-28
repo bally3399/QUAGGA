@@ -1,6 +1,6 @@
 package africa.semicolon.com.quagga.services;
 
-import africa.semicolon.com.quagga.dtos.request.RegisterSpecialistRequest;
+import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 import africa.semicolon.com.quagga.dtos.response.RegisterSpecialistResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ public class SpecialistServicesImplTest {
 
     @Test
     public void registerSpecialistTest() {
-        RegisterSpecialistRequest request = new RegisterSpecialistRequest();
+        RegisterRequest request = new RegisterRequest();
         request.setFirstName("Sulaiman");
         request.setLastName("Baliqis");
         request.setEmail("sulaimabaliqis@gmail.com");

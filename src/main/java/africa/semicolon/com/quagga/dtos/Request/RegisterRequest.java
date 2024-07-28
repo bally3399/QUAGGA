@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class RegisterSpecialistRequest {
+public class RegisterRequest {
     private String firstName;
     private String lastName;
     private String email;
@@ -20,5 +20,6 @@ public class RegisterSpecialistRequest {
     private String companyName;
     private String companyRegNo;
     private String professionalSkills;
+
 
 }
