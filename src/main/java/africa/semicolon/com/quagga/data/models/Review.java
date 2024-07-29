@@ -9,12 +9,16 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Setter
 @Getter
 @Table(name = "reviews")
+@Entity
 public class Review {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
-    private String userId;
+    @JoinColumn(name = "user_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User userId;
     private String serviceProviderId;
     private int rating;
     private String comment;
+
 }

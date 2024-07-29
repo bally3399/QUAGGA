@@ -1,8 +1,8 @@
 package africa.semicolon.com.quagga.services;
 
 import africa.semicolon.com.quagga.data.models.Role;
-import africa.semicolon.com.quagga.dtos.request.RegisterUserRequest;
 import africa.semicolon.com.quagga.dtos.response.RegisterUserResponse;
+import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +16,7 @@ public class UserServiceTest {
 
     @Test
     public void testRegisterUser(){
-        RegisterUserRequest request = new RegisterUserRequest();
+        RegisterRequest request = new RegisterRequest();
         request.setFirstName("username");
         request.setLastName("lastname");
         request.setPassword("password");

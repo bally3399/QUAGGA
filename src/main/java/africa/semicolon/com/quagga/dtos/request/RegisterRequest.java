@@ -15,11 +15,10 @@ public class RegisterRequest {
     private String username;
     private String address;
     private Role role;
-    private int rating;
-    private String comment;
     private String companyName;
     private String companyRegNo;
     private String professionalSkills;
-
+    private String typeOfMaterial;
+    private String phoneNumber;
 
 }
