@@ -14,20 +14,17 @@ import org.springframework.stereotype.Service;
 public class SpecialistServicesImpl implements SpecialistService {
     private final ModelMapper modelMapper;
     private final SpecialistRepository specialistRepository;
-    private final UserService userService;
+
 
     @Override
-    public RegisterSpecialistResponse registerSpecialist(RegisterRequest request) {
-        userService.register(request);
-        Specialist specialist = modelMapper.map(request, Specialist.class);
-        specialist = specialistRepository.save(specialist);
-        var response = modelMapper.map(specialist, RegisterSpecialistResponse.class);
-        response.setMessage("Specialist registered successfully");
-        return response;
+    public Specialist createSpecialist(User user, RegisterRequest request) {
+        Specialist specialist = new Specialist();
+        specialist.setUserId(user.getId());
+        specialist.setAvailability(true);
+        specialist.setProfessionalSkills(request.getProfessionalSkills());
+        specialist.setCompanyName(request.getCompanyName());
+        specialist.setCompanyRegNo(request.getCompanyRegNo());
+        return specialistRepository.save(specialist);
     }
 
-    @Override
-    public void createSpecialist(User savedUser) {
-
-    }
 }

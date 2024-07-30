@@ -20,6 +20,7 @@ public class UserServiceImpl implements UserService {
     private final SupplierService supplierService;
     private final ProfessionalService professionalService;
 
+
     @Override
     public RegisterUserResponse register(RegisterRequest request) {
         String email = request.getEmail().toLowerCase();
@@ -29,7 +30,7 @@ public class UserServiceImpl implements UserService {
         User savedUser = userRepository.save(newUser);
 
         switch (savedUser.getRole()) {
-            case SPECIALIST -> specialistService.createSpecialist(savedUser);
+            case SPECIALIST -> specialistService.createSpecialist(savedUser, request);
             case CLIENT -> clientService.createClient(savedUser);
             case SUPPLIER -> supplierService.createSupplier(savedUser);
             case PROFESSIONAL -> professionalService.createProfessional(savedUser);
