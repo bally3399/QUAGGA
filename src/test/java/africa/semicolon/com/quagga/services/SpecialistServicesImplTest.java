@@ -23,6 +23,7 @@ public class SpecialistServicesImplTest {
         request.setFirstName("Sulaiman");
         request.setLastName("Baliqis");
         request.setEmail("sulaimabaliqis@gmail.com");
+        request.setPhoneNumber("09132431343");
         request.setPassword("123456");
         request.setAddress("sabo yaba");
         request.setRole(SPECIALIST);
