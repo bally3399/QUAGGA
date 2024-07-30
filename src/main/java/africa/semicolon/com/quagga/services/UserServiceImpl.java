@@ -19,7 +19,7 @@ public class UserServiceImpl implements UserService {
     private final SpecialistService specialistService;
     private final SupplierService supplierService;
     private final ProfessionalService professionalService;
-
+    private final AdminService adminService;
 
     @Override
     public RegisterUserResponse register(RegisterRequest request) {
@@ -31,6 +31,7 @@ public class UserServiceImpl implements UserService {
 
         switch (savedUser.getRole()) {
             case SPECIALIST -> specialistService.createSpecialist(savedUser, request);
+            case ADMIN -> adminService.createAdmin(savedUser, request);
             case CLIENT -> clientService.createClient(savedUser);
             case SUPPLIER -> supplierService.createSupplier(savedUser);
             case PROFESSIONAL -> professionalService.createProfessional(savedUser);
