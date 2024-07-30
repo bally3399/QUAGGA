@@ -7,4 +7,5 @@ import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 public interface SpecialistService {
     Specialist createSpecialist(User user, RegisterRequest request);
 
+
 }

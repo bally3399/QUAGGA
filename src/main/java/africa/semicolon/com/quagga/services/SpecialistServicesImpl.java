@@ -3,7 +3,6 @@ package africa.semicolon.com.quagga.services;
 import africa.semicolon.com.quagga.data.models.Specialist;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
-import africa.semicolon.com.quagga.dtos.response.RegisterSpecialistResponse;
 import africa.semicolon.com.quagga.repository.SpecialistRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;

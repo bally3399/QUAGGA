@@ -1,5 +1,6 @@
 package africa.semicolon.com.quagga.services;
 
+import africa.semicolon.com.quagga.dtos.Request.LoginRequest;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 import africa.semicolon.com.quagga.dtos.response.RegisterUserResponse;
 import org.junit.jupiter.api.Test;
@@ -33,6 +34,11 @@ public class SpecialistServicesImplTest {
         RegisterUserResponse response = userService.register(request);
         assertThat(response).isNotNull();
         assertThat(response.getMessage()).isEqualTo("Registration successful");
+
+    }
+
+    @Test
+    public void testThatSpecialistCanSearchForSupplier(){
 
     }
 
