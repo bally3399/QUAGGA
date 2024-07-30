@@ -7,5 +7,5 @@ import org.springframework.security.authentication.AuthenticationManager;
 @Configuration
 @AllArgsConstructor
 public class SecurityConfig {
-    private final AuthenticationManager authenticationManager;
+//    private final AuthenticationManager authenticationManager;
 }

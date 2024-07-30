@@ -5,6 +5,8 @@ import africa.semicolon.com.quagga.data.models.Role;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Setter
 @Getter
 public class RegisterRequest {
@@ -17,7 +19,7 @@ public class RegisterRequest {
     private Role role;
     private String companyName;
     private String companyRegNo;
-    private String professionalSkills;
+    private List<String> professionalSkills;
     private String typeOfMaterial;
     private String phoneNumber;
 
