@@ -4,8 +4,6 @@ import africa.semicolon.com.quagga.data.models.Specialist;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 import africa.semicolon.com.quagga.dtos.response.RegisterSpecialistResponse;
-import africa.semicolon.com.quagga.exceptions.IncorrectPasswordException;
-import africa.semicolon.com.quagga.exceptions.UserAlreadyExistException;
 import africa.semicolon.com.quagga.repository.SpecialistRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -20,7 +18,6 @@ public class SpecialistServicesImpl implements SpecialistService {
 
     @Override
     public RegisterSpecialistResponse registerSpecialist(RegisterRequest request) {
-
         userService.register(request);
         Specialist specialist = modelMapper.map(request, Specialist.class);
         specialist = specialistRepository.save(specialist);
