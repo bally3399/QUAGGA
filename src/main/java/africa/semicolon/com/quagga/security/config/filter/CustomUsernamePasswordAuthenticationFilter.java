@@ -1,6 +1,7 @@
 package africa.semicolon.com.quagga.security.config.filter;
 
 import africa.semicolon.com.quagga.dtos.Request.LoginRequest;
+import africa.semicolon.com.quagga.dtos.Response.BaseResponse;
 import africa.semicolon.com.quagga.dtos.Response.LoginResponse;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -10,6 +11,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -52,11 +54,20 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
     protected void  successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException{
         LoginResponse loginResponse = new LoginResponse();
         String token = generateAccessToken(authResult);
+        loginResponse.setToken(token);
+        loginResponse.setMessage("Successful Authentication");
+        BaseResponse <LoginResponse> authResponse = new BaseResponse<>();
+        authResponse.setCode(HttpStatus.OK.value());
+        authResponse.setData(loginResponse);
+        authResponse.setStatus(true);
+        response.getOutputStream().write(objectMapper.writeValueAsBytes(authResponse));
+        response.flushBuffer();
+        chain.doFilter(request, response);
 
     }
 
 
-    
+
 
     private  static String generateAccessToken(Authentication authResult){
         return JWT.create()
@@ -71,6 +82,22 @@ public class CustomUsernamePasswordAuthenticationFilter extends UsernamePassword
         return authorities.stream()
                 .map(GrantedAuthority::getAuthority)
                 .toArray(String[]::new);
+
+    }
+
+    @Override
+
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setMessage(exception.getMessage());
+        BaseResponse<LoginResponse> baseResponse = new BaseResponse<>();
+        baseResponse.setData(loginResponse);
+        baseResponse.setStatus(false);
+        baseResponse.setCode(HttpStatus.UNAUTHORIZED.value());
+        response.getOutputStream()
+                .write(objectMapper.writeValueAsBytes(baseResponse));
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.flushBuffer();
 
     }
 
