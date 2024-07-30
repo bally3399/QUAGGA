@@ -7,6 +7,7 @@ import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
 import africa.semicolon.com.quagga.dtos.response.RegisterUserResponse;
 import africa.semicolon.com.quagga.exceptions.IncorrectPasswordException;
 import africa.semicolon.com.quagga.exceptions.UserAlreadyExistException;
+import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -45,6 +46,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getById(long id) {
+        return userRepository.findById(id)
+                .orElseThrow(()-> new UserNotFoundException("User does not exist"));
+
     public User getUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username)
                 .orElseThrow(()->new UserNotFoundException("User not found"));
