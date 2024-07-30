@@ -1,21 +1,24 @@
 package africa.semicolon.com.quagga.services;
 
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
-import africa.semicolon.com.quagga.dtos.response.RegisterSpecialistResponse;
+import africa.semicolon.com.quagga.dtos.response.RegisterUserResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 import static africa.semicolon.com.quagga.data.models.Role.SPECIALIST;
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
 public class SpecialistServicesImplTest {
+
     @Autowired
-    private SpecialistService specialistService;
+    private UserService userService;
 
     @Test
-    public void registerSpecialistTest() {
+    public void testThatSpecialistCanBeCreated() {
         RegisterRequest request = new RegisterRequest();
         request.setFirstName("Sulaiman");
         request.setLastName("Baliqis");
@@ -26,10 +29,11 @@ public class SpecialistServicesImplTest {
         request.setCompanyName("Semicolon");
         request.setCompanyRegNo("abcd");
         request.setUsername("bally");
-        request.setProfessionalSkills("Construction");
-        RegisterSpecialistResponse response = specialistService.registerSpecialist(request);
+        request.setProfessionalSkills(List.of("Construction", "Painting"));
+        RegisterUserResponse response = userService.register(request);
         assertThat(response).isNotNull();
-        assertThat(response.getMessage()).isEqualTo("Specialist registered successfully");
+        assertThat(response.getMessage()).isEqualTo("Registration successful");
 
     }
+
 }

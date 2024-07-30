@@ -1,8 +1,7 @@
 package africa.semicolon.com.quagga.services;
 
 import africa.semicolon.com.quagga.data.models.Role;
-import africa.semicolon.com.quagga.dtos.request.RegisterUserRequest;
-import africa.semicolon.com.quagga.dtos.Response.RegisterUserResponse;
+import africa.semicolon.com.quagga.dtos.response.RegisterUserResponse;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +9,13 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-public class UserServiceTest {
+public class ClientServiceTest {
 
     @Autowired
     public UserService userService;
 
     @Test
-    public void testRegisterUser(){
+    public void testRegisterClient(){
         RegisterRequest request = new RegisterRequest();
         request.setFirstName("username");
         request.setLastName("lastname");
@@ -29,6 +28,8 @@ public class UserServiceTest {
         assertThat(response).isNotNull();
         assertThat(response.getMessage()).isEqualTo("Registration successful");
     }
+
+
 
 
 
