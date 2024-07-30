@@ -18,7 +18,7 @@ public class SpecialistServicesImpl implements SpecialistService {
     @Override
     public Specialist createSpecialist(User user, RegisterRequest request) {
         Specialist specialist = new Specialist();
-        specialist.setUserId(user.getId());
+        specialist.setUser(user);
         specialist.setAvailability(true);
         specialist.setProfessionalSkills(request.getProfessionalSkills());
         specialist.setCompanyName(request.getCompanyName());
