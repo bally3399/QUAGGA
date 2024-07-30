@@ -9,9 +9,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.jdbc.Sql;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
+@Sql(scripts = {"/db/data.sql"})
 public class ClientServiceTest {
 
     @Autowired
@@ -35,10 +38,10 @@ public class ClientServiceTest {
     @Test
     @DisplayName("Test that user can be retrieved by id")
     public void testGetUserById() {
-        User user = userService.getById(1L);
+        User user = userService.getById(100L);
         assertThat(user).isNotNull();
-        assertThat(user.getId()).isEqualTo(1L);
-        System.out.println(user.getFirstName());
+        assertThat(user.getId()).isEqualTo(100L);
+        assertThat(user.getFirstName()).isEqualTo("john");
     }
 
 
