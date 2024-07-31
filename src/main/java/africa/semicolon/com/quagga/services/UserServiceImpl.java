@@ -2,6 +2,8 @@ package africa.semicolon.com.quagga.services;
 
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.data.repositories.UserRepository;
+import africa.semicolon.com.quagga.dtos.Request.LoginRequest;
+import africa.semicolon.com.quagga.dtos.Response.LoginResponse;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
@@ -24,7 +26,7 @@ public class UserServiceImpl implements UserService {
     private final AdminService adminService;
 
     @Override
-    public africa.semicolon.com.quagga.dtos.response.RegisterResponse register(RegisterRequest request) {
+    public RegisterResponse register(RegisterRequest request) {
         String email = request.getEmail().toLowerCase();
         validate(email);
         validateRegistration(request);
@@ -39,7 +41,7 @@ public class UserServiceImpl implements UserService {
             case PROFESSIONAL -> professionalService.createProfessional(savedUser);
         }
 
-        RegisterResponse response = modelMapper.map(savedUser, africa.semicolon.com.quagga.dtos.response.RegisterResponse.class);
+        RegisterResponse response = modelMapper.map(savedUser, RegisterResponse.class);
         response.setMessage("Registration successful");
         return response;
     }
@@ -54,6 +56,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(username)
                 .orElseThrow(()->new UserNotFoundException("User not found"));
     }
+
 
 
     private void validate(String email) {

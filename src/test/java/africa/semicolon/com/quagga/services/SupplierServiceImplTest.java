@@ -1,5 +1,4 @@
 package africa.semicolon.com.quagga.services;
-
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 
 import org.junit.jupiter.api.Test;
@@ -32,4 +31,6 @@ class SupplierServiceImplTest {
 
 
     }
-}
+
+
+    }
