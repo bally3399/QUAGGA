@@ -1,5 +1,8 @@
 package africa.semicolon.com.quagga.data.models;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
