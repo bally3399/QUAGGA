@@ -13,7 +13,8 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 public class Review {
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private Long id;
+    @Column(name = "review_id")
+    private Long reviewId;
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private User userId;

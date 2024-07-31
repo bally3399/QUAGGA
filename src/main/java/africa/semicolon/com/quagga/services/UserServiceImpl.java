@@ -3,11 +3,10 @@ package africa.semicolon.com.quagga.services;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.data.repositories.UserRepository;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
+import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
-import africa.semicolon.com.quagga.dtos.response.RegisterUserResponse;
 import africa.semicolon.com.quagga.exceptions.IncorrectPasswordException;
 import africa.semicolon.com.quagga.exceptions.UserAlreadyExistException;
-import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -25,7 +24,7 @@ public class UserServiceImpl implements UserService {
     private final AdminService adminService;
 
     @Override
-    public RegisterUserResponse register(RegisterRequest request) {
+    public africa.semicolon.com.quagga.dtos.response.RegisterResponse register(RegisterRequest request) {
         String email = request.getEmail().toLowerCase();
         validate(email);
         validateRegistration(request);
@@ -36,11 +35,11 @@ public class UserServiceImpl implements UserService {
             case SPECIALIST -> specialistService.createSpecialist(savedUser, request);
             case ADMIN -> adminService.createAdmin(savedUser, request);
             case CLIENT -> clientService.createClient(savedUser);
-            case SUPPLIER -> supplierService.createSupplier(savedUser);
+            case SUPPLIER -> supplierService.createSupplier(request);
             case PROFESSIONAL -> professionalService.createProfessional(savedUser);
         }
 
-        RegisterUserResponse response = modelMapper.map(savedUser, RegisterUserResponse.class);
+        RegisterResponse response = modelMapper.map(savedUser, africa.semicolon.com.quagga.dtos.response.RegisterResponse.class);
         response.setMessage("Registration successful");
         return response;
     }
@@ -48,7 +47,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getById(long id) {
         return userRepository.findById(id)
-                .orElseThrow(()-> new UserNotFoundException("User does not exist"));
+                .orElseThrow(() -> new UserNotFoundException("User does not exist"));
+    }
 
     public User getUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username)
