@@ -1,8 +1,6 @@
 package africa.semicolon.com.quagga.data.models;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +13,9 @@ public class Product {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long projectId;
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "supplier_id")
+    private Long supplierId;
     private String title;
     private String description;
     private String status;

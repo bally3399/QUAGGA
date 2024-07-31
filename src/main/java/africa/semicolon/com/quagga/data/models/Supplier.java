@@ -11,7 +11,6 @@ import java.util.List;
 @Table(name = "suppliers")
 public class Supplier {
     private String typeOfMaterial;
-    private List<Product> products;
     private User user;
     private Review review;
 

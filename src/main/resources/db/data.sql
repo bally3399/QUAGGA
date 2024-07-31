@@ -11,4 +11,3 @@ insert into users(id, first_name, last_name, email, password, address, phone_num
 (104, 'george', 'bush', 'george@email.com', '$2a$10$wqdT5ndwlN8WL83AZH7Fp.evLqldxFxmIYW5wraO8kORgPsn56oKW', 'Abule Ijesha', '09080432262', 'CLIENT');
 
 
-insert into suppliers(supplier_id, user_id, review_id, )

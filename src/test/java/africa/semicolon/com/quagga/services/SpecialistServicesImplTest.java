@@ -41,6 +41,7 @@ public class SpecialistServicesImplTest {
     @Test
     public void testThatSpecialistCanSearchForSupplier(){
 
+
     }
 
 }
