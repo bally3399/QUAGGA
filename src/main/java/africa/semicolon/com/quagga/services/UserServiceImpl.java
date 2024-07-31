@@ -1,5 +1,6 @@
 package africa.semicolon.com.quagga.services;
 
+import africa.semicolon.com.quagga.data.models.Role;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.data.repositories.UserRepository;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
@@ -11,6 +12,9 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -48,13 +52,46 @@ public class UserServiceImpl implements UserService {
     public User getById(long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User does not exist"));
+
+   
     }
 
+    @Override
     public User getUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username)
                 .orElseThrow(()->new UserNotFoundException("User not found"));
     }
 
+    @Override
+    public List<User> findAllUsers() {
+        return userRepository.findAll();
+    }
+
+    @Override
+    public List<User> getAllSpecialist() {
+        List<User> userList = userRepository.findAll();
+        List<User> specialists = new ArrayList<>();
+        for (User user : userList) {
+            if (user.getRole().equals(Role.SPECIALIST)){
+                specialists.add(user);
+            }
+        }
+        return specialists;
+    }
+
+
+
+    @Override
+    public List<User> getAllSupplier() {
+        List<User> userList = userRepository.findAll();
+        List<User> suppliers = new ArrayList<>();
+        for (User user : userList) {
+            if (user.getRole().equals(Role.SUPPLIER)){
+                suppliers.add(user);
+            }
+        }
+        return suppliers;
+    }
 
     private void validate(String email) {
         for (User user : userRepository.findAll()) {

@@ -5,10 +5,10 @@ import africa.semicolon.com.quagga.data.repositories.ClientRepository;
 import org.springframework.stereotype.Service;
 
 @Service
-public class QuaggaClient implements ClientService{
+public class ClientServiceImpl implements ClientService{
     private final ClientRepository clientRepository;
 
-    public QuaggaClient(ClientRepository clientRepository) {
+    public ClientServiceImpl(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
 

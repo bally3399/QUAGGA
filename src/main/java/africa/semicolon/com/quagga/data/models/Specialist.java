@@ -19,7 +19,8 @@ public class Specialist {
     @Column(name = "skill")
     private List<String> professionalSkills;
     private boolean availability;
-    private Long userId;
+    @OneToOne
+    private User user;
     private String companyName;
     private String companyRegNo;
 }
