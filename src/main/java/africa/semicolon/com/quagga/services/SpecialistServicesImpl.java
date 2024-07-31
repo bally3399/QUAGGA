@@ -3,7 +3,7 @@ package africa.semicolon.com.quagga.services;
 import africa.semicolon.com.quagga.data.models.Specialist;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
-import africa.semicolon.com.quagga.repository.SpecialistRepository;
+import africa.semicolon.com.quagga.data.repositories.SpecialistRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -24,6 +24,7 @@ public class SpecialistServicesImpl implements SpecialistService {
         specialist.setCompanyName(request.getCompanyName());
         specialist.setCompanyRegNo(request.getCompanyRegNo());
         return specialistRepository.save(specialist);
+
     }
 
 }
