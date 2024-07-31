@@ -1,6 +1,7 @@
 package africa.semicolon.com.quagga.services;
 
 import africa.semicolon.com.quagga.data.models.Role;
+import africa.semicolon.com.quagga.data.models.Specialist;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.dtos.response.RegisterUserResponse;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
@@ -10,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -42,6 +45,12 @@ public class ClientServiceTest {
         assertThat(user).isNotNull();
         assertThat(user.getId()).isEqualTo(100L);
         assertThat(user.getFirstName()).isEqualTo("john");
+    }
+
+    @Test
+    public void testFindAllSpecialist(){
+        List<User> specialistList = userService.getAllSupplier();
+        assertThat(specialistList.size()).isEqualTo(4L);
     }
 
 

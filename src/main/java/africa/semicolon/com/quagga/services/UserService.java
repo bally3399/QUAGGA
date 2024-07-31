@@ -17,5 +17,4 @@ public interface UserService {
     List<User> getAllSpecialist();
     List<User> getAllSupplier();
 
-
 }

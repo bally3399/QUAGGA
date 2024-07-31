@@ -7,10 +7,12 @@ import lombok.Setter;
 @Setter
 @Getter
 @Table(name = "admins")
+@Entity
 public class Admin {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
+    @OneToOne
     private User user;
 
 }
