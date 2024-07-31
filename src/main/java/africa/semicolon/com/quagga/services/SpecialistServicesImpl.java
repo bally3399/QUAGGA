@@ -24,6 +24,7 @@ public class SpecialistServicesImpl implements SpecialistService {
         specialist.setCompanyName(request.getCompanyName());
         specialist.setCompanyRegNo(request.getCompanyRegNo());
         return specialistRepository.save(specialist);
+
     }
 
 }

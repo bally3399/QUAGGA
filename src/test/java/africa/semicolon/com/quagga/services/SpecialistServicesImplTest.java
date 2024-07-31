@@ -1,7 +1,7 @@
 package africa.semicolon.com.quagga.services;
 
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
-import africa.semicolon.com.quagga.dtos.response.RegisterUserResponse;
+import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,7 +31,7 @@ public class SpecialistServicesImplTest {
         request.setCompanyRegNo("abcd");
         request.setUsername("bally");
         request.setProfessionalSkills(List.of("Construction", "Painting"));
-        RegisterUserResponse response = userService.register(request);
+        RegisterResponse response = userService.register(request);
         assertThat(response).isNotNull();
         assertThat(response.getMessage()).isEqualTo("Registration successful");
 
