@@ -3,7 +3,9 @@ package africa.semicolon.com.quagga.services;
 import africa.semicolon.com.quagga.data.models.Role;
 import africa.semicolon.com.quagga.data.models.Specialist;
 import africa.semicolon.com.quagga.data.models.User;
+import africa.semicolon.com.quagga.dtos.request.CreateServiceRequest;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
+import africa.semicolon.com.quagga.dtos.response.ServiceRequestResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,12 @@ public class ClientServiceTest {
 
     @Autowired
     public UserService userService;
+
+    @Autowired
+    public SpecialistService specialistService;
+
+    @Autowired
+    public RequestService requestService;
 
     @Test
     public void testRegisterClient(){
@@ -47,9 +55,31 @@ public class ClientServiceTest {
 
     @Test
     public void testFindAllSpecialist(){
+        List<Specialist> specialistList = specialistService.findAllSpecialist();
+        assertThat(specialistList.size()).isEqualTo(4L);
+    }
+
+    @Test
+    public void testFindAllSupplier(){
         List<User> specialistList = userService.getAllSupplier();
         assertThat(specialistList.size()).isEqualTo(4L);
     }
 
+    @Test
+    public void testFindOnlyAvailableSpecialist(){
+        List<Specialist> availableSpecialists = specialistService.findAllAvailableSpecialist();
+        assertThat(availableSpecialists.size()).isEqualTo(3L);
+    }
+
+    @Test
+    public void testThatClientCanCreateServiceRequest() {
+        CreateServiceRequest serviceRequest = new CreateServiceRequest();
+        serviceRequest.setClientId(300L);
+        serviceRequest.setSpecialistId(203L);
+        serviceRequest.setServiceDescription("I am in need of plumbing service");
+        ServiceRequestResponse response = requestService.create(serviceRequest);
+        assertThat(response).isNotNull();
+        assertThat(response.getMessage()).isEqualTo("Request sent successfully");
+    }
 
 }
