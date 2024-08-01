@@ -30,7 +30,6 @@ public class SpecialistServicesImplTest {
         request.setRole(SPECIALIST);
         request.setCompanyName("Semicolon");
         request.setCompanyRegNo("abcd");
-        request.setUsername("bally");
         request.setProfessionalSkills(List.of("Construction", "Painting"));
         RegisterResponse response = userService.register(request);
         assertThat(response).isNotNull();
