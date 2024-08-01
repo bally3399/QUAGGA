@@ -25,11 +25,9 @@ class SupplierServiceImplTest {
         request.setAddress("No 30, Helen Street, Idumota, Lagos");
         request.setPhoneNumber("08123456789");
         request.setRole(SUPPLIER);
-        request.setUsername("George");
         RegisterResponse response = userService.register(request);
         assertThat(response).isNotNull();
         assertThat(response.getMessage()).isEqualTo("Registration successful");
-
 
     }
 }

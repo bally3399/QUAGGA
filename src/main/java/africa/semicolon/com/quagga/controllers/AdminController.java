@@ -1,10 +1,8 @@
 package africa.semicolon.com.quagga.controllers;
 
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
-import africa.semicolon.com.quagga.dtos.request.RegisterUserRequest;
 import africa.semicolon.com.quagga.dtos.response.ApiResponse;
-import africa.semicolon.com.quagga.dtos.response.RegisterUserResponse;
-import africa.semicolon.com.quagga.services.AdminService;
+import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 import africa.semicolon.com.quagga.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +22,7 @@ public class AdminController {
     @PostMapping("/createAdmin")
     public ResponseEntity<?> createAdmin(@RequestBody RegisterRequest request){
         try{
-            RegisterUserResponse response = userService.register(request);
+            RegisterResponse response = userService.register(request);
             return new ResponseEntity<>(new ApiResponse(true, response), HttpStatus.CREATED);
         } catch (Exception e){
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()),  HttpStatus.BAD_REQUEST);
