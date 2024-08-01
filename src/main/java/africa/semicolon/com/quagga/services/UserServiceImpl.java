@@ -3,8 +3,6 @@ package africa.semicolon.com.quagga.services;
 import africa.semicolon.com.quagga.data.models.Role;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.data.repositories.UserRepository;
-import africa.semicolon.com.quagga.dtos.Request.LoginRequest;
-import africa.semicolon.com.quagga.dtos.Response.LoginResponse;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
@@ -55,7 +53,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User does not exist"));
 
-   
+
     }
 
     @Override
