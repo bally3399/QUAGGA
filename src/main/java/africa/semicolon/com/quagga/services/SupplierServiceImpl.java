@@ -4,7 +4,7 @@ import africa.semicolon.com.quagga.data.models.Supplier;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 
-import africa.semicolon.com.quagga.repository.SupplierRepository;
+import africa.semicolon.com.quagga.data.repositories.SupplierRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;

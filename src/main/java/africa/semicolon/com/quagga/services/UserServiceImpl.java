@@ -5,7 +5,7 @@ import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.data.repositories.UserRepository;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
-import africa.semicolon.com.quagga.dtos.response.RegisterUserResponse;
+import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 import africa.semicolon.com.quagga.exceptions.IncorrectPasswordException;
 import africa.semicolon.com.quagga.exceptions.UserAlreadyExistException;
 import lombok.AllArgsConstructor;
@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
     private final AdminService adminService;
 
     @Override
-    public RegisterUserResponse register(RegisterRequest request) {
+    public RegisterResponse register(RegisterRequest request) {
         String email = request.getEmail().toLowerCase();
         validate(email);
         validateRegistration(request);
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
             case PROFESSIONAL -> professionalService.createProfessional(savedUser);
         }
 
-        RegisterUserResponse response = modelMapper.map(savedUser, RegisterUserResponse.class);
+        RegisterResponse response = modelMapper.map(savedUser, RegisterResponse.class);
         response.setMessage("Registration successful");
         return response;
     }
