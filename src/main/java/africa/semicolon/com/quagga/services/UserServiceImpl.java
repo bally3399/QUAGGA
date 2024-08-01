@@ -4,6 +4,7 @@ import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.data.repositories.UserRepository;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 
+
 import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
 
 import africa.semicolon.com.quagga.dtos.response.RegisterUserResponse;
@@ -51,12 +52,14 @@ public class UserServiceImpl implements UserService {
     public User getById(long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User does not exist"));
+
     }
 
-        public User getUserByUsername (String username) throws UsernameNotFoundException {
-            return userRepository.findByEmail(username)
-                    .orElseThrow(() -> new UserNotFoundException("User not found"));
-        }
+    public User getUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByEmail(username)
+                .orElseThrow(()->new UserNotFoundException("User not found"));
+    }
+
 
 
         private void validate (String email){

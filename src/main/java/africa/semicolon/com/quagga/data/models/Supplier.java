@@ -10,7 +10,8 @@ import java.util.List;
 @Getter
 @Table(name = "suppliers")
 public class Supplier {
-    private String typeOfMaterial;
+    private String companyName;
+    private String categoryName;
     private List<Product> products;
     private User user;
     private Review review;

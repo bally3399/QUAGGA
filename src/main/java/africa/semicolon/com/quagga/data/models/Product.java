@@ -6,6 +6,8 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @Setter
@@ -14,10 +16,14 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 public class Product {
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private Long projectId;
+    private Long productId;
     private Long userId;
     private String title;
     private String description;
     private String status;
-    private String vr;
+    private List<Photo> photos;
+    private double price;
+    private String category;
+    private String brand;
+    private int quantity;
 }

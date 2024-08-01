@@ -7,6 +7,5 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 public interface UserService {
     RegisterUserResponse register(RegisterRequest request);
     User getById(long id);
-
     User getUserByUsername(String username) throws UsernameNotFoundException;
 }
