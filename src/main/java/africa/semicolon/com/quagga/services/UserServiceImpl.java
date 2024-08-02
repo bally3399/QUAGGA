@@ -4,17 +4,10 @@ import africa.semicolon.com.quagga.data.models.Role;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.data.repositories.UserRepository;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
-<<<<<<< HEAD
-
 
 import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
 
-import africa.semicolon.com.quagga.dtos.response.RegisterUserResponse;
-
-=======
 import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
-import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
->>>>>>> 3b3e25973b23a0ddf2d22dffbf895c595242e73a
 import africa.semicolon.com.quagga.exceptions.IncorrectPasswordException;
 import africa.semicolon.com.quagga.exceptions.UserAlreadyExistException;
 import lombok.AllArgsConstructor;
@@ -48,7 +41,7 @@ public class UserServiceImpl implements UserService {
             case SPECIALIST -> specialistService.createSpecialist(savedUser, request);
             case ADMIN -> adminService.createAdmin(savedUser, request);
             case CLIENT -> clientService.createClient(savedUser);
-            case SUPPLIER -> supplierService.createSupplier(request);
+            case SUPPLIER -> supplierService.createSupplier(savedUser, request);
             case PROFESSIONAL -> professionalService.createProfessional(savedUser);
         }
 

@@ -22,4 +22,5 @@ public class Specialist {
     private User user;
     private String companyName;
     private String companyRegNo;
+
 }

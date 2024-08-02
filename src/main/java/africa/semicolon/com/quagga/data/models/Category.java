@@ -21,7 +21,7 @@ public enum Category {
     ENTERTAINMENT("Entertainment"),
     MAINTENANCE("Maintenance"),
     RENEWABLE_ENERGY("Renewal energy"),
-    SPECIALTY_FLOORING("Specialty_Flooring"),
+    SPECIALTY_FLOORING("Specialty Flooring"),
     SECURITY_AND_SAFETY("Security and Safety"),
     FINISHES_AND_DECORATIONS("Finishes and Decorations"),
     LOW_VOLTAGE_SYSTEMS("Low Voltage System"),
