@@ -93,6 +93,11 @@ public class UserServiceImpl implements UserService {
         return suppliers;
     }
 
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
     private void validate(String email) {
         for (User user : userRepository.findAll()) {
             if (user.getEmail().equals(email.toLowerCase())) {
