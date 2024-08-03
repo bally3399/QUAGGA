@@ -1,8 +1,8 @@
 package africa.semicolon.com.quagga.security.config.filter;
 
-import africa.semicolon.com.quagga.dtos.Request.LoginRequest;
-import africa.semicolon.com.quagga.dtos.Response.BaseResponse;
-import africa.semicolon.com.quagga.dtos.Response.LoginResponse;
+import africa.semicolon.com.quagga.dtos.request.LoginRequest;
+import africa.semicolon.com.quagga.dtos.response.BaseResponse;
+import africa.semicolon.com.quagga.dtos.response.LoginResponse;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -53,5 +53,4 @@ public class SpecialistServicesImpl implements SpecialistService {
                 .orElseThrow(()-> new SpecialistDoesNotExistException("Specialist does not exist"));
     }
 
-
 }

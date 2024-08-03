@@ -14,7 +14,7 @@ public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long photoId;
-    private Long projectId;
+    private Long userId;
     private String url;
     private String description;
 }

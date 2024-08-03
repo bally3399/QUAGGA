@@ -1,4 +1,4 @@
-package africa.semicolon.com.quagga.dtos.Request;
+package africa.semicolon.com.quagga.dtos.request;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
