@@ -19,8 +19,10 @@ public class Supplier {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long supplierId;
-    @Column(name = "type_of_material")
-    private String typeOfMaterial;
+    private String companyName;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Category category;
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> products;
     @ManyToOne

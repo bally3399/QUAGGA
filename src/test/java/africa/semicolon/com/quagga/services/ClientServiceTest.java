@@ -6,6 +6,7 @@ import africa.semicolon.com.quagga.data.models.Specialist;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.dtos.request.CreateServiceRequest;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
+import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 import africa.semicolon.com.quagga.dtos.response.ServiceRequestResponse;
 import jakarta.persistence.Column;
 import org.junit.jupiter.api.DisplayName;
@@ -44,7 +45,10 @@ public class ClientServiceTest {
         request.setAddress("No 30, Helen Street, Idumota, Lagos");
         request.setPhoneNumber("08123456789");
         request.setRole(Role.CLIENT);
-        africa.semicolon.com.quagga.dtos.response.RegisterResponse response = userService.register(request);
+        request.setLGA("Sabo");
+        request.setState("Lagos");
+
+        RegisterResponse response = userService.register(request);
         assertThat(response).isNotNull();
         assertThat(response.getMessage()).isEqualTo("Registration successful");
     }
@@ -78,23 +82,24 @@ public class ClientServiceTest {
 
     @Test
     public void testUpdateClientInfo(){
-        Client client = clientService.findById(4L);
-        assertThat(client.getUser().getFirstName()).isEqualTo("username");
+        Client client = clientService.findById(1L);
+        assertThat(client.getUser().getFirstName()).isEqualTo("UpdatedFirstName");
         UpdateClientRequest updateClientRequest = new UpdateClientRequest();
-        updateClientRequest.setClientId(4L);
-        updateClientRequest.setFirstName("UpdatedFirstName");
-        updateClientRequest.setLastName("UpdatedLastName");
-        updateClientRequest.setEmail("UpdatedEmail");
-        updateClientRequest.setAddress("UpdatedAddress");
-        updateClientRequest.setPassword("UpdatedPassword");
+        updateClientRequest.setClientId(1L);
+        updateClientRequest.setFirstName("UpdatedFirstName2");
+        updateClientRequest.setLastName("UpdatedLastName2");
+        updateClientRequest.setEmail("UpdatedEmail2");
+        //updateClientRequest.setAddress("UpdatedAddress");
+        //updateClientRequest.setPassword("UpdatedPassword");
         // updateClientRequest.setPhoneNumber("419");
-        UpdateClientResponse response = clientService.update(updateClientRequest);
+
+        UpdateClientResponse response = userService.update(updateClientRequest);
         assertThat(response).isNotNull();
         assertThat(response.getMessage()).isEqualTo("Client updated successfully");
 
-        Client updatedClient = clientService.findById(4L);
+        Client updatedClient = clientService.findById(1L);
         assertThat(updatedClient.getUser().getPhoneNumber()).isEqualTo("08123456789");
-        assertThat(updatedClient.getUser().getFirstName()).isEqualTo("UpdatedFirstName");
+        assertThat(updatedClient.getUser().getFirstName()).isEqualTo("UpdatedFirstName2");
     }
 
     @Test

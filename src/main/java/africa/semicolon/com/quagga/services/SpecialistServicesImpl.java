@@ -24,7 +24,7 @@ public class SpecialistServicesImpl implements SpecialistService {
         Specialist specialist = new Specialist();
         specialist.setUser(user);
         specialist.setAvailability(true);
-        specialist.setProfessionalSkills(request.getProfessionalSkills());
+//        specialist.setProfessionalSkills(request.getProfessionalSkills());
         specialist.setCompanyName(request.getCompanyName());
         specialist.setCompanyRegNo(request.getCompanyRegNo());
         return specialistRepository.save(specialist);
@@ -52,6 +52,5 @@ public class SpecialistServicesImpl implements SpecialistService {
         return specialistRepository.findById(specialistId)
                 .orElseThrow(()-> new SpecialistDoesNotExistException("Specialist does not exist"));
     }
-
 
 }
