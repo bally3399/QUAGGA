@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
             case SPECIALIST -> specialistService.createSpecialist(savedUser, request);
             case ADMIN -> adminService.createAdmin(savedUser, request);
             case CLIENT -> clientService.createClient(savedUser);
-            case SUPPLIER -> supplierService.createSupplier(savedUser);
+            case SUPPLIER -> supplierService.createSupplier(savedUser, request);
             case PROFESSIONAL -> professionalService.createProfessional(savedUser);
         }
 

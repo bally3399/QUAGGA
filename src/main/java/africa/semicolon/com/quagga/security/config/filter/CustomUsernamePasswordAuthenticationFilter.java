@@ -1,6 +1,6 @@
 package africa.semicolon.com.quagga.security.config.filter;
 
-import africa.semicolon.com.quagga.dtos.Request.LoginRequest;
+import africa.semicolon.com.quagga.dtos.request.LoginRequest;
 import africa.semicolon.com.quagga.dtos.Response.BaseResponse;
 import africa.semicolon.com.quagga.dtos.Response.LoginResponse;
 import com.auth0.jwt.JWT;
