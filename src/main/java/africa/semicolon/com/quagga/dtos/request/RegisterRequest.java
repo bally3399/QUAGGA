@@ -17,10 +17,11 @@ public class RegisterRequest {
     private String password;
     private String address;
     private Role role;
+    private String LGA;
+    private String state;
     private String companyName;
     private String companyRegNo;
     private Category Category;
-    private String typeOfMaterial;
     private String phoneNumber;
 
 }
