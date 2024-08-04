@@ -4,17 +4,14 @@ import africa.semicolon.com.quagga.data.models.Client;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.data.repositories.ClientRepository;
 import africa.semicolon.com.quagga.exceptions.ClientNotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 public class ClientServiceImpl implements ClientService{
+
     private final ClientRepository clientRepository;
-
-    public ClientServiceImpl(ClientRepository clientRepository) {
-        this.clientRepository = clientRepository;
-    }
-
-
     @Override
     public Client createClient(User savedUser) {
         Client newClient = new Client();
@@ -25,6 +22,12 @@ public class ClientServiceImpl implements ClientService{
     @Override
     public Client findById(Long clientId) {
         return clientRepository.findById(clientId)
-                .orElseThrow(()-> new ClientNotFoundException("Client does not exist"));
+                .orElseThrow(()-> new ClientNotFoundException("Client with id: " + clientId + " does not exist"));
     }
+
+    @Override
+    public Client update(Client client) {
+        return clientRepository.save(client);
+    }
+
 }

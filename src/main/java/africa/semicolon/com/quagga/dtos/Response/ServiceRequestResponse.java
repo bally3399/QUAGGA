@@ -6,7 +6,5 @@ import lombok.Setter;
 @Setter
 @Getter
 public class ServiceRequestResponse {
-
     private String message;
-
 }

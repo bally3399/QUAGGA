@@ -12,7 +12,6 @@ public class Specialist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long specialistId;
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Category category;
     @Enumerated(EnumType.STRING)

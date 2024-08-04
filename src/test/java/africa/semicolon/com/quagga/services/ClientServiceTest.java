@@ -1,11 +1,14 @@
 package africa.semicolon.com.quagga.services;
 
+import africa.semicolon.com.quagga.data.models.Client;
 import africa.semicolon.com.quagga.data.models.Role;
 import africa.semicolon.com.quagga.data.models.Specialist;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.dtos.request.CreateServiceRequest;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
+import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 import africa.semicolon.com.quagga.dtos.response.ServiceRequestResponse;
+import jakarta.persistence.Column;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +20,14 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-@Sql(scripts = {"/db/data.sql"})
+//@Sql(scripts = {"/db/data.sql"})
 public class ClientServiceTest {
 
     @Autowired
     public UserService userService;
+
+    @Autowired
+    public ClientService clientService;
 
     @Autowired
     public SpecialistService specialistService;
@@ -39,18 +45,21 @@ public class ClientServiceTest {
         request.setAddress("No 30, Helen Street, Idumota, Lagos");
         request.setPhoneNumber("08123456789");
         request.setRole(Role.CLIENT);
-        africa.semicolon.com.quagga.dtos.response.RegisterResponse response = userService.register(request);
+        request.setLGA("Sabo");
+        request.setState("Lagos");
+
+        RegisterResponse response = userService.register(request);
         assertThat(response).isNotNull();
         assertThat(response.getMessage()).isEqualTo("Registration successful");
     }
 
     @Test
-    @DisplayName("Test that user can be retrieved by id")
-    public void testGetUserById() {
-        User user = userService.getById(100L);
-        assertThat(user).isNotNull();
-        assertThat(user.getId()).isEqualTo(100L);
-        assertThat(user.getFirstName()).isEqualTo("john");
+    @DisplayName("Test that client can be retrieved by id")
+    public void testGetClientById() {
+        Client client = clientService.findById(300L);
+        assertThat(client).isNotNull();
+        assertThat(client.getId()).isEqualTo(300L);
+        assertThat(client.getUser().getFirstName()).isEqualTo("Alice");
     }
 
     @Test
@@ -69,6 +78,28 @@ public class ClientServiceTest {
     public void testFindOnlyAvailableSpecialist(){
         List<Specialist> availableSpecialists = specialistService.findAllAvailableSpecialist();
         assertThat(availableSpecialists.size()).isEqualTo(3L);
+    }
+
+    @Test
+    public void testUpdateClientInfo(){
+        Client client = clientService.findById(1L);
+        assertThat(client.getUser().getFirstName()).isEqualTo("UpdatedFirstName");
+        UpdateClientRequest updateClientRequest = new UpdateClientRequest();
+        updateClientRequest.setClientId(1L);
+        updateClientRequest.setFirstName("UpdatedFirstName2");
+        updateClientRequest.setLastName("UpdatedLastName2");
+        updateClientRequest.setEmail("UpdatedEmail2");
+        //updateClientRequest.setAddress("UpdatedAddress");
+        //updateClientRequest.setPassword("UpdatedPassword");
+        // updateClientRequest.setPhoneNumber("419");
+
+        UpdateClientResponse response = userService.update(updateClientRequest);
+        assertThat(response).isNotNull();
+        assertThat(response.getMessage()).isEqualTo("Client updated successfully");
+
+        Client updatedClient = clientService.findById(1L);
+        assertThat(updatedClient.getUser().getPhoneNumber()).isEqualTo("08123456789");
+        assertThat(updatedClient.getUser().getFirstName()).isEqualTo("UpdatedFirstName2");
     }
 
     @Test
