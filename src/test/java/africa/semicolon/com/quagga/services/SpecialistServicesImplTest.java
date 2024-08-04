@@ -32,6 +32,7 @@ public class SpecialistServicesImplTest {
         request.setState("Lagos");
         request.setCompanyName("Semicolon");
         request.setCompanyRegNo("abcd");
+//        request.setProfessionalSkills(List.of("Construction", "Painting"));
         request.setCategory(Category.ELECTRICAL);
         RegisterResponse response = userService.register(request);
         assertThat(response).isNotNull();
