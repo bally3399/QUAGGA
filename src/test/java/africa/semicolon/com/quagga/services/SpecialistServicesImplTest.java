@@ -1,14 +1,12 @@
 package africa.semicolon.com.quagga.services;
 
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
-import africa.semicolon.com.quagga.dtos.request.UpdateSpecialistRequest;
+import africa.semicolon.com.quagga.dtos.request.UpdateRequest;
 import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
-import africa.semicolon.com.quagga.dtos.response.UpdateSpecialistResponse;
+import africa.semicolon.com.quagga.dtos.response.UpdateResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
-import java.util.List;
 
 import static africa.semicolon.com.quagga.data.models.Role.SPECIALIST;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -31,7 +29,7 @@ public class SpecialistServicesImplTest {
         request.setRole(SPECIALIST);
         request.setCompanyName("Semicolon");
         request.setCompanyRegNo("abcd");
-        request.setProfessionalSkills(List.of("Construction", "Painting"));
+//        request.setProfessionalSkills(List.of("Construction", "Painting"));
         RegisterResponse response = userService.register(request);
         assertThat(response).isNotNull();
         assertThat(response.getMessage()).isEqualTo("Registration successful");
@@ -50,19 +48,19 @@ public class SpecialistServicesImplTest {
         request.setRole(SPECIALIST);
         request.setCompanyName("Semicolon");
         request.setCompanyRegNo("abcd");
-        request.setProfessionalSkills(List.of("Construction", "Painting"));
+//        request.setProfessionalSkills(List.of("Construction", "Painting"));
         RegisterResponse response = userService.register(request);
 
-        UpdateSpecialistRequest updateSpecialistRequest = new UpdateSpecialistRequest();
-        updateSpecialistRequest.setFirstName("Sulaiman2");
-        updateSpecialistRequest.setLastName("Baliqis2");
-        updateSpecialistRequest.setEmail("sulaimabaliqis2@gmail.com");
-        updateSpecialistRequest.setPhoneNumber("09132431343");
-        updateSpecialistRequest.setPassword("123456");
-        updateSpecialistRequest.setAddress("sabo yaba");
-        updateSpecialistRequest.setCompanyName("Semicolon africa");
-        updateSpecialistRequest.setCompanyRegNo("abcdef");
-        UpdateSpecialistResponse response1 = userService.update(updateSpecialistRequest);
+        UpdateRequest updateRequest = new UpdateRequest();
+        updateRequest.setFirstName("Sulaiman2");
+        updateRequest.setLastName("Baliqis2");
+        updateRequest.setEmail("sulaimabaliqis2@gmail.com");
+        updateRequest.setPhoneNumber("09132431343");
+        updateRequest.setPassword("123456");
+        updateRequest.setAddress("sabo yaba");
+        updateRequest.setCompanyName("Semicolon africa");
+        updateRequest.setCompanyRegNo("abcdef");
+        UpdateResponse response1 = userService.update(updateRequest);
 
 
     }

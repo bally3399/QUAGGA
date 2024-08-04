@@ -15,17 +15,24 @@ public class User {
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private String firstName;
+    @Column(nullable = false)
     private String lastName;
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
     private String password;
+    @Column(nullable = false)
     private String address;
+    @Column(nullable = false)
+    private String LGA;
+    @Column(nullable = false)
+    private String state;
+    @Column(nullable = false)
     private String phoneNumber;
     @Enumerated(EnumType.STRING)
     private Role role;
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<Authority> authorities;
-
 }

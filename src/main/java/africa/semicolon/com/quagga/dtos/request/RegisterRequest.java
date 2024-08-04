@@ -1,6 +1,7 @@
 package africa.semicolon.com.quagga.dtos.request;
 
 
+import africa.semicolon.com.quagga.data.models.Category;
 import africa.semicolon.com.quagga.data.models.Role;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +19,7 @@ public class RegisterRequest {
     private Role role;
     private String companyName;
     private String companyRegNo;
-    private List<String> professionalSkills;
+    private Category Category;
     private String typeOfMaterial;
     private String phoneNumber;
 

@@ -1,10 +1,11 @@
 package africa.semicolon.com.quagga.services;
-
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
-import africa.semicolon.com.quagga.dtos.request.UpdateSpecialistRequest;
-import africa.semicolon.com.quagga.dtos.response.UpdateSpecialistResponse;
+import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
+import africa.semicolon.com.quagga.dtos.request.UpdateRequest;
+import africa.semicolon.com.quagga.dtos.response.UpdateResponse;
 import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 
 import java.util.List;
@@ -17,5 +18,5 @@ public interface UserService {
     List<User> getAllSpecialist();
     List<User> getAllSupplier();
 
-    UpdateSpecialistResponse update(UpdateSpecialistRequest updateSpecialistRequest);
+    UpdateResponse update(UpdateRequest updateRequest);
 }

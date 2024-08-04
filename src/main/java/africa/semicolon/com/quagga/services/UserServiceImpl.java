@@ -4,7 +4,10 @@ import africa.semicolon.com.quagga.data.models.Role;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.data.repositories.UserRepository;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
+import africa.semicolon.com.quagga.dtos.request.UpdateRequest;
+import africa.semicolon.com.quagga.dtos.response.UpdateResponse;
 import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
+
 import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 import africa.semicolon.com.quagga.exceptions.IncorrectPasswordException;
 import africa.semicolon.com.quagga.exceptions.UserAlreadyExistException;
@@ -91,18 +94,27 @@ public class UserServiceImpl implements UserService {
         return suppliers;
     }
 
-    private void validate(String email) {
-        for (User user : userRepository.findAll()) {
-            if (user.getEmail().equals(email.toLowerCase())) {
-                throw new UserAlreadyExistException("email already exist");
+    @Override
+    public UpdateResponse update(UpdateRequest updateRequest) {
+        return null;
+    }
+
+
+    private void validate (String email){
+            for (User user : userRepository.findAll()) {
+                if (user.getEmail().equals(email.toLowerCase())) {
+                    throw new UserAlreadyExistException("email already exist");
+                }
             }
         }
+        private static void validateRegistration (RegisterRequest request){
+            if (!request.getEmail().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$"))
+                throw new UserAlreadyExistException("Invalid Input");
+            if (request.getPassword().isEmpty())
+                throw new IncorrectPasswordException("Invalid Password provide a Password");
+        }
+
+
     }
-    private static void validateRegistration(RegisterRequest request) {
-        if (!request.getEmail().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) throw new UserAlreadyExistException("Invalid Input");
-        if (request.getPassword().isEmpty()) throw new IncorrectPasswordException("Invalid Password provide a Password");
-    }
 
 
-
-}

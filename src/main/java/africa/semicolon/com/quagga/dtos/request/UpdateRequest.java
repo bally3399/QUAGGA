@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class UpdateSpecialistRequest {
+public class UpdateRequest {
     private String firstName;
     private String lastName;
     private String email;
