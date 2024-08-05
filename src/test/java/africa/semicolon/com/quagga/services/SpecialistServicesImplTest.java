@@ -34,12 +34,15 @@ public class SpecialistServicesImplTest {
         request.setPassword("123456");
         request.setAddress("sabo yaba");
         request.setRole(SPECIALIST);
+        request.setLGA("Mushin");
+        request.setState("Lagos");
         request.setCompanyName("Semicolon");
         request.setCompanyRegNo("abcd");
         request.setLGA("Sabo");
         request.setState("Lagos");
         request.setCategory(Category.STRUCTURAL);
         request.setSubCategory(SubCategory.ACOUSTICS);
+        request.setCategory(Category.ELECTRICAL);
         RegisterResponse response = userService.register(request);
         assertThat(response).isNotNull();
         assertThat(response.getMessage()).isEqualTo("Registration successful");

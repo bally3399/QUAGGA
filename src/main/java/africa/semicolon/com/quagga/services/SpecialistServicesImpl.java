@@ -27,6 +27,7 @@ public class SpecialistServicesImpl implements SpecialistService {
         specialist.setCategory(request.getCategory());
         specialist.setSubCategory(request.getSubCategory());
 //        specialist.setProfessionalSkills(request.getProfessionalSkills());
+        specialist.setCategory(request.getCategory());
         specialist.setCompanyName(request.getCompanyName());
         specialist.setCompanyRegNo(request.getCompanyRegNo());
         return specialistRepository.save(specialist);

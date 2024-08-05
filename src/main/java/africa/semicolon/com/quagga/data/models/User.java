@@ -22,13 +22,9 @@ public class User {
     @Column(nullable = false, unique = true)
     private String email;
     private String password;
-    @Column(nullable = false)
     private String address;
-    @Column(nullable = false)
     private String LGA;
-    @Column(nullable = false)
     private String state;
-    @Column(nullable = false)
     private String phoneNumber;
     @Enumerated(EnumType.STRING)
     private Role role;
