@@ -17,4 +17,6 @@ public interface UserService {
     User save(User user);
 
     UpdateClientResponse update(UpdateClientRequest updateClientRequest);
+
+    void deleteById(long id);
 }

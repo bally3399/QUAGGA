@@ -3,6 +3,7 @@ package africa.semicolon.com.quagga.dtos.request;
 
 import africa.semicolon.com.quagga.data.models.Category;
 import africa.semicolon.com.quagga.data.models.Role;
+import africa.semicolon.com.quagga.data.models.SubCategory;
 import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,5 +26,5 @@ public class RegisterRequest {
     private String phoneNumber;
     private String LGA;
     private String state;
-
+    private SubCategory subCategory;
 }

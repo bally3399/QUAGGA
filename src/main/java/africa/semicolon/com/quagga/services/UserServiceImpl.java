@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -104,30 +105,51 @@ public class UserServiceImpl implements UserService {
     public UpdateClientResponse update(UpdateClientRequest updateClientRequest) {
         Client client = clientService.findById(updateClientRequest.getClientId());
         User user = getById(client.getUser().getId());
-        if (updateClientRequest.getFirstName() != null){
-            user.setFirstName(updateClientRequest.getFirstName());
-        }
-        if (updateClientRequest.getLastName() != null){
-            user.setLastName(updateClientRequest.getLastName());
-        }
-        if (updateClientRequest.getEmail() != null){
-            user.setEmail(updateClientRequest.getEmail());
-        }
-        if (updateClientRequest.getAddress() != null){
-            user.setAddress(updateClientRequest.getAddress());
-        }
-        if (updateClientRequest.getPhoneNumber() != null){
-            user.setPhoneNumber(updateClientRequest.getPhoneNumber());
-        }
-        if (updateClientRequest.getPassword() != null){
-            user.setPassword(updateClientRequest.getPassword());
-        }
+        Optional.ofNullable(updateClientRequest.getFirstName()).ifPresent(user::setFirstName);
+        Optional.ofNullable(updateClientRequest.getLastName()).ifPresent(user::setLastName);
+        Optional.ofNullable(updateClientRequest.getEmail()).ifPresent(user::setEmail);
+        Optional.ofNullable(updateClientRequest.getAddress()).ifPresent(user::setAddress);
+        Optional.ofNullable(updateClientRequest.getPhoneNumber()).ifPresent(user::setPhoneNumber);
+        Optional.ofNullable(updateClientRequest.getPassword()).ifPresent(user::setPassword);
+
+//        if (updateClientRequest.getFirstName() != null){
+//            user.setFirstName(updateClientRequest.getFirstName());
+//        }
+//        if (updateClientRequest.getLastName() != null){
+//            user.setLastName(updateClientRequest.getLastName());
+//        }
+//        if (updateClientRequest.getEmail() != null){
+//            user.setEmail(updateClientRequest.getEmail());
+//        }
+//        if (updateClientRequest.getAddress() != null){
+//            user.setAddress(updateClientRequest.getAddress());
+//        }
+//        if (updateClientRequest.getPhoneNumber() != null){
+//            user.setPhoneNumber(updateClientRequest.getPhoneNumber());
+//        }
+//        if (updateClientRequest.getPassword() != null){
+//            user.setPassword(updateClientRequest.getPassword());
+//        }
         userRepository.save(user);
         clientService.update(client);
 
         UpdateClientResponse response = new UpdateClientResponse();
         response.setMessage("Client updated successfully");
         return response;
+    }
+
+    @Override
+    public void deleteById(long id) {
+        User user = getById(id);
+        switch (user.getRole()){
+            case SPECIALIST -> specialistService.delete(id);
+//            case ADMIN -> adminService.deleteById(id);
+            case CLIENT -> clientService.deleteById(id);
+//            case SUPPLIER -> supplierService.deleteById(id);
+//            case PROFESSIONAL -> professionalService.deleteById(id);
+        }
+        userRepository.deleteById(id);
+
     }
 
     private void validate(String email) {
