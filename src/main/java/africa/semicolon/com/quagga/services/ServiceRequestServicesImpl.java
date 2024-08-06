@@ -71,27 +71,15 @@ public class ServiceRequestServicesImpl implements ServiceRequestServices {
         Long specialistId = rejectServiceRequest.getSpecialistId();
         String reason = rejectServiceRequest.getReason();
 
-        //ServiceRequest serviceRequest = findById(serviceId);
-        //Specialist specialist = specialistService.findById(specialistId);
-
-        //if (specialist.getSpecialistId() == specialistId){
-            //serviceRequest.setServiceRequestStatus(REJECTED);
-        //}
-        for (ServiceRequest service : serviceRepository.findAll()){
-            if (service.getId().equals(serviceId) && service.getSpecialist().getSpecialistId().equals(specialistId)){
-                service.setServiceRequestStatus(REJECTED);
-                serviceRepository.save(service);
-                RejectServiceResponse response = new RejectServiceResponse();
-                response.setMessage("Request rejected, " + reason);
-                return response;
-            }
+        ServiceRequest serviceRequest = findById(serviceId);
+        Specialist specialist = specialistService.findById(specialistId);
+        if (specialist.getSpecialistId() == specialistId){
+            serviceRequest.setServiceRequestStatus(REJECTED);
+            serviceRepository.save(serviceRequest);
         }
-        throw new ServiceDoesNotExistException("Service does not exist");
-
-//        RejectServiceResponse response = new RejectServiceResponse();
-//        response.setMessage("Request rejected because specialist " + reason);
-
-//        return response;
+        RejectServiceResponse response = new RejectServiceResponse();
+        response.setMessage("Request rejected, " + reason);
+        return response;
     }
 
 }
