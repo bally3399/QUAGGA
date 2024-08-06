@@ -15,4 +15,8 @@ public interface SpecialistService {
     List<Specialist> findAllSpecialist();
 
     Specialist findById(Long specialistId);
+
+    void delete(long id);
+
+    Specialist findByUserId(Long id);
 }
