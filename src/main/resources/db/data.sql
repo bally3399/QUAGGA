@@ -33,9 +33,9 @@ insert into service_request(id, client_id, specialist_id, request_date, descript
     (402, 300, 201, '2024-08-05 14:25:16.185059', 'I am in need of Piling service', 'PENDING'),
     (403, 301, 202, '2024-08-06 14:25:16.185059', 'I am in need of mechanical service', 'PENDING');
 
-insert into reviews (id, rating, review_receiver_id, review_sender_id, comment)) values
-    (500, 4, 100, 105, "The service was satisfactory"),
-    (501, 5, 101, 104, "Excelent job")
+insert into reviews (review_id, rating, review_receiver_id, review_sender_id, comment) values
+    (500, 4, 100, 105, 'The service was satisfactory'),
+    (501, 5, 101, 104, 'Excellent job');
 
 -- insert into suppliers()
 

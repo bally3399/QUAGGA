@@ -1,5 +1,6 @@
 package africa.semicolon.com.quagga.services;
 
+import africa.semicolon.com.quagga.data.models.Review;
 import africa.semicolon.com.quagga.dtos.request.SendReviewRequest;
 import africa.semicolon.com.quagga.dtos.response.SendReviewResponse;
 import org.junit.jupiter.api.Test;
@@ -29,7 +30,15 @@ public class ReviewServiceTest {
     }
 
     @Test
-    public void findReview(){
+    public void testFindReview(){
+        Review review = reviewService.findById(500L);
+        assertThat(review).isNotNull();
+        assertThat(review.getComment()).isEqualTo("The service was satisfactory");
+    }
+
+    @Test
+    public void testDeleteReview(){
 
     }
+
 }

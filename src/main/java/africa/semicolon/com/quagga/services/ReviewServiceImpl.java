@@ -6,6 +6,7 @@ import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.data.repositories.ReviewRepository;
 import africa.semicolon.com.quagga.dtos.request.SendReviewRequest;
 import africa.semicolon.com.quagga.dtos.response.SendReviewResponse;
+import africa.semicolon.com.quagga.exceptions.ReviewNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,12 @@ public class ReviewServiceImpl implements ReviewService{
         SendReviewResponse response = new SendReviewResponse();
         response.setMessage("Review sent successfully");
         return response;
+    }
+
+    @Override
+    public Review findById(long id) {
+        return reviewRepository.findById(id)
+                .orElseThrow(()-> new ReviewNotFoundException("Review not found"));
     }
 
 }
