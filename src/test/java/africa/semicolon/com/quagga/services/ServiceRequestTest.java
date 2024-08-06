@@ -3,16 +3,16 @@ package africa.semicolon.com.quagga.services;
 import africa.semicolon.com.quagga.data.models.ServiceRequest;
 import africa.semicolon.com.quagga.dtos.request.AcceptServiceRequest;
 import africa.semicolon.com.quagga.dtos.request.CreateServiceRequest;
+import africa.semicolon.com.quagga.dtos.request.RejectServiceRequest;
 import africa.semicolon.com.quagga.dtos.response.AcceptServiceResponse;
+import africa.semicolon.com.quagga.dtos.response.RejectServiceResponse;
 import africa.semicolon.com.quagga.dtos.response.ServiceRequestResponse;
-import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.jdbc.Sql;
 
-import static africa.semicolon.com.quagga.data.models.ServiceRequestStatus.ACCEPTED;
-import static africa.semicolon.com.quagga.data.models.ServiceRequestStatus.PENDING;
+import static africa.semicolon.com.quagga.data.models.ServiceRequestStatus.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -41,7 +41,7 @@ public class ServiceRequestTest {
     }
 
     @Test
-    public void testAcceptService(){
+    public void testAcceptServiceRequest(){
         ServiceRequest foundPendingServiceRequest = serviceRequestServices.findById(401L);
         assertThat(foundPendingServiceRequest.getServiceRequestStatus()).isEqualTo(PENDING);
         AcceptServiceRequest serviceRequest = new AcceptServiceRequest();
@@ -53,5 +53,21 @@ public class ServiceRequestTest {
         ServiceRequest foundAcceptedServiceRequest = serviceRequestServices.findById(401L);
         assertThat(foundAcceptedServiceRequest.getServiceRequestStatus()).isEqualTo(ACCEPTED);
     }
+
+    @Test
+    public void testRejectServiceRequest(){
+        ServiceRequest foundPendingServiceRequest = serviceRequestServices.findById(401L);
+        assertThat(foundPendingServiceRequest.getServiceRequestStatus()).isEqualTo(PENDING);
+        RejectServiceRequest rejectServiceRequest = new RejectServiceRequest();
+        rejectServiceRequest.setServiceId(401L);
+        rejectServiceRequest.setSpecialistId(203L);
+        rejectServiceRequest.setReason("Not enough time");
+        RejectServiceResponse response = serviceRequestServices.reject(rejectServiceRequest);
+        assertThat(response).isNotNull();
+        assertThat(response.getMessage()).isEqualTo("Request rejected, Not enough time");
+        ServiceRequest foundAcceptedServiceRequest = serviceRequestServices.findById(401L);
+        assertThat(foundAcceptedServiceRequest.getServiceRequestStatus()).isEqualTo(REJECTED);
+    }
+
 
 }

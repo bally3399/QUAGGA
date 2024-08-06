@@ -25,7 +25,5 @@ public class RegisterRequest {
     private String companyRegNo;
     private Category Category;
     private String phoneNumber;
-    private String LGA;
-    private String state;
     private SubCategory subCategory;
 }

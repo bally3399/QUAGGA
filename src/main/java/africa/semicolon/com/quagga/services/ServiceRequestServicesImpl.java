@@ -7,11 +7,15 @@ import africa.semicolon.com.quagga.data.models.Specialist;
 import africa.semicolon.com.quagga.data.repositories.ServiceRepository;
 import africa.semicolon.com.quagga.dtos.request.AcceptServiceRequest;
 import africa.semicolon.com.quagga.dtos.request.CreateServiceRequest;
+import africa.semicolon.com.quagga.dtos.request.RejectServiceRequest;
 import africa.semicolon.com.quagga.dtos.response.AcceptServiceResponse;
+import africa.semicolon.com.quagga.dtos.response.RejectServiceResponse;
 import africa.semicolon.com.quagga.dtos.response.ServiceRequestResponse;
 import africa.semicolon.com.quagga.exceptions.ServiceDoesNotExistException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import static africa.semicolon.com.quagga.data.models.ServiceRequestStatus.REJECTED;
 
 @Service
 @AllArgsConstructor
@@ -43,7 +47,6 @@ public class ServiceRequestServicesImpl implements ServiceRequestServices {
         Long serviceId = serviceRequest.getServiceId();
         Long specialistId = serviceRequest.getSpecialistId();
 
-//        ServiceRequest foundService = findServiceById(serviceId);
         for (ServiceRequest service : serviceRepository.findAll()){
             if (service.getId().equals(serviceId) && service.getSpecialist().getSpecialistId().equals(specialistId)){
                 service.setServiceRequestStatus(ServiceRequestStatus.ACCEPTED);
@@ -60,6 +63,35 @@ public class ServiceRequestServicesImpl implements ServiceRequestServices {
     public ServiceRequest findById(long id) {
         return serviceRepository.findById(id)
                 .orElseThrow(()-> new ServiceDoesNotExistException("Service does not exist exception"));
+    }
+
+    @Override
+    public RejectServiceResponse reject(RejectServiceRequest rejectServiceRequest) {
+        Long serviceId = rejectServiceRequest.getServiceId();
+        Long specialistId = rejectServiceRequest.getSpecialistId();
+        String reason = rejectServiceRequest.getReason();
+
+        //ServiceRequest serviceRequest = findById(serviceId);
+        //Specialist specialist = specialistService.findById(specialistId);
+
+        //if (specialist.getSpecialistId() == specialistId){
+            //serviceRequest.setServiceRequestStatus(REJECTED);
+        //}
+        for (ServiceRequest service : serviceRepository.findAll()){
+            if (service.getId().equals(serviceId) && service.getSpecialist().getSpecialistId().equals(specialistId)){
+                service.setServiceRequestStatus(REJECTED);
+                serviceRepository.save(service);
+                RejectServiceResponse response = new RejectServiceResponse();
+                response.setMessage("Request rejected, " + reason);
+                return response;
+            }
+        }
+        throw new ServiceDoesNotExistException("Service does not exist");
+
+//        RejectServiceResponse response = new RejectServiceResponse();
+//        response.setMessage("Request rejected because specialist " + reason);
+
+//        return response;
     }
 
 }
