@@ -7,6 +7,5 @@ import africa.semicolon.com.quagga.dtos.response.SendReviewResponse;
 public interface ReviewService {
     SendReviewResponse sendReview(SendReviewRequest reviewRequest);
     Review findById(long id);
-
-
+    void deleteById(long id);
 }

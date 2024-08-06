@@ -42,4 +42,10 @@ public class ReviewServiceImpl implements ReviewService{
                 .orElseThrow(()-> new ReviewNotFoundException("Review not found"));
     }
 
+    @Override
+    public void deleteById(long id) {
+        Review review = findById(id);
+        reviewRepository.delete(review);
+    }
+
 }
