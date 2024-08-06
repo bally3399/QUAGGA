@@ -152,6 +152,12 @@ public class UserServiceImpl implements UserService {
 
     }
 
+    @Override
+    public User findUserById(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User does not exist"));
+    }
+
     private void validate(String email) {
         for (User user : userRepository.findAll()) {
             if (user.getEmail().equals(email.toLowerCase())) {
