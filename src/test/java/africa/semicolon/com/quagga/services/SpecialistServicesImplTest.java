@@ -1,7 +1,10 @@
 package africa.semicolon.com.quagga.services;
 
 import africa.semicolon.com.quagga.data.models.Category;
+import africa.semicolon.com.quagga.data.models.SubCategory;
+import africa.semicolon.com.quagga.dtos.request.AcceptServiceRequest;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
+import africa.semicolon.com.quagga.dtos.response.AcceptServiceResponse;
 import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +21,9 @@ public class SpecialistServicesImplTest {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ServiceRequestServices serviceRequestServices;
+
     @Test
     public void testThatSpecialistCanBeCreated() {
         RegisterRequest request = new RegisterRequest();
@@ -32,12 +38,25 @@ public class SpecialistServicesImplTest {
         request.setState("Lagos");
         request.setCompanyName("Semicolon");
         request.setCompanyRegNo("abcd");
-//        request.setProfessionalSkills(List.of("Construction", "Painting"));
+        request.setLGA("Sabo");
+        request.setState("Lagos");
+        request.setCategory(Category.STRUCTURAL);
+        request.setSubCategory(SubCategory.ACOUSTICS);
         request.setCategory(Category.ELECTRICAL);
         RegisterResponse response = userService.register(request);
         assertThat(response).isNotNull();
         assertThat(response.getMessage()).isEqualTo("Registration successful");
 
+    }
+
+    @Test
+    public void testThatSpecialistCanAcceptServiceRequest(){
+        AcceptServiceRequest serviceRequest = new AcceptServiceRequest();
+        serviceRequest.setServiceId(3L);
+        serviceRequest.setSpecialistId(203L);
+        AcceptServiceResponse response = serviceRequestServices.accept(serviceRequest);
+        assertThat(response).isNotNull();
+        assertThat(response.getMessage()).isEqualTo("Service accepted");
     }
 
 }

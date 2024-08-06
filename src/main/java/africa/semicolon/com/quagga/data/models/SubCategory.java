@@ -1,7 +1,6 @@
 package africa.semicolon.com.quagga.data.models;
 
 public enum SubCategory {
-
     WOOD_FRAMING(Category.STRUCTURAL, "Wood_framing"),
     FORM_WORK(Category.STRUCTURAL, "Form_work"),
     STEEL_ERECTION(Category.STRUCTURAL, "Steel_erection"),

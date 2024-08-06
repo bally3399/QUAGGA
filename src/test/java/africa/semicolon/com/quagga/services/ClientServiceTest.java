@@ -1,14 +1,11 @@
 package africa.semicolon.com.quagga.services;
 
-import africa.semicolon.com.quagga.data.models.Client;
-import africa.semicolon.com.quagga.data.models.Role;
-import africa.semicolon.com.quagga.data.models.Specialist;
-import africa.semicolon.com.quagga.data.models.User;
+import africa.semicolon.com.quagga.data.models.*;
 import africa.semicolon.com.quagga.dtos.request.CreateServiceRequest;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 import africa.semicolon.com.quagga.dtos.response.ServiceRequestResponse;
-import jakarta.persistence.Column;
+import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +15,10 @@ import org.springframework.test.context.jdbc.Sql;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-//@Sql(scripts = {"/db/data.sql"})
+@Sql(scripts = {"/db/data.sql"})
 public class ClientServiceTest {
 
     @Autowired
@@ -33,7 +31,7 @@ public class ClientServiceTest {
     public SpecialistService specialistService;
 
     @Autowired
-    public RequestService requestService;
+    public ServiceRequestServices requestService;
 
     @Test
     public void testRegisterClient(){
@@ -103,6 +101,14 @@ public class ClientServiceTest {
     }
 
     @Test
+    public void deleteClient(){
+        User user = userService.getById(100L);
+        assertThat(user).isNotNull();
+        userService.deleteById(100L);
+        assertThrows(UserNotFoundException.class, ()->userService.getById(100L));
+    }
+
+    @Test
     public void testThatClientCanCreateServiceRequest() {
         CreateServiceRequest serviceRequest = new CreateServiceRequest();
         serviceRequest.setClientId(300L);
@@ -112,5 +118,6 @@ public class ClientServiceTest {
         assertThat(response).isNotNull();
         assertThat(response.getMessage()).isEqualTo("Request sent successfully");
     }
+
 
 }
