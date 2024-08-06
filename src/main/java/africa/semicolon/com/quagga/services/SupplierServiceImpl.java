@@ -1,6 +1,7 @@
 package africa.semicolon.com.quagga.services;
 
 import africa.semicolon.com.quagga.data.models.Supplier;
+import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 
@@ -24,5 +25,10 @@ public class SupplierServiceImpl implements SupplierService {
         response.setMessage("Registration successful");
         return supplierRepository.save(supplier);
 
+    }
+
+    @Override
+    public Supplier createSupplier(User user, RegisterRequest request) {
+        return null;
     }
 }

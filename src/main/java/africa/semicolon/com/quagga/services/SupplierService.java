@@ -6,6 +6,8 @@ import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 
 public interface SupplierService {
 
+     Supplier createSupplier(RegisterRequest request);
+
      Supplier createSupplier(User user, RegisterRequest request);
 
 

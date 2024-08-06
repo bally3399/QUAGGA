@@ -1,10 +1,13 @@
 package africa.semicolon.com.quagga.services;
 
+import africa.semicolon.com.quagga.data.models.Client;
 import africa.semicolon.com.quagga.data.models.Role;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.data.repositories.UserRepository;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
+import africa.semicolon.com.quagga.dtos.request.UpdateClientRequest;
 import africa.semicolon.com.quagga.dtos.request.UpdateRequest;
+import africa.semicolon.com.quagga.dtos.response.UpdateClientResponse;
 import africa.semicolon.com.quagga.dtos.response.UpdateResponse;
 import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
 
@@ -97,6 +100,36 @@ public class UserServiceImpl implements UserService {
     @Override
     public UpdateResponse update(UpdateRequest updateRequest) {
         return null;
+    }
+
+    @Override
+    public UpdateClientResponse update(UpdateClientRequest updateClientRequest) {
+        Client client = clientService.findById(updateClientRequest.getClientId());
+        User user = getById(client.getUser().getId());
+        if (updateClientRequest.getFirstName() != null){
+            user.setFirstName(updateClientRequest.getFirstName());
+        }
+        if (updateClientRequest.getLastName() != null){
+            user.setLastName(updateClientRequest.getLastName());
+        }
+        if (updateClientRequest.getEmail() != null){
+            user.setEmail(updateClientRequest.getEmail());
+        }
+        if (updateClientRequest.getAddress() != null){
+            user.setAddress(updateClientRequest.getAddress());
+        }
+        if (updateClientRequest.getPhoneNumber() != null){
+            user.setPhoneNumber(updateClientRequest.getPhoneNumber());
+        }
+        if (updateClientRequest.getPassword() != null){
+            user.setPassword(updateClientRequest.getPassword());
+        }
+        userRepository.save(user);
+        clientService.update(client);
+
+        UpdateClientResponse response = new UpdateClientResponse();
+        response.setMessage("Client updated successfully");
+        return response;
     }
 
 
