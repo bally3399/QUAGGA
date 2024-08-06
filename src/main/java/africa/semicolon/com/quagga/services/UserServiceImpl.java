@@ -6,6 +6,8 @@ import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.data.repositories.UserRepository;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 
+import africa.semicolon.com.quagga.dtos.request.UpdateClientRequest;
+import africa.semicolon.com.quagga.dtos.response.UpdateClientResponse;
 import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
 
 import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
@@ -31,7 +33,7 @@ public class UserServiceImpl implements UserService {
     private final AdminService adminService;
 
     @Override
-    public africa.semicolon.com.quagga.dtos.response.RegisterResponse register(RegisterRequest request) {
+    public RegisterResponse register(RegisterRequest request) {
         String email = request.getEmail().toLowerCase();
         validate(email);
         validateRegistration(request);

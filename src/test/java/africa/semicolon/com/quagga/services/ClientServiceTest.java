@@ -6,14 +6,14 @@ import africa.semicolon.com.quagga.data.models.Specialist;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.dtos.request.CreateServiceRequest;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
+import africa.semicolon.com.quagga.dtos.request.UpdateClientRequest;
 import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 import africa.semicolon.com.quagga.dtos.response.ServiceRequestResponse;
-import jakarta.persistence.Column;
+import africa.semicolon.com.quagga.dtos.response.UpdateClientResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 
