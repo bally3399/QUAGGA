@@ -53,4 +53,14 @@ public class SpecialistServicesImpl implements SpecialistService {
                 .orElseThrow(()-> new SpecialistDoesNotExistException("Specialist does not exist"));
     }
 
+    @Override
+    public void delete(long id) {
+
+    }
+
+    @Override
+    public Specialist findByUserId(Long id) {
+        return null;
+    }
+
 }

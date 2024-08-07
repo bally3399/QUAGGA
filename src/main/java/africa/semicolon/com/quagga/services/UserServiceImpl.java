@@ -132,6 +132,11 @@ public class UserServiceImpl implements UserService {
         return response;
     }
 
+    @Override
+    public void deleteById(long id) {
+
+    }
+
 
     private void validate (String email){
             for (User user : userRepository.findAll()) {
