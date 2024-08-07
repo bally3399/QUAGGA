@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Setter
 @Getter
 @Table(name = "specialists")
@@ -14,13 +12,14 @@ public class Specialist {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long specialistId;
-    @ElementCollection
-    @CollectionTable(name = "professional_skills", joinColumns = @JoinColumn(name = "specialist_id"))
-    @Column(name = "skill")
-    private List<String> professionalSkills;
+    @Enumerated(EnumType.STRING)
+    private Category category;
+    @Enumerated(EnumType.STRING)
+    private SubCategory subCategory;
     private boolean availability;
     @OneToOne
     private User user;
     private String companyName;
     private String companyRegNo;
+
 }

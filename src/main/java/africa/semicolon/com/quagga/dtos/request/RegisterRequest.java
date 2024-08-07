@@ -1,7 +1,10 @@
 package africa.semicolon.com.quagga.dtos.request;
 
 
+import africa.semicolon.com.quagga.data.models.Category;
 import africa.semicolon.com.quagga.data.models.Role;
+import africa.semicolon.com.quagga.data.models.SubCategory;
+import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,13 +17,13 @@ public class RegisterRequest {
     private String lastName;
     private String email;
     private String password;
-    private String username;
     private String address;
     private Role role;
+    private String LGA;
+    private String state;
     private String companyName;
     private String companyRegNo;
-    private List<String> professionalSkills;
-    private String typeOfMaterial;
+    private Category Category;
     private String phoneNumber;
-
+    private SubCategory subCategory;
 }

@@ -1,4 +1,9 @@
 package africa.semicolon.com.quagga.services;
+<<<<<<< HEAD
+=======
+
+import africa.semicolon.com.quagga.data.models.Category;
+>>>>>>> 1bfd79603e763307856fb2bd3a0b6afc3503f657
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 
 import org.junit.jupiter.api.Test;
@@ -24,11 +29,10 @@ class SupplierServiceImplTest {
         request.setAddress("No 30, Helen Street, Idumota, Lagos");
         request.setPhoneNumber("08123456789");
         request.setRole(SUPPLIER);
-        request.setUsername("George");
+        request.setCategory(Category.ELECTRICAL);
         RegisterResponse response = userService.register(request);
         assertThat(response).isNotNull();
         assertThat(response.getMessage()).isEqualTo("Registration successful");
-
 
     }
 

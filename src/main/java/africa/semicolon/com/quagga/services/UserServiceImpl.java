@@ -1,11 +1,14 @@
 package africa.semicolon.com.quagga.services;
 
+import africa.semicolon.com.quagga.data.models.Client;
 import africa.semicolon.com.quagga.data.models.Role;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.data.repositories.UserRepository;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
-import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
+
 import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
+
+import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 import africa.semicolon.com.quagga.exceptions.IncorrectPasswordException;
 import africa.semicolon.com.quagga.exceptions.UserAlreadyExistException;
 import lombok.AllArgsConstructor;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -39,7 +43,7 @@ public class UserServiceImpl implements UserService {
             case SPECIALIST -> specialistService.createSpecialist(savedUser, request);
             case ADMIN -> adminService.createAdmin(savedUser, request);
             case CLIENT -> clientService.createClient(savedUser);
-            case SUPPLIER -> supplierService.createSupplier(request);
+            case SUPPLIER -> supplierService.createSupplier(savedUser, request);
             case PROFESSIONAL -> professionalService.createProfessional(savedUser);
         }
 
@@ -92,20 +96,80 @@ public class UserServiceImpl implements UserService {
         }
         return suppliers;
     }
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
+    public UpdateClientResponse update(UpdateClientRequest updateClientRequest) {
+        Client client = clientService.findById(updateClientRequest.getClientId());
+        User user = getById(client.getUser().getId());
+        Optional.ofNullable(updateClientRequest.getFirstName()).ifPresent(user::setFirstName);
+        Optional.ofNullable(updateClientRequest.getLastName()).ifPresent(user::setLastName);
+        Optional.ofNullable(updateClientRequest.getEmail()).ifPresent(user::setEmail);
+        Optional.ofNullable(updateClientRequest.getAddress()).ifPresent(user::setAddress);
+        Optional.ofNullable(updateClientRequest.getPhoneNumber()).ifPresent(user::setPhoneNumber);
+        Optional.ofNullable(updateClientRequest.getPassword()).ifPresent(user::setPassword);
+
+//        if (updateClientRequest.getFirstName() != null){
+//            user.setFirstName(updateClientRequest.getFirstName());
+//        }
+//        if (updateClientRequest.getLastName() != null){
+//            user.setLastName(updateClientRequest.getLastName());
+//        }
+//        if (updateClientRequest.getEmail() != null){
+//            user.setEmail(updateClientRequest.getEmail());
+//        }
+//        if (updateClientRequest.getAddress() != null){
+//            user.setAddress(updateClientRequest.getAddress());
+//        }
+//        if (updateClientRequest.getPhoneNumber() != null){
+//            user.setPhoneNumber(updateClientRequest.getPhoneNumber());
+//        }
+//        if (updateClientRequest.getPassword() != null){
+//            user.setPassword(updateClientRequest.getPassword());
+//        }
+        userRepository.save(user);
+        clientService.update(client);
+
+        UpdateClientResponse response = new UpdateClientResponse();
+        response.setMessage("Client updated successfully");
+        return response;
+    }
+
+    @Override
+    public void deleteById(long id) {
+        User user = getById(id);
+        switch (user.getRole()){
+            case SPECIALIST -> specialistService.delete(id);
+//            case ADMIN -> adminService.deleteById(id);
+            case CLIENT -> clientService.deleteById(id);
+//            case SUPPLIER -> supplierService.deleteById(id);
+//            case PROFESSIONAL -> professionalService.deleteById(id);
+        }
+        userRepository.deleteById(id);
+
+    }
 
 
     private void validate(String email) {
         for (User user : userRepository.findAll()) {
             if (user.getEmail().equals(email.toLowerCase())) {
                 throw new UserAlreadyExistException("email already exist");
+                }
             }
         }
+        private static void validateRegistration (RegisterRequest request){
+            if (!request.getEmail().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$"))
+                throw new UserAlreadyExistException("Invalid Input");
+            if (request.getPassword().isEmpty())
+                throw new IncorrectPasswordException("Invalid Password provide a Password");
+        }
+
+
+
+
     }
-    private static void validateRegistration(RegisterRequest request) {
-        if (!request.getEmail().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$")) throw new UserAlreadyExistException("Invalid Input");
-        if (request.getPassword().isEmpty()) throw new IncorrectPasswordException("Invalid Password provide a Password");
-    }
 
 
-
-}

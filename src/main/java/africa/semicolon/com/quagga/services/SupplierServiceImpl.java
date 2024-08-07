@@ -1,13 +1,15 @@
 package africa.semicolon.com.quagga.services;
 
 import africa.semicolon.com.quagga.data.models.Supplier;
-import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
-import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
-
+import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.data.repositories.SupplierRepository;
+import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
+
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -17,12 +19,17 @@ public class SupplierServiceImpl implements SupplierService {
 
 
     @Override
-    public Supplier createSupplier(RegisterRequest request) {
-        Supplier supplier = modelMapper.map(request, Supplier.class);
-
-        RegisterResponse response = modelMapper.map(supplier, RegisterResponse.class);
-        response.setMessage("Registration successful");
-        return supplierRepository.save(supplier);
-
+    public Supplier createSupplier(User savedUser, RegisterRequest request) {
+        Supplier newSupplier = new Supplier();
+        newSupplier.setUser(savedUser);
+        newSupplier.setCategory(request.getCategory());
+        return supplierRepository.save(newSupplier);
     }
+
+    @Override
+    public List<Supplier> searchForSuppliersBy(String companyName) {
+        return supplierRepository.findSuppliersBy(companyName);
+    }
+
+
 }
