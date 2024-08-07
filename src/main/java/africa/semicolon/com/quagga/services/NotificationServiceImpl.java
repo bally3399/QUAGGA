@@ -1,0 +1,34 @@
+package africa.semicolon.com.quagga.services;
+
+import africa.semicolon.com.quagga.data.models.Notification;
+import africa.semicolon.com.quagga.data.models.User;
+import africa.semicolon.com.quagga.data.repositories.NotificationRepository;
+import africa.semicolon.com.quagga.dtos.request.CreateNotificationRequest;
+import africa.semicolon.com.quagga.dtos.response.NotificationResponse;
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+
+@Service
+@AllArgsConstructor
+public class NotificationServiceImpl implements NotificationService{
+
+    private final NotificationRepository notificationRepository;
+    private final UserService userService;
+
+    @Override
+    public NotificationResponse create(CreateNotificationRequest notificationRequest) {
+        User notificationSender = userService.findUserById(notificationRequest.getSenderId());
+        User notificationReceiver = userService.findUserById(notificationRequest.getReceiverId());
+
+        Notification notification = new Notification();
+        notification.setMessage("You have a notification from " + notificationSender.getFirstName());
+        notification.setReceiver(notificationReceiver);
+        notification.setSender(notificationSender);
+        notificationRepository.save(notification);
+        NotificationResponse response = new NotificationResponse();
+        response.setMessage("Notification created successfully");
+        return response;
+    }
+
+
+}

@@ -2,6 +2,7 @@ package africa.semicolon.com.quagga.services;
 
 import africa.semicolon.com.quagga.data.models.Review;
 import africa.semicolon.com.quagga.dtos.request.SendReviewRequest;
+import africa.semicolon.com.quagga.dtos.request.UpdateReviewRequest;
 import africa.semicolon.com.quagga.dtos.response.SendReviewResponse;
 import africa.semicolon.com.quagga.exceptions.ReviewNotFoundException;
 import org.junit.jupiter.api.Test;
@@ -46,9 +47,5 @@ public class ReviewServiceTest {
         assertThrows(ReviewNotFoundException.class, ()->reviewService.findById(500L));
     }
 
-    @Test
-    public void updateReview(){
-
-    }
 
 }
