@@ -21,4 +21,5 @@ public interface UserService {
     UpdateClientResponse update(UpdateClientRequest updateClientRequest);
 
     void deleteById(long id);
+    User findUserById(Long id);
 }
