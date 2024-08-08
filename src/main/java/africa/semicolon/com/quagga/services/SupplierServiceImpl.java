@@ -21,6 +21,7 @@ public class SupplierServiceImpl implements SupplierService {
         Supplier newSupplier = new Supplier();
         newSupplier.setUser(savedUser);
         newSupplier.setCategory(request.getCategory());
+        //newSupplier.setCategory(request.getCategory());
         return supplierRepository.save(newSupplier);
     }
 
