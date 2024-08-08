@@ -26,10 +26,10 @@ public class SupplierServiceImpl implements SupplierService {
         return supplierRepository.save(newSupplier);
     }
 
-    @Override
-    public List<Supplier> searchForSuppliersBy(String companyName) {
-        return supplierRepository.findSuppliersBy(companyName);
-    }
-
+//    @Override
+//    public List<Supplier> searchForSuppliersBy(String companyName) {
+//        return supplierRepository.findSuppliersBy(companyName);
+//    }
+//
 
 }

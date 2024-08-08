@@ -9,5 +9,5 @@ import java.util.List;
 public interface SupplierService {
 
     Supplier createSupplier(User user, RegisterRequest request);
-    List<Supplier> searchForSuppliersBy(String companyName);
+//    List<Supplier> searchForSuppliersBy(String companyName);
 }
