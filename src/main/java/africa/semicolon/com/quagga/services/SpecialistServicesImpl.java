@@ -24,10 +24,7 @@ public class SpecialistServicesImpl implements SpecialistService {
         Specialist specialist = new Specialist();
         specialist.setUser(user);
         specialist.setAvailability(true);
-        specialist.setCategory(request.getCategory());
-        specialist.setSubCategory(request.getSubCategory());
-//        specialist.setProfessionalSkills(request.getProfessionalSkills());
-        specialist.setCategory(request.getCategory());
+       // specialist.setProfessionalSkills(request.getProfessionalSkills());
         specialist.setCompanyName(request.getCompanyName());
         specialist.setCompanyRegNo(request.getCompanyRegNo());
         return specialistRepository.save(specialist);
@@ -58,18 +55,12 @@ public class SpecialistServicesImpl implements SpecialistService {
 
     @Override
     public void delete(long id) {
-        Specialist specialist = findByUserId(id);
-        specialistRepository.delete(specialist);
+
     }
 
     @Override
     public Specialist findByUserId(Long id) {
-        for (Specialist specialist : specialistRepository.findAll()){
-            if (specialist.getUser().getId().equals(id)){
-                return specialist;
-            }
-        }
-        throw new SpecialistDoesNotExistException("Specialist does not exist");
+        return null;
     }
 
 }

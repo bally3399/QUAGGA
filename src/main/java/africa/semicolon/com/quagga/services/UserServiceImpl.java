@@ -5,7 +5,10 @@ import africa.semicolon.com.quagga.data.models.Role;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.data.repositories.UserRepository;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
-
+import africa.semicolon.com.quagga.dtos.request.UpdateClientRequest;
+import africa.semicolon.com.quagga.dtos.request.UpdateRequest;
+import africa.semicolon.com.quagga.dtos.response.UpdateClientResponse;
+import africa.semicolon.com.quagga.dtos.response.UpdateResponse;
 import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
 
 import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
@@ -18,7 +21,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -32,7 +34,7 @@ public class UserServiceImpl implements UserService {
     private final AdminService adminService;
 
     @Override
-    public africa.semicolon.com.quagga.dtos.response.RegisterResponse register(RegisterRequest request) {
+    public RegisterResponse register(RegisterRequest request) {
         String email = request.getEmail().toLowerCase();
         validate(email);
         validateRegistration(request);
@@ -47,7 +49,7 @@ public class UserServiceImpl implements UserService {
             case PROFESSIONAL -> professionalService.createProfessional(savedUser);
         }
 
-        RegisterResponse response = modelMapper.map(savedUser, africa.semicolon.com.quagga.dtos.response.RegisterResponse.class);
+        RegisterResponse response = modelMapper.map(savedUser, RegisterResponse.class);
         response.setMessage("Registration successful");
         return response;
     }
@@ -56,8 +58,6 @@ public class UserServiceImpl implements UserService {
     public User getById(long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User does not exist"));
-
-   
     }
 
     @Override
@@ -96,40 +96,30 @@ public class UserServiceImpl implements UserService {
         }
         return suppliers;
     }
-    @Override
-    public User save(User user) {
-        return userRepository.save(user);
-    }
+
 
     @Override
     public UpdateClientResponse update(UpdateClientRequest updateClientRequest) {
         Client client = clientService.findById(updateClientRequest.getClientId());
         User user = getById(client.getUser().getId());
-        Optional.ofNullable(updateClientRequest.getFirstName()).ifPresent(user::setFirstName);
-        Optional.ofNullable(updateClientRequest.getLastName()).ifPresent(user::setLastName);
-        Optional.ofNullable(updateClientRequest.getEmail()).ifPresent(user::setEmail);
-        Optional.ofNullable(updateClientRequest.getAddress()).ifPresent(user::setAddress);
-        Optional.ofNullable(updateClientRequest.getPhoneNumber()).ifPresent(user::setPhoneNumber);
-        Optional.ofNullable(updateClientRequest.getPassword()).ifPresent(user::setPassword);
-
-//        if (updateClientRequest.getFirstName() != null){
-//            user.setFirstName(updateClientRequest.getFirstName());
-//        }
-//        if (updateClientRequest.getLastName() != null){
-//            user.setLastName(updateClientRequest.getLastName());
-//        }
-//        if (updateClientRequest.getEmail() != null){
-//            user.setEmail(updateClientRequest.getEmail());
-//        }
-//        if (updateClientRequest.getAddress() != null){
-//            user.setAddress(updateClientRequest.getAddress());
-//        }
-//        if (updateClientRequest.getPhoneNumber() != null){
-//            user.setPhoneNumber(updateClientRequest.getPhoneNumber());
-//        }
-//        if (updateClientRequest.getPassword() != null){
-//            user.setPassword(updateClientRequest.getPassword());
-//        }
+        if (updateClientRequest.getFirstName() != null){
+            user.setFirstName(updateClientRequest.getFirstName());
+        }
+        if (updateClientRequest.getLastName() != null){
+            user.setLastName(updateClientRequest.getLastName());
+        }
+        if (updateClientRequest.getEmail() != null){
+            user.setEmail(updateClientRequest.getEmail());
+        }
+        if (updateClientRequest.getAddress() != null){
+            user.setAddress(updateClientRequest.getAddress());
+        }
+        if (updateClientRequest.getPhoneNumber() != null){
+            user.setPhoneNumber(updateClientRequest.getPhoneNumber());
+        }
+        if (updateClientRequest.getPassword() != null){
+            user.setPassword(updateClientRequest.getPassword());
+        }
         userRepository.save(user);
         clientService.update(client);
 
@@ -140,28 +130,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteById(long id) {
-        User user = getById(id);
-        switch (user.getRole()){
-            case SPECIALIST -> specialistService.delete(id);
-//            case ADMIN -> adminService.deleteById(id);
-            case CLIENT -> clientService.deleteById(id);
-//            case SUPPLIER -> supplierService.deleteById(id);
-//            case PROFESSIONAL -> professionalService.deleteById(id);
-        }
-        userRepository.deleteById(id);
 
     }
 
     @Override
     public User findUserById(Long id) {
-        return userRepository.findById(id)
-                .orElseThrow(() -> new UserNotFoundException("User does not exist"));
+        return null;
     }
 
-    private void validate(String email) {
-        for (User user : userRepository.findAll()) {
-            if (user.getEmail().equals(email.toLowerCase())) {
-                throw new UserAlreadyExistException("email already exist");
+
+    private void validate (String email){
+            for (User user : userRepository.findAll()) {
+                if (user.getEmail().equals(email.toLowerCase())) {
+                    throw new UserAlreadyExistException("email already exist");
                 }
             }
         }
@@ -171,8 +152,6 @@ public class UserServiceImpl implements UserService {
             if (request.getPassword().isEmpty())
                 throw new IncorrectPasswordException("Invalid Password provide a Password");
         }
-
-
 
 
     }

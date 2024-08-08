@@ -1,4 +1,4 @@
-package africa.semicolon.com.quagga.services;
+package africa.semicolon.com.quagga.dtos.request;
 
 import lombok.Getter;
 import lombok.Setter;
