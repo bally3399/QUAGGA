@@ -5,9 +5,9 @@ import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SupplierService {
 
     Supplier createSupplier(User user, RegisterRequest request);
-//    List<Supplier> searchForSuppliersBy(String companyName);
 }
