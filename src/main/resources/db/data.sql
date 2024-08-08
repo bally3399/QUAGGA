@@ -28,16 +28,15 @@ insert into client(id, user_id) values
     (302, 111),
     (303, 112);
 
-insert into suppliers (company_name, category, user_id) VALUES
-    ('Global Supplies Inc.', 'ELECTRICAL', 105),
-    ('Quality Building Materials', 'STRUCTURAL', 106),
-    ('Eco-Friendly Solutions', 'MECHANICAL', 107),
-    ('Fasteners R Us', '', 108);
 
 insert into service_request(id, client_id, specialist_id, request_date, description, service_request_status) values
     (401, 300, 203, '2024-08-05 14:25:16.185059', 'I am in need of Electrical service', 'PENDING'),
-    (402, 300, 201, '2024-08-05 14:25:16.185059', 'I am in need of Piling service', 'PENDING');
+    (402, 300, 201, '2024-08-05 14:25:16.185059', 'I am in need of Piling service', 'PENDING'),
+    (403, 301, 202, '2024-08-06 14:25:16.185059', 'I am in need of mechanical service', 'PENDING');
 
+insert into reviews (review_id, rating, review_receiver_id, review_sender_id, comment) values
+    (500, 4, 100, 105, 'The service was satisfactory'),
+    (501, 5, 101, 104, 'Excellent job');
 
 -- insert into suppliers()
 

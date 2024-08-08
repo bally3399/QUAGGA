@@ -1,11 +1,18 @@
 package africa.semicolon.com.quagga.data.models;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDateTime;
 import java.util.Set;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static java.time.LocalDateTime.now;
 
 @Entity
 @Setter
@@ -31,4 +38,21 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<Authority> authorities;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime timeCreated;
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    private LocalDateTime timeUpdated;
+
+    @PrePersist
+    private void setTimeCreated(){
+        this.timeCreated = now();
+    }
+
+    @PreUpdate
+    private void setTimeUpdated(){
+        this.timeUpdated = now();
+    }
+
 }
