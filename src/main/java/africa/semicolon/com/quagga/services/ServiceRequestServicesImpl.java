@@ -6,16 +6,19 @@ import africa.semicolon.com.quagga.data.models.ServiceRequestStatus;
 import africa.semicolon.com.quagga.data.models.Specialist;
 import africa.semicolon.com.quagga.data.repositories.ServiceRepository;
 import africa.semicolon.com.quagga.dtos.request.AcceptServiceRequest;
+import africa.semicolon.com.quagga.dtos.request.CompleteServiceRequest;
 import africa.semicolon.com.quagga.dtos.request.CreateServiceRequest;
 import africa.semicolon.com.quagga.dtos.request.RejectServiceRequest;
 import africa.semicolon.com.quagga.dtos.response.AcceptServiceResponse;
+import africa.semicolon.com.quagga.dtos.response.CompleteServiceResponse;
 import africa.semicolon.com.quagga.dtos.response.RejectServiceResponse;
 import africa.semicolon.com.quagga.dtos.response.ServiceRequestResponse;
 import africa.semicolon.com.quagga.exceptions.ServiceDoesNotExistException;
+import africa.semicolon.com.quagga.exceptions.UnacceptedServiceException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static africa.semicolon.com.quagga.data.models.ServiceRequestStatus.REJECTED;
+import static africa.semicolon.com.quagga.data.models.ServiceRequestStatus.*;
 
 @Service
 @AllArgsConstructor
@@ -79,6 +82,26 @@ public class ServiceRequestServicesImpl implements ServiceRequestServices {
         }
         RejectServiceResponse response = new RejectServiceResponse();
         response.setMessage("Request rejected, " + reason);
+        return response;
+    }
+
+    @Override
+    public CompleteServiceResponse complete(CompleteServiceRequest completeServiceRequest) {
+        Long serviceId = completeServiceRequest.getServiceId();
+        Long specialistId = completeServiceRequest.getSpecialistId();
+
+        ServiceRequest serviceRequest = findById(serviceId);
+        Specialist specialist = specialistService.findById(specialistId);
+        if (!serviceRequest.getServiceRequestStatus().equals(ACCEPTED)){
+            throw new UnacceptedServiceException("You need to accept the service first");
+        }
+        if (specialist.getSpecialistId() == specialistId){
+            serviceRequest.setServiceRequestStatus(COMPLETED);
+            serviceRepository.save(serviceRequest);
+        }
+
+        CompleteServiceResponse response = new CompleteServiceResponse();
+        response.setMessage("Service completed");
         return response;
     }
 

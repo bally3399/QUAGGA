@@ -60,7 +60,7 @@ public class SpecialistServicesImplTest {
         updateRequest.setAddress("sabo yaba");
         updateRequest.setCompanyName("Semicolon africa");
         updateRequest.setCompanyRegNo("abcdef");
-        UpdateResponse response1 = userService.update(updateRequest);
+//        UpdateResponse response1 = userService.update(updateRequest);
 
 
     }

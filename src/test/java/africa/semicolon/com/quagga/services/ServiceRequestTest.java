@@ -2,11 +2,14 @@ package africa.semicolon.com.quagga.services;
 
 import africa.semicolon.com.quagga.data.models.ServiceRequest;
 import africa.semicolon.com.quagga.dtos.request.AcceptServiceRequest;
+import africa.semicolon.com.quagga.dtos.request.CompleteServiceRequest;
 import africa.semicolon.com.quagga.dtos.request.CreateServiceRequest;
 import africa.semicolon.com.quagga.dtos.request.RejectServiceRequest;
 import africa.semicolon.com.quagga.dtos.response.AcceptServiceResponse;
+import africa.semicolon.com.quagga.dtos.response.CompleteServiceResponse;
 import africa.semicolon.com.quagga.dtos.response.RejectServiceResponse;
 import africa.semicolon.com.quagga.dtos.response.ServiceRequestResponse;
+import africa.semicolon.com.quagga.exceptions.UnacceptedServiceException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -14,6 +17,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 import static africa.semicolon.com.quagga.data.models.ServiceRequestStatus.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
 @Sql(scripts = {"/db/data.sql"})
@@ -67,6 +71,38 @@ public class ServiceRequestTest {
         assertThat(response.getMessage()).isEqualTo("Request rejected, Not enough time");
         ServiceRequest foundAcceptedServiceRequest = serviceRequestServices.findById(401L);
         assertThat(foundAcceptedServiceRequest.getServiceRequestStatus()).isEqualTo(REJECTED);
+    }
+
+    @Test
+    public void testCompleteServiceRequest(){
+        ServiceRequest foundPendingServiceRequest = serviceRequestServices.findById(403L);
+        assertThat(foundPendingServiceRequest.getServiceRequestStatus()).isEqualTo(PENDING);
+
+        AcceptServiceRequest serviceRequest = new AcceptServiceRequest();
+        serviceRequest.setServiceId(403L);
+        serviceRequest.setSpecialistId(202L);
+        serviceRequestServices.accept(serviceRequest);
+        ServiceRequest foundAcceptedServiceRequest = serviceRequestServices.findById(403L);
+        assertThat(foundAcceptedServiceRequest.getServiceRequestStatus()).isEqualTo(ACCEPTED);
+
+        CompleteServiceRequest completeServiceRequest = new CompleteServiceRequest();
+        completeServiceRequest.setServiceId(403L);
+        completeServiceRequest.setSpecialistId(202L);
+        CompleteServiceResponse response = serviceRequestServices.complete(completeServiceRequest);
+        assertThat(response).isNotNull();
+        assertThat(response.getMessage()).isEqualTo("Service completed");
+    }
+
+    @Test
+    public void testCompleteServiceRequestThrowExceptionIfStatusIsNotAccepted(){
+        ServiceRequest foundPendingServiceRequest = serviceRequestServices.findById(403L);
+        assertThat(foundPendingServiceRequest.getServiceRequestStatus()).isEqualTo(PENDING);
+
+        CompleteServiceRequest completeServiceRequest = new CompleteServiceRequest();
+        completeServiceRequest.setServiceId(403L);
+        completeServiceRequest.setSpecialistId(202L);
+        assertThrows(UnacceptedServiceException.class, ()->serviceRequestServices.complete(completeServiceRequest));
+
     }
 
 

@@ -15,10 +15,10 @@ public class Review {
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "review_id")
     private Long reviewId;
-    @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private User userId;
-    private String serviceProviderId;
+    private User reviewSender;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User reviewReceiver;
     private int rating;
     private String comment;
 

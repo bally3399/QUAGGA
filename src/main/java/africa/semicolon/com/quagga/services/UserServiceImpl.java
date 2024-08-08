@@ -97,10 +97,6 @@ public class UserServiceImpl implements UserService {
         return suppliers;
     }
 
-    @Override
-    public UpdateResponse update(UpdateRequest updateRequest) {
-        return null;
-    }
 
     @Override
     public UpdateClientResponse update(UpdateClientRequest updateClientRequest) {
@@ -135,6 +131,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteById(long id) {
 
+    }
+
+    @Override
+    public User findUserById(Long id) {
+        return null;
     }
 
 
