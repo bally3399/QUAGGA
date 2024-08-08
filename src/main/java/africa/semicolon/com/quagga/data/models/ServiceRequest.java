@@ -23,6 +23,8 @@ public class ServiceRequest {
     private Specialist specialist;
 
     private String description;
+    @Enumerated(EnumType.STRING)
+    private ServiceRequestStatus serviceRequestStatus;
     private LocalDateTime requestDate = LocalDateTime.now();
 
 }

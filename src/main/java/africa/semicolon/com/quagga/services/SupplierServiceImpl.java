@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class SupplierServiceImpl implements SupplierService {
     private final SupplierRepository supplierRepository;
-    private final ModelMapper modelMapper;
 
 
     @Override

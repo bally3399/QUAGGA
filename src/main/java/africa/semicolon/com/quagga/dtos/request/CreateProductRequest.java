@@ -6,6 +6,7 @@ import africa.semicolon.com.quagga.data.models.Supplier;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Setter
 @Getter
@@ -13,7 +14,7 @@ public class CreateProductRequest {
     private Long supplierId;
     private String name;
     private String description;
-    private String imageUrl;
+    private MultipartFile mediaFile;
     private double price;
     private Category category;
     private SubCategory subCategory;

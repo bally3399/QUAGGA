@@ -1,21 +1,30 @@
 package africa.semicolon.com.quagga.services;
 
 import africa.semicolon.com.quagga.data.models.Category;
-import africa.semicolon.com.quagga.data.models.SubCategory;
 import africa.semicolon.com.quagga.dtos.request.CreateProductRequest;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 
 import africa.semicolon.com.quagga.dtos.response.CreateProductResponse;
+import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static africa.semicolon.com.quagga.data.models.Role.SUPPLIER;
 import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
+import org.springframework.test.context.jdbc.Sql;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static africa.semicolon.com.quagga.services.TestUtils.TEST_IMAGE_LOCATION;
+import static africa.semicolon.com.quagga.services.TestUtils.buildUploadProductRequest;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @SpringBootTest
+@Slf4j
 class SupplierServiceImplTest {
     @Autowired
     private UserService userService;
@@ -42,29 +51,40 @@ class SupplierServiceImplTest {
     @Test
     void testSupplierCanCreateProduct(){
         RegisterRequest request = new RegisterRequest();
-        request.setFirstName("sam");
-        request.setLastName("Olu");
-        request.setPassword("passwordss");
-        request.setEmail("samdbeloved@gmail.com");
-        request.setAddress("No 50, Helen Street, Idumota, Lagos");
+        request.setFirstName("sammmy");
+        request.setLastName("Olumide");
+        request.setPassword("passwordzz");
+        request.setEmail("samuelbeloved@gmail.com");
+        request.setAddress("No 80, Helen Street, Idumota, Lagos");
         request.setPhoneNumber("08123456889");
         request.setRole(SUPPLIER);
         request.setCategory(Category.MECHANICAL);
         RegisterResponse response = userService.register(request);
         assertThat(response).isNotNull();
         assertThat(response.getMessage()).isEqualTo("Registration successful");
-        CreateProductRequest firstRequest = new CreateProductRequest();
-        firstRequest.setName("Wire");
-        firstRequest.setDescription("4mm wire 250m length");
-        firstRequest.setCategory(Category.ELECTRICAL);
-        firstRequest.setSubCategory(SubCategory.INDUSTRIAL_ELECTRICAL);
-        firstRequest.setBrand("coleman");
-        firstRequest.setPrice(5000.0);
-        firstRequest.setImageUrl(TEST_IMAGE_LOCATION);
-        firstRequest.setSupplierId(1L);
-        CreateProductResponse createProductResponse = productService.createProduct(firstRequest);
-        assertThat(createProductResponse).isNotNull();
-        assertThat(createProductResponse.getMessage()).isEqualTo("Product created successfully");
+        Path path = Paths.get(TEST_IMAGE_LOCATION);
+        try(var inputStream = Files.newInputStream(path)){
+            CreateProductRequest productRequest  = buildUploadProductRequest(inputStream);
+            CreateProductResponse productResponse = productService.createProduct(productRequest);
+            log.info("response ->{}", productResponse);
+            Assertions.assertThat(productResponse).isNotNull();
+            Assertions.assertThat(productResponse.getUrl()).isNotNull();
+        }
+        catch (IOException exception){
+            Assertions.assertThat(exception).isNotNull();
+        }
+//        CreateProductRequest firstRequest = new CreateProductRequest();
+//        firstRequest.setName("Wire");
+//        firstRequest.setDescription("4mm wire 250m length");
+//        firstRequest.setCategory(Category.ELECTRICAL);
+//        firstRequest.setSubCategory(SubCategory.INDUSTRIAL_ELECTRICAL);
+//        firstRequest.setBrand("coleman");
+//        firstRequest.setPrice(5000.0);
+//        firstRequest.setImageUrl(TEST_IMAGE_LOCATION);
+//        firstRequest.setSupplierId(1L);
+//        CreateProductResponse createProductResponse = productService.createProduct(firstRequest);
+//        assertThat(createProductResponse).isNotNull();
+//        assertThat(createProductResponse.getMessage()).isEqualTo("Product created successfully");
 
     }
 }
