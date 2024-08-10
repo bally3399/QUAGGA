@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface SpecialistService {
     Specialist createSpecialist(User user, RegisterRequest request);
+
+
     List<Specialist> findAllAvailableSpecialist();
 
     List<Specialist> findAllSpecialist();

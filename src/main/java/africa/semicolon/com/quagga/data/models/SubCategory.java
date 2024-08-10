@@ -45,10 +45,9 @@ public enum SubCategory {
     DRYWALL(Category.FINISHING, "Drywall"),
     PLASTERING(Category.FINISHING, "Plastering"),
     FLOORING(Category.FINISHING, "Flooring"),
-    CEILINGS(Category.FINISHING, "Ceilings"),
+    CEILINGS(Category.FINISHING,  "Ceilings"),
     MILLWORK(Category.FINISHING, "Millwork"),
     GLAZING(Category.FINISHING, "Glazing"),
-
     LATHING(Category.FINISHING, "Lathing"),
 
     // Exterior Trades

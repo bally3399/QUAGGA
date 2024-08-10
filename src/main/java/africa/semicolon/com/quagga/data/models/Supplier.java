@@ -23,8 +23,8 @@ public class Supplier {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Category category;
-    @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Product> products;
+    //@OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL, orphanRemoval = true)
+    //private List<Product> products;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
