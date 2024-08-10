@@ -27,6 +27,11 @@ public class ClientController {
         }
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteClient(@PathVariable("id") Long id){
+
+    }
+
 
 
 }

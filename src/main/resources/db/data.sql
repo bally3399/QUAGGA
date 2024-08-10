@@ -2,7 +2,7 @@ truncate table users cascade;
 truncate table specialists cascade;
 
 insert into users(id, first_name, last_name, email, password, address, phone_number, role, lga, state) values
-(100, 'john', 'carter', 'john@email.com', '$2a$10$wqdT5ndwlN8WL83AZH7Fp.evLqldxFxmIYW5wraO8kORgPsn56oKW', 'Sabo Yaba', '09072635262', 'CLIENT', 'Sabo', 'Lagos'),
+(100, 'john', 'carter', 'john@email.com', '$2a$10$gdHtHlN/N9FYD3EheIGYreZ2EwEIeQmUdFIpMjgTBN0izQBIk0C7q', 'Sabo Yaba', '09072635262', 'CLIENT', 'Sabo', 'Lagos'),
 (101, 'jane', 'cena', 'jane@email.com', '$2a$10$wqdT5ndwlN8WL83AZH7Fp.evLqldxFxmIYW5wraO8kORgPsn56oKW', 'Abule oja', '08173737272', 'CLIENT', 'Sabo', 'Lagos'),
 (102, 'jonny', 'cage', 'johnny@email.com', '$2a$10$wqdT5ndwlN8WL83AZH7Fp.evLqldxFxmIYW5wraO8kORgPsn56oKW', 'Unilag Lagos', '07053627211', 'CLIENT', 'Ketu', 'Lagos'),
 (103, 'james', 'bond', 'james@email.com', '$2a$10$wqdT5ndwlN8WL83AZH7Fp.evLqldxFxmIYW5wraO8kORgPsn56oKW', 'Sabo Yaba', '08172635262', 'CLIENT', 'Unilag', 'Lagos'),
