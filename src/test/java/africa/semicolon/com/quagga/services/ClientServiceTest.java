@@ -33,7 +33,7 @@ public class ClientServiceTest {
     public SpecialistService specialistService;
 
     @Autowired
-    public ServiceRequestServices requestService;
+     public ServiceRequestServices requestService;
 
     @Test
     public void testRegisterClient(){
