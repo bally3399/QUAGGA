@@ -18,17 +18,11 @@ public class SupplierServiceImpl implements SupplierService {
 
 
     @Override
-    public Supplier createSupplier(RegisterRequest request) {
-        Supplier supplier = modelMapper.map(request, Supplier.class);
-
-        RegisterResponse response = modelMapper.map(supplier, RegisterResponse.class);
-        response.setMessage("Registration successful");
-        return supplierRepository.save(supplier);
-
+    public Supplier createSupplier(User savedUser, RegisterRequest request) {
+        Supplier newSupplier = new Supplier();
+        newSupplier.setUser(savedUser);
+        newSupplier.setCategory(request.getCategory());
+        return supplierRepository.save(newSupplier);
     }
 
-    @Override
-    public Supplier createSupplier(User user, RegisterRequest request) {
-        return null;
-    }
 }

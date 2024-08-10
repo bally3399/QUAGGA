@@ -4,19 +4,20 @@ import africa.semicolon.com.quagga.data.models.Client;
 import africa.semicolon.com.quagga.data.models.Role;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.data.repositories.UserRepository;
+import africa.semicolon.com.quagga.dtos.request.LoginRequest;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 import africa.semicolon.com.quagga.dtos.request.UpdateClientRequest;
-import africa.semicolon.com.quagga.dtos.request.UpdateRequest;
-import africa.semicolon.com.quagga.dtos.response.UpdateClientResponse;
-import africa.semicolon.com.quagga.dtos.response.UpdateResponse;
-import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
-
+import africa.semicolon.com.quagga.dtos.response.LoginResponse;
 import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
+import africa.semicolon.com.quagga.dtos.response.UpdateClientResponse;
 import africa.semicolon.com.quagga.exceptions.IncorrectPasswordException;
 import africa.semicolon.com.quagga.exceptions.UserAlreadyExistException;
+import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
 import lombok.AllArgsConstructor;
+import org.apache.http.auth.InvalidCredentialsException;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class UserServiceImpl implements UserService {
     private final SupplierService supplierService;
     private final ProfessionalService professionalService;
     private final AdminService adminService;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public RegisterResponse register(RegisterRequest request) {
@@ -39,6 +41,7 @@ public class UserServiceImpl implements UserService {
         validate(email);
         validateRegistration(request);
         User newUser = modelMapper.map(request, User.class);
+        newUser.setPassword(passwordEncoder.encode(request.getPassword()));
         User savedUser = userRepository.save(newUser);
 
         switch (savedUser.getRole()) {
@@ -48,7 +51,6 @@ public class UserServiceImpl implements UserService {
             case SUPPLIER -> supplierService.createSupplier(savedUser, request);
             case PROFESSIONAL -> professionalService.createProfessional(savedUser);
         }
-
         RegisterResponse response = modelMapper.map(savedUser, RegisterResponse.class);
         response.setMessage("Registration successful");
         return response;
@@ -108,9 +110,6 @@ public class UserServiceImpl implements UserService {
         if (updateClientRequest.getLastName() != null){
             user.setLastName(updateClientRequest.getLastName());
         }
-        if (updateClientRequest.getEmail() != null){
-            user.setEmail(updateClientRequest.getEmail());
-        }
         if (updateClientRequest.getAddress() != null){
             user.setAddress(updateClientRequest.getAddress());
         }
@@ -137,6 +136,27 @@ public class UserServiceImpl implements UserService {
     public User findUserById(Long id) {
 
         return null;
+    }
+
+    @Override
+    public LoginResponse login(LoginRequest loginRequest) throws InvalidCredentialsException {
+        String email = loginRequest.getEmail();
+        String password = loginRequest.getPassword();
+        boolean authenticated = authenticate(email, password);
+
+        if (authenticated){
+            LoginResponse loginResponse = new LoginResponse();
+            loginResponse.setMessage("Login successful");
+            return loginResponse;
+        }
+        else {
+            throw new InvalidCredentialsException("Invalid username or password");
+        }
+    }
+
+    public boolean authenticate(String username, String password){
+        User user = getUserByUsername(username);
+        return passwordEncoder.matches(password, user.getPassword());
     }
 
 

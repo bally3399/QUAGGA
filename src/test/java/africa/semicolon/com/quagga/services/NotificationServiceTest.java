@@ -28,6 +28,10 @@ public class NotificationServiceTest {
     }
     @Test
     public void findNotification(){
-
+        Notification notification = notificationService.findById(1L);
+        assertThat(notification).isNotNull();
+        assertThat(notification.getMessage()).isEqualTo("You have a notification from Jane");
+        assertThat(notification.getReceiver().getId()).isEqualTo(105L);
+        assertThat(notification.getSender().getId()).isEqualTo(101L);
     }
 }

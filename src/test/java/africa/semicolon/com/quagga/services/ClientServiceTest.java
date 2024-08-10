@@ -2,12 +2,15 @@ package africa.semicolon.com.quagga.services;
 
 import africa.semicolon.com.quagga.data.models.*;
 import africa.semicolon.com.quagga.dtos.request.CreateServiceRequest;
+import africa.semicolon.com.quagga.dtos.request.LoginRequest;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 import africa.semicolon.com.quagga.dtos.request.UpdateClientRequest;
+import africa.semicolon.com.quagga.dtos.response.LoginResponse;
 import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 import africa.semicolon.com.quagga.dtos.response.ServiceRequestResponse;
 import africa.semicolon.com.quagga.dtos.response.UpdateClientResponse;
 import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
+import org.apache.http.auth.InvalidCredentialsException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +57,15 @@ public class ClientServiceTest {
     }
 
     @Test
+    public void testLoginClient() throws InvalidCredentialsException {
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setEmail("username@gmail.com");
+        loginRequest.setPassword("password");
+        LoginResponse loginResponse = userService.login(loginRequest);
+        assertThat(loginResponse).isNotNull();
+    }
+
+    @Test
     @DisplayName("Test that client can be retrieved by id")
     public void testGetClientById() {
         Client client = clientService.findById(300L);
@@ -82,13 +94,12 @@ public class ClientServiceTest {
 
     @Test
     public void testUpdateClientInfo(){
-        Client client = clientService.findById(1L);
-        assertThat(client.getUser().getFirstName()).isEqualTo("UpdatedFirstName");
+        Client client = clientService.findById(300L);
+        assertThat(client.getUser().getFirstName()).isEqualTo("john");
         UpdateClientRequest updateClientRequest = new UpdateClientRequest();
-        updateClientRequest.setClientId(1L);
-        updateClientRequest.setFirstName("UpdatedFirstName2");
+        updateClientRequest.setClientId(300L);
+        updateClientRequest.setFirstName("updatedJohn");
         updateClientRequest.setLastName("UpdatedLastName2");
-        updateClientRequest.setEmail("UpdatedEmail2");
         //updateClientRequest.setAddress("UpdatedAddress");
         //updateClientRequest.setPassword("UpdatedPassword");
         // updateClientRequest.setPhoneNumber("419");
@@ -99,15 +110,15 @@ public class ClientServiceTest {
 
         Client updatedClient = clientService.findById(1L);
         assertThat(updatedClient.getUser().getPhoneNumber()).isEqualTo("08123456789");
-        assertThat(updatedClient.getUser().getFirstName()).isEqualTo("UpdatedFirstName2");
+        assertThat(updatedClient.getUser().getFirstName()).isEqualTo("updatedJohn");
     }
 
     @Test
     public void deleteClient(){
-        User user = userService.getById(100L);
+        User user = userService.getById(1L);
         assertThat(user).isNotNull();
-        userService.deleteById(100L);
-        assertThrows(UserNotFoundException.class, ()->userService.getById(100L));
+        userService.deleteById(1L);
+        assertThrows(UserNotFoundException.class, ()->userService.getById(1L));
     }
 
     @Test

@@ -9,7 +9,6 @@ public class UpdateClientRequest {
     private Long clientId;
     private String firstName;
     private String lastName;
-    private String email;
     private String password;
     private String address;
     private String phoneNumber;

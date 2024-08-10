@@ -5,6 +5,7 @@ import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.data.repositories.NotificationRepository;
 import africa.semicolon.com.quagga.dtos.request.CreateNotificationRequest;
 import africa.semicolon.com.quagga.dtos.response.NotificationResponse;
+import africa.semicolon.com.quagga.exceptions.NotificationNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,12 @@ public class NotificationServiceImpl implements NotificationService{
         NotificationResponse response = new NotificationResponse();
         response.setMessage("Notification created successfully");
         return response;
+    }
+
+    @Override
+    public Notification findById(long id) {
+        return notificationRepository.findById(id)
+                .orElseThrow(() -> new NotificationNotFoundException("Notification not found"));
     }
 
 
