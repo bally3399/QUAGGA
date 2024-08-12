@@ -7,6 +7,7 @@ import africa.semicolon.com.quagga.data.repositories.UserRepository;
 import africa.semicolon.com.quagga.dtos.request.LoginRequest;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 import africa.semicolon.com.quagga.dtos.request.UpdateClientRequest;
+import africa.semicolon.com.quagga.dtos.response.DeleteUserResponse;
 import africa.semicolon.com.quagga.dtos.response.LoginResponse;
 import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 import africa.semicolon.com.quagga.dtos.response.UpdateClientResponse;
@@ -128,16 +129,21 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteById(long id) {
+    public DeleteUserResponse deleteById(long id) {
         User user = getById(id);
         switch (user.getRole()){
             case SPECIALIST -> specialistService.delete(id);
 //            case ADMIN -> adminService.deleteById(id);
             case CLIENT -> clientService.deleteById(id);
+
 //            case SUPPLIER -> supplierService.deleteById(id);
 //            case PROFESSIONAL -> professionalService.deleteById(id);
+
         }
         userRepository.deleteById(id);
+        DeleteUserResponse response = new DeleteUserResponse();
+        response.setMessage(user.getRole() + " successfully deleted");
+        return response;
     }
 
     @Override

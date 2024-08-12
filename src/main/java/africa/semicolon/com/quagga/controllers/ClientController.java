@@ -2,6 +2,7 @@ package africa.semicolon.com.quagga.controllers;
 
 import africa.semicolon.com.quagga.data.models.Client;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
+import africa.semicolon.com.quagga.dtos.request.UpdateClientRequest;
 import africa.semicolon.com.quagga.dtos.response.ApiResponse;
 import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 import africa.semicolon.com.quagga.services.UserService;
@@ -28,6 +29,8 @@ public class ClientController {
         }
     }
 
+
+
     @GetMapping("/findClient/{id}")
     public ResponseEntity<?> getClientById(@PathVariable("id") Long id){
         try {
@@ -46,11 +49,19 @@ public class ClientController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteClient(@PathVariable("id") Long id){
         try{
-            userService.deleteById(id);
+            return new ResponseEntity<>(new ApiResponse(true, userService.deleteById(id)), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
         }
-        return null;
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> updateClient(@RequestBody UpdateClientRequest updateClientRequest){
+        try {
+            return new ResponseEntity<>(new ApiResponse(true, userService.update(updateClientRequest)), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
     }
 
 
