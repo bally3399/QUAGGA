@@ -1,5 +1,6 @@
 package africa.semicolon.com.quagga.services;
 import africa.semicolon.com.quagga.data.models.Client;
+import africa.semicolon.com.quagga.data.models.Specialist;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.dtos.request.LoginRequest;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
@@ -31,4 +32,6 @@ public interface UserService {
     Client findClientById(Long id);
 
     List<Client> findAllClient();
+
+    Specialist findSpecialistById(Long id);
 }

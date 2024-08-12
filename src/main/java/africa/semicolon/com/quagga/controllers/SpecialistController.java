@@ -34,4 +34,13 @@ public class SpecialistController {
         }
     }
 
+    @GetMapping("find/{id}")
+    public ResponseEntity<?> getSpecialist(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(new ApiResponse(true, userService.findSpecialistById(id)), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }
