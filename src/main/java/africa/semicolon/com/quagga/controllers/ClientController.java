@@ -1,6 +1,7 @@
 package africa.semicolon.com.quagga.controllers;
 
 import africa.semicolon.com.quagga.data.models.Client;
+import africa.semicolon.com.quagga.dtos.request.LoginRequest;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 import africa.semicolon.com.quagga.dtos.request.UpdateClientRequest;
 import africa.semicolon.com.quagga.dtos.response.ApiResponse;
@@ -29,7 +30,14 @@ public class ClientController {
         }
     }
 
-
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest){
+        try {
+            return new ResponseEntity<>(new ApiResponse(true, userService.login(loginRequest)), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @GetMapping("/findClient/{id}")
     public ResponseEntity<?> getClientById(@PathVariable("id") Long id){
