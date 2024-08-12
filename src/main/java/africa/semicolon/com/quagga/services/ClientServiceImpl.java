@@ -7,6 +7,8 @@ import africa.semicolon.com.quagga.exceptions.ClientNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class ClientServiceImpl implements ClientService{
@@ -33,6 +35,11 @@ public class ClientServiceImpl implements ClientService{
     @Override
     public void deleteById(long id) {
         clientRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Client> findAll() {
+        return clientRepository.findAll();
     }
 
 }

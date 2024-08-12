@@ -38,7 +38,10 @@ public class ClientController {
         }
     }
 
-    @GetMapping("")
+    @GetMapping("/findAll")
+    public ResponseEntity<?> getAllClients(){
+        return ResponseEntity.ok(userService.findAllClient());
+    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteClient(@PathVariable("id") Long id){

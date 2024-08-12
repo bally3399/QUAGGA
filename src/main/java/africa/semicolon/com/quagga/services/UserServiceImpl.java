@@ -166,6 +166,11 @@ public class UserServiceImpl implements UserService {
         return clientService.findById(id);
     }
 
+    @Override
+    public List<Client> findAllClient() {
+        return clientService.findAll();
+    }
+
     public boolean authenticate(String username, String password){
         User user = getUserByUsername(username);
         return passwordEncoder.matches(password, user.getPassword());

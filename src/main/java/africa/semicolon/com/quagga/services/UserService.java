@@ -31,4 +31,6 @@ public interface UserService {
     LoginResponse login(LoginRequest loginRequest) throws InvalidCredentialsException;
 
     Client findClientById(Long id);
+
+    List<Client> findAllClient();
 }
