@@ -2,6 +2,7 @@ package africa.semicolon.com.quagga.services;
 
 import africa.semicolon.com.quagga.data.models.Client;
 import africa.semicolon.com.quagga.data.models.Role;
+import africa.semicolon.com.quagga.data.models.Specialist;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.data.repositories.UserRepository;
 import africa.semicolon.com.quagga.dtos.request.LoginRequest;
@@ -175,6 +176,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<Client> findAllClient() {
         return clientService.findAll();
+    }
+
+    @Override
+    public Specialist findSpecialistById(Long id) {
+        return specialistService.findById(id);
     }
 
     public boolean authenticate(String username, String password){
