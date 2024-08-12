@@ -27,7 +27,20 @@ public class SpecialistController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest){
+     try {
+            return new ResponseEntity<>(new ApiResponse(true, userService.login(loginRequest)), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.UNAUTHORIZED);
+        }
+    }
 
+    @GetMapping("find/{id}")
+    public ResponseEntity<?> getSpecialist(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(new ApiResponse(true, userService.findSpecialistById(id)), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
     }
 
 }
