@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-@Sql(scripts = {"/db/data.sql"})
+//@Sql(scripts = {"/db/data.sql"})
 public class ClientServiceTest {
 
     @Autowired
@@ -41,13 +41,14 @@ public class ClientServiceTest {
     @Test
     public void testRegisterClient(){
         RegisterRequest request = new RegisterRequest();
-        request.setFirstName("username");
-        request.setLastName("lastname");
+        request.setFirstName("username2");
+        request.setLastName("lastname2");
         request.setPassword("password");
-        request.setEmail("username@gmail.com");
+        request.setEmail("username2@gmail.com");
         request.setAddress("No 30, Helen Street, Idumota, Lagos");
         request.setPhoneNumber("08123456789");
         request.setRole(Role.CLIENT);
+        request.setCategory(Category.STRUCTURAL);
         request.setLGA("Sabo");
         request.setState("Lagos");
 
@@ -68,10 +69,10 @@ public class ClientServiceTest {
     @Test
     @DisplayName("Test that client can be retrieved by id")
     public void testGetClientById() {
-        Client client = clientService.findById(300L);
+        Client client = clientService.findById(1L);
         assertThat(client).isNotNull();
-        assertThat(client.getId()).isEqualTo(300L);
-        assertThat(client.getUser().getFirstName()).isEqualTo("Alice");
+        assertThat(client.getId()).isEqualTo(1L);
+        assertThat(client.getUser().getFirstName()).isEqualTo("username");
     }
 
     @Test
@@ -115,9 +116,9 @@ public class ClientServiceTest {
 
     @Test
     public void deleteClient(){
-        User user = userService.getById(1L);
+        User user = userService.getById(100L);
         assertThat(user).isNotNull();
-        userService.deleteById(1L);
+        userService.deleteById(100L);
         assertThrows(UserNotFoundException.class, ()->userService.getById(1L));
     }
 
