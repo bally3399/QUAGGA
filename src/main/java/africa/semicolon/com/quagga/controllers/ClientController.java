@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/quagga/client")
-@CrossOrigin("*")
 public class ClientController {
 
     @Autowired
@@ -27,10 +26,10 @@ public class ClientController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteClient(@PathVariable("id") Long id){
-
-    }
+//    @DeleteMapping("/delete/{id}")
+//    public ResponseEntity<?> deleteClient(@PathVariable("id") Long id){
+//
+//    }
 
 
 
