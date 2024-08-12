@@ -1,5 +1,6 @@
 package africa.semicolon.com.quagga.controllers;
 
+import africa.semicolon.com.quagga.data.models.Client;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 import africa.semicolon.com.quagga.dtos.response.ApiResponse;
 import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
@@ -27,9 +28,26 @@ public class ClientController {
         }
     }
 
+    @GetMapping("/findClient/{id}")
+    public ResponseEntity<?> getClientById(@PathVariable("id") Long id){
+        try {
+            Client client = userService.findClientById(id);
+            return new ResponseEntity<>(new ApiResponse(true, client), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping("")
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteClient(@PathVariable("id") Long id){
-
+        try{
+            userService.deleteById(id);
+        }catch (Exception e){
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+        return null;
     }
 
 

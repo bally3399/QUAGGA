@@ -129,7 +129,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteById(long id) {
-
+        User user = getById(id);
+        switch (user.getRole()){
+            case SPECIALIST -> specialistService.delete(id);
+//            case ADMIN -> adminService.deleteById(id);
+            case CLIENT -> clientService.deleteById(id);
+//            case SUPPLIER -> supplierService.deleteById(id);
+//            case PROFESSIONAL -> professionalService.deleteById(id);
+        }
+        userRepository.deleteById(id);
     }
 
     @Override
@@ -151,6 +159,11 @@ public class UserServiceImpl implements UserService {
         else {
             throw new InvalidCredentialsException("Invalid username or password");
         }
+    }
+
+    @Override
+    public Client findClientById(Long id) {
+        return clientService.findById(id);
     }
 
     public boolean authenticate(String username, String password){
