@@ -34,4 +34,6 @@ public interface UserService {
     List<Client> findAllClient();
 
     Specialist findSpecialistById(Long id);
+
+    List<Specialist> getAllSpecialists();
 }
