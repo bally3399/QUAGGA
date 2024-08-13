@@ -3,6 +3,7 @@ package africa.semicolon.com.quagga.dtos.request;
 
 import africa.semicolon.com.quagga.data.models.Category;
 import africa.semicolon.com.quagga.data.models.Role;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,7 @@ public class RegisterRequest {
     private String email;
     private String password;
     private String address;
+    @JsonProperty
     private Role role;
     private String LGA;
     private String state;
