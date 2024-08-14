@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/quagga/client")
-@CrossOrigin("*")
+@CrossOrigin(origins = "*")
 public class ClientController {
 
     @Autowired
