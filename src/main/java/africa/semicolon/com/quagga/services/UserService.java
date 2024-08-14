@@ -27,7 +27,7 @@ public interface UserService {
     DeleteUserResponse deleteById(long id);
     User findUserById(Long id);
 
-    LoginResponse login(LoginRequest loginRequest) throws InvalidCredentialsException;
+    LoginResponse login(LoginRequest loginRequest);
 
     Client findClientById(Long id);
 
@@ -36,4 +36,8 @@ public interface UserService {
     Specialist findSpecialistById(Long id);
 
     List<Specialist> getAllSpecialists();
+
+    DeleteUserResponse deleteSpecialistById(Long id);
+
+    DeleteUserResponse deleteClientById(long id);
 }

@@ -11,7 +11,7 @@ import org.springframework.test.context.jdbc.Sql;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
-@Sql(scripts = {"/db/data.sql"})
+//@Sql(scripts = {"/db/data.sql"})
 public class NotificationServiceTest {
 
     @Autowired

@@ -13,20 +13,26 @@ import africa.semicolon.com.quagga.dtos.response.LoginResponse;
 import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 import africa.semicolon.com.quagga.dtos.response.UpdateClientResponse;
 import africa.semicolon.com.quagga.exceptions.IncorrectPasswordException;
+import africa.semicolon.com.quagga.exceptions.InvalidCredentialException;
 import africa.semicolon.com.quagga.exceptions.UserAlreadyExistException;
 import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
+import africa.semicolon.com.quagga.utils.JwtUtils;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.auth.InvalidCredentialsException;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
@@ -36,6 +42,7 @@ public class UserServiceImpl implements UserService {
     private final ProfessionalService professionalService;
     private final AdminService adminService;
     private final PasswordEncoder passwordEncoder;
+    private final TokenService tokenService;
 
     @Override
     public RegisterResponse register(RegisterRequest request) {
@@ -45,6 +52,8 @@ public class UserServiceImpl implements UserService {
         User newUser = modelMapper.map(request, User.class);
         newUser.setPassword(passwordEncoder.encode(request.getPassword()));
         User savedUser = userRepository.save(newUser);
+        String accessToken = JwtUtils.generateAccessToken(newUser.getId());
+        log.info("Token ------------------>" + accessToken);
 
         switch (savedUser.getRole()) {
             case SPECIALIST -> specialistService.createSpecialist(savedUser, request);
@@ -54,6 +63,7 @@ public class UserServiceImpl implements UserService {
             case PROFESSIONAL -> professionalService.createProfessional(savedUser);
         }
         RegisterResponse response = modelMapper.map(savedUser, RegisterResponse.class);
+        response.setJwtToken(accessToken);
         response.setMessage("Registration successful");
         return response;
     }
@@ -149,23 +159,46 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User findUserById(Long id) {
-        return null;
+        return userRepository.findById(id)
+                .orElseThrow(()->new UserNotFoundException("User does not exist"));
     }
 
     @Override
-    public LoginResponse login(LoginRequest loginRequest) throws InvalidCredentialsException {
+    public LoginResponse login(LoginRequest loginRequest) {
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
-        boolean authenticated = authenticate(email, password);
+        String encodedPassword = passwordEncoder.encode(password);
 
-        if (authenticated){
-            LoginResponse loginResponse = new LoginResponse();
-            loginResponse.setMessage("Login successful");
-            return loginResponse;
+        log.info("User name ----->{}", email);
+        log.info("Password ----->{}", password);
+        log.info("Encoded Password-------->" + encodedPassword);
+
+        return checkLoginDetail(email, password);
+
+    }
+
+    private LoginResponse checkLoginDetail(String email, String password) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        if (optionalUser.isPresent()){
+            User user = optionalUser.get();
+            if (passwordEncoder.matches(password, user.getPassword())){
+                return loginResponseMapper(user);
+            } else {
+                throw new InvalidCredentialException("Invalid username or password");
+            }
+        } else {
+            throw new InvalidCredentialException("Invalid username or password");
         }
-        else {
-            throw new InvalidCredentialsException("Invalid username or password");
-        }
+    }
+
+    private LoginResponse loginResponseMapper(User user) {
+        LoginResponse loginResponse = new LoginResponse();
+        String accessToken = JwtUtils.generateAccessToken(user.getId());
+        BeanUtils.copyProperties(user, loginResponse);
+        loginResponse.setJwtToken(accessToken);
+        loginResponse.setMessage("Login Successful");
+
+        return loginResponse;
     }
 
     @Override
@@ -188,10 +221,35 @@ public class UserServiceImpl implements UserService {
         return specialistService.findAllSpecialist();
     }
 
-    public boolean authenticate(String username, String password){
-        User user = getUserByUsername(username);
-        return passwordEncoder.matches(password, user.getPassword());
+    @Override
+    public DeleteUserResponse deleteSpecialistById(Long id) {
+        Specialist specialist = findSpecialistById(id);
+        Long userId = specialist.getUser().getId();
+        User user = findUserById(userId);
+        specialistService.delete(id);
+        userRepository.deleteById(user.getId());
+
+        DeleteUserResponse response = new DeleteUserResponse();
+        response.setMessage("Specialist successfully deleted");
+        return response;
     }
+
+    @Override
+    public DeleteUserResponse deleteClientById(long id) {
+        Client client = clientService.findById(id);
+        User user = findUserById(client.getUser().getId());
+        clientService.deleteById(id);
+        userRepository.deleteById(user.getId());
+
+        DeleteUserResponse response = new DeleteUserResponse();
+        response.setMessage("Client successfully deleted");
+        return response;
+    }
+
+//    public boolean authenticate(String username, String password){
+//        User user = getUserByUsername(username);
+//        return passwordEncoder.matches(password, user.getPassword());
+//    }
 
 
     private void validate (String email){

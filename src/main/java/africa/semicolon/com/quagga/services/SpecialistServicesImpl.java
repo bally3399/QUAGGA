@@ -57,7 +57,7 @@ public class SpecialistServicesImpl implements SpecialistService {
 
     @Override
     public void delete(long id) {
-
+        specialistRepository.deleteById(id);
     }
 
     @Override
