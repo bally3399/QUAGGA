@@ -14,7 +14,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SpringBootTest
-@Sql(scripts = {"/db/data.sql"})
+//@Sql(scripts = {"/db/data.sql"})
 public class ReviewServiceTest {
 
     @Autowired
@@ -25,8 +25,8 @@ public class ReviewServiceTest {
         SendReviewRequest reviewRequest = new SendReviewRequest();
         reviewRequest.setRating(4);
         reviewRequest.setComment("The service was good");
-        reviewRequest.setReceiverId(105L);
-        reviewRequest.setSenderId(100L);
+        reviewRequest.setReceiverId(25L);
+        reviewRequest.setSenderId(26L);
         SendReviewResponse response = reviewService.sendReview(reviewRequest);
         assertThat(response).isNotNull();
         assertThat(response.getMessage()).isEqualTo("Review sent successfully");
@@ -34,14 +34,14 @@ public class ReviewServiceTest {
 
     @Test
     public void testFindReview(){
-        Review review = reviewService.findById(500L);
+        Review review = reviewService.findById(4L);
         assertThat(review).isNotNull();
-        assertThat(review.getComment()).isEqualTo("The service was satisfactory");
+        assertThat(review.getComment()).isEqualTo("The service was good");
     }
 
     @Test
     public void testDeleteReview(){
-        Review review = reviewService.findById(500L);
+        Review review = reviewService.findById(501L);
         assertThat(review).isNotNull();
         reviewService.deleteById(500L);
         assertThrows(ReviewNotFoundException.class, ()->reviewService.findById(500L));

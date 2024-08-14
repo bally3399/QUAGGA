@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class AuthenticationServiceImpl implements AuthenticationService{
 
 //    private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
+//    private final PasswordEncoder passwordEncoder;
 
     @Override
     public boolean authenticate(String username, String password) {
@@ -19,9 +19,11 @@ public class AuthenticationServiceImpl implements AuthenticationService{
         return false;
     }
 
+/*
     private boolean validatePassword(String password, String encryptedPassword) {
         return passwordEncoder.matches(password, encryptedPassword);
     }
+*/
 
 
 
