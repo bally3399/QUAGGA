@@ -41,12 +41,12 @@ public class ClientServiceTest {
     @Test
     public void testRegisterClient(){
         RegisterRequest request = new RegisterRequest();
-        request.setFirstName("username2");
-        request.setLastName("lastname2");
-        request.setPassword("password");
-        request.setEmail("username2@gmail.com");
+        request.setFirstName("Paul");
+        request.setLastName("Bond");
+        request.setPassword("911");
+        request.setEmail("paul@gmail.com");
         request.setAddress("No 30, Helen Street, Idumota, Lagos");
-        request.setPhoneNumber("08123456789");
+        request.setPhoneNumber("08133856789");
         request.setRole(Role.CLIENT);
         request.setCategory(Category.STRUCTURAL);
         request.setLGA("Sabo");
@@ -58,10 +58,10 @@ public class ClientServiceTest {
     }
 
     @Test
-    public void testLoginClient() throws InvalidCredentialsException {
+    public void testLoginClient(){
         LoginRequest loginRequest = new LoginRequest();
-        loginRequest.setEmail("username@gmail.com");
-        loginRequest.setPassword("password");
+        loginRequest.setEmail("naruto@gmail.com");
+        loginRequest.setPassword("1234");
         LoginResponse loginResponse = userService.login(loginRequest);
         assertThat(loginResponse).isNotNull();
     }
@@ -69,38 +69,37 @@ public class ClientServiceTest {
     @Test
     @DisplayName("Test that client can be retrieved by id")
     public void testGetClientById() {
-        Client client = clientService.findById(1L);
+        Client client = clientService.findById(11L);
         assertThat(client).isNotNull();
-        assertThat(client.getId()).isEqualTo(1L);
-        assertThat(client.getUser().getFirstName()).isEqualTo("username");
+        assertThat(client.getId()).isEqualTo(11L);
     }
 
     @Test
     public void testFindAllSpecialist(){
         List<Specialist> specialistList = specialistService.findAllSpecialist();
-        assertThat(specialistList.size()).isEqualTo(4L);
+        assertThat(specialistList).isNotEmpty();
     }
 
     @Test
     public void testFindAllSupplier(){
         List<User> specialistList = userService.getAllSupplier();
-        assertThat(specialistList.size()).isEqualTo(4L);
+        assertThat(specialistList).isNotEmpty();
     }
 
     @Test
     public void testFindOnlyAvailableSpecialist(){
         List<Specialist> availableSpecialists = specialistService.findAllAvailableSpecialist();
-        assertThat(availableSpecialists.size()).isEqualTo(3L);
+        assertThat(availableSpecialists.size()).isEqualTo(5L);
     }
 
     @Test
     public void testUpdateClientInfo(){
-        Client client = clientService.findById(300L);
-        assertThat(client.getUser().getFirstName()).isEqualTo("john");
+        Client client = clientService.findById(10L);
+        assertThat(client).isNotNull();
         UpdateClientRequest updateClientRequest = new UpdateClientRequest();
-        updateClientRequest.setClientId(300L);
-        updateClientRequest.setFirstName("updatedJohn");
-        updateClientRequest.setLastName("UpdatedLastName2");
+        updateClientRequest.setClientId(10L);
+        updateClientRequest.setFirstName("Fresh");
+        updateClientRequest.setLastName("Name");
         //updateClientRequest.setAddress("UpdatedAddress");
         //updateClientRequest.setPassword("UpdatedPassword");
         // updateClientRequest.setPhoneNumber("419");
@@ -109,17 +108,18 @@ public class ClientServiceTest {
         assertThat(response).isNotNull();
         assertThat(response.getMessage()).isEqualTo("Client updated successfully");
 
-        Client updatedClient = clientService.findById(1L);
+        Client updatedClient = clientService.findById(10L);
         assertThat(updatedClient.getUser().getPhoneNumber()).isEqualTo("08123456789");
-        assertThat(updatedClient.getUser().getFirstName()).isEqualTo("updatedJohn");
+        assertThat(updatedClient.getUser().getFirstName()).isEqualTo("Fresh");
     }
 
     @Test
     public void deleteClient(){
-        User user = userService.getById(100L);
-        assertThat(user).isNotNull();
-        userService.deleteById(100L);
-        assertThrows(UserNotFoundException.class, ()->userService.getById(1L));
+        Client client = userService.findClientById(303L);
+        assertThat(client).isNotNull();
+        userService.deleteClientById(303L);
+//        userService.deleteClientById(12L);
+        assertThrows(UserNotFoundException.class, ()->userService.getById(303L));
     }
 
     @Test

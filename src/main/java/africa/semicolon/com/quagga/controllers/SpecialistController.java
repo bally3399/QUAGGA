@@ -52,4 +52,13 @@ public class SpecialistController {
         }
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteSpecialist(@PathVariable("id") Long id) {
+        try {
+            return new ResponseEntity<>(new ApiResponse(true, userService.deleteSpecialistById(id)), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }
