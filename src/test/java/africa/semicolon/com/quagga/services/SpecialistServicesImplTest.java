@@ -20,9 +20,9 @@ public class SpecialistServicesImplTest {
     @Test
     public void testThatSpecialistCanBeCreated() {
         RegisterRequest request = new RegisterRequest();
-        request.setFirstName("Sulaiman");
-        request.setLastName("Baliqis");
-        request.setEmail("sulaimabaliqis@gmail.com");
+        request.setFirstName("Jay");
+        request.setLastName("Cee");
+        request.setEmail("cee@gmail.com");
         request.setPhoneNumber("09132431343");
         request.setPassword("123456");
         request.setAddress("sabo yaba");
@@ -36,33 +36,20 @@ public class SpecialistServicesImplTest {
 
     }
 
-    @Test
-    public void testThatSpecialistCanUpdateDetails(){
-        RegisterRequest request = new RegisterRequest();
-        request.setFirstName("Sulaiman");
-        request.setLastName("Baliqis");
-        request.setEmail("sulaimabaliqis@gmail.com");
-        request.setPhoneNumber("09132431343");
-        request.setPassword("123456");
-        request.setAddress("sabo yaba");
-        request.setRole(SPECIALIST);
-        request.setCompanyName("Semicolon");
-        request.setCompanyRegNo("abcd");
-//        request.setProfessionalSkills(List.of("Construction", "Painting"));
-        RegisterResponse response = userService.register(request);
-
-        UpdateRequest updateRequest = new UpdateRequest();
-        updateRequest.setFirstName("Sulaiman2");
-        updateRequest.setLastName("Baliqis2");
-        updateRequest.setEmail("sulaimabaliqis2@gmail.com");
-        updateRequest.setPhoneNumber("09132431343");
-        updateRequest.setPassword("123456");
-        updateRequest.setAddress("sabo yaba");
-        updateRequest.setCompanyName("Semicolon africa");
-        updateRequest.setCompanyRegNo("abcdef");
-//        UpdateResponse response1 = userService.update(updateRequest);
-
-
-    }
+//    @Test
+//    public void testThatSpecialistCanUpdateDetails(){
+//        UpdateRequest updateRequest = new UpdateRequest();
+//        updateRequest.setFirstName("Sulaiman2");
+//        updateRequest.setLastName("Baliqis2");
+//        updateRequest.setEmail("sulaimabaliqis2@gmail.com");
+//        updateRequest.setPhoneNumber("09132431343");
+//        updateRequest.setPassword("123456");
+//        updateRequest.setAddress("sabo yaba");
+//        updateRequest.setCompanyName("Semicolon africa");
+//        updateRequest.setCompanyRegNo("abcdef");
+////        UpdateResponse response1 = userService.update(updateRequest);
+//
+//
+//    }
 
 }

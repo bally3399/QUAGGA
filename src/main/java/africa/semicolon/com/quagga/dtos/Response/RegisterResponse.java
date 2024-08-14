@@ -7,5 +7,4 @@ import lombok.Setter;
 @Setter
 public class RegisterResponse {
     private String message;
-    private String jwtToken;
 }

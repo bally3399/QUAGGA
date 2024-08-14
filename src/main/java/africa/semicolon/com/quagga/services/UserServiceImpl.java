@@ -19,11 +19,9 @@ import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
 import africa.semicolon.com.quagga.utils.JwtUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.auth.InvalidCredentialsException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,7 +39,6 @@ public class UserServiceImpl implements UserService {
     private final SupplierService supplierService;
     private final ProfessionalService professionalService;
     private final AdminService adminService;
-    private final PasswordEncoder passwordEncoder;
     private final TokenService tokenService;
 
     @Override
@@ -50,10 +47,8 @@ public class UserServiceImpl implements UserService {
         validate(email);
         validateRegistration(request);
         User newUser = modelMapper.map(request, User.class);
-        newUser.setPassword(passwordEncoder.encode(request.getPassword()));
+//        newUser.setPassword(passwordEncoder.encode(request.getPassword()));
         User savedUser = userRepository.save(newUser);
-        String accessToken = JwtUtils.generateAccessToken(newUser.getId());
-        log.info("Token ------------------>" + accessToken);
 
         switch (savedUser.getRole()) {
             case SPECIALIST -> specialistService.createSpecialist(savedUser, request);
@@ -63,7 +58,6 @@ public class UserServiceImpl implements UserService {
             case PROFESSIONAL -> professionalService.createProfessional(savedUser);
         }
         RegisterResponse response = modelMapper.map(savedUser, RegisterResponse.class);
-        response.setJwtToken(accessToken);
         response.setMessage("Registration successful");
         return response;
     }
@@ -167,12 +161,10 @@ public class UserServiceImpl implements UserService {
     public LoginResponse login(LoginRequest loginRequest) {
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
-        String encodedPassword = passwordEncoder.encode(password);
+
 
         log.info("User name ----->{}", email);
         log.info("Password ----->{}", password);
-        log.info("Encoded Password-------->" + encodedPassword);
-
         return checkLoginDetail(email, password);
 
     }
@@ -181,7 +173,8 @@ public class UserServiceImpl implements UserService {
         Optional<User> optionalUser = userRepository.findByEmail(email);
         if (optionalUser.isPresent()){
             User user = optionalUser.get();
-            if (passwordEncoder.matches(password, user.getPassword())){
+//            if (passwordEncoder.matches(password, user.getPassword())){
+            if (user.getPassword().equals(password)) {
                 return loginResponseMapper(user);
             } else {
                 throw new InvalidCredentialException("Invalid username or password");
