@@ -6,6 +6,7 @@ import africa.semicolon.com.quagga.data.repositories.NotificationRepository;
 import africa.semicolon.com.quagga.dtos.request.CreateNotificationRequest;
 import africa.semicolon.com.quagga.dtos.response.NotificationResponse;
 import africa.semicolon.com.quagga.exceptions.NotificationNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,9 +26,10 @@ public class NotificationServiceImpl implements NotificationService{
         notification.setMessage("You have a notification from " + notificationSender.getFirstName());
         notification.setReceiver(notificationReceiver);
         notification.setSender(notificationSender);
-        notificationRepository.save(notification);
+        Notification savedNotification =notificationRepository.save(notification);
         NotificationResponse response = new NotificationResponse();
         response.setMessage("Notification created successfully");
+        response.setNotification(savedNotification);
         return response;
     }
 
@@ -35,6 +37,12 @@ public class NotificationServiceImpl implements NotificationService{
     public Notification findById(long id) {
         return notificationRepository.findById(id)
                 .orElseThrow(() -> new NotificationNotFoundException("Notification not found"));
+    }
+
+    @Transactional
+    @Override
+    public void deleteAll() {
+        notificationRepository.deleteAll();
     }
 
 

@@ -8,4 +8,6 @@ public interface ReviewService {
     SendReviewResponse sendReview(SendReviewRequest reviewRequest);
     Review findById(long id);
     void deleteById(long id);
+
+    void deleteAll();
 }

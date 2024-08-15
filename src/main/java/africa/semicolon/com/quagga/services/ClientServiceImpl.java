@@ -43,4 +43,14 @@ public class ClientServiceImpl implements ClientService{
         return clientRepository.findAll();
     }
 
+    @Override
+    public Client findClientByUser(User user) {
+        return clientRepository.findClientByUser(user);
+    }
+
+    @Override
+    public void deleteAll() {
+        clientRepository.deleteAll();
+    }
+
 }

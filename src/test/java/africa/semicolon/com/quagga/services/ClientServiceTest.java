@@ -10,12 +10,11 @@ import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 import africa.semicolon.com.quagga.dtos.response.ServiceRequestResponse;
 import africa.semicolon.com.quagga.dtos.response.UpdateClientResponse;
 import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
-import org.apache.http.auth.InvalidCredentialsException;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
 
@@ -36,10 +35,27 @@ public class ClientServiceTest {
     public SpecialistService specialistService;
 
     @Autowired
-    public ServiceRequestServices requestService;
+    public SupplierService supplierService;
 
-    @Test
-    public void testRegisterClient(){
+    @Autowired
+    public ServiceRequestServices requestService;
+    private User client;
+    private User specialist;
+    private User supplier;
+
+    private RegisterResponse clientsResponse;
+    private RegisterResponse specialistResponse;
+    private RegisterResponse supplierResponse;
+
+
+
+    @BeforeEach
+    public void setUserService(){
+        requestService.deleteAll();
+        clientService.deleteAll();
+        specialistService.deleteAll();
+        supplierService.deleteAll();
+        userService.deleteAll();
         RegisterRequest request = new RegisterRequest();
         request.setFirstName("Paul");
         request.setLastName("Bond");
@@ -52,52 +68,111 @@ public class ClientServiceTest {
         request.setLGA("Sabo");
         request.setState("Lagos");
 
-        RegisterResponse response = userService.register(request);
-        assertThat(response).isNotNull();
-        assertThat(response.getMessage()).isEqualTo("Registration successful");
+        clientsResponse = userService.register(request);
+        client = clientsResponse.getUser();
+
+        RegisterRequest request2 = new RegisterRequest();
+        request2.setFirstName("Seun");
+        request2.setLastName("Bond");
+        request2.setPassword("9111");
+        request2.setEmail("seun@gmail.com");
+        request2.setAddress("No 30, Helena Street, Idumota, Lagos");
+        request2.setPhoneNumber("08134856789");
+        request2.setRole(Role.SPECIALIST);
+        request2.setCategory(Category.STRUCTURAL);
+        request2.setLGA("Sabo");
+        request2.setState("Lagos");
+
+        specialistResponse = userService.register(request2);
+        specialist = specialistResponse.getUser();
+
+        RegisterRequest request3 = new RegisterRequest();
+        request3.setFirstName("Tayo");
+        request3.setLastName("Bond");
+        request3.setPassword("9211");
+        request3.setEmail("tayo@gmail.com");
+        request3.setAddress("No 30, Helenaw Street, Idumota, Lagos");
+        request3.setPhoneNumber("08134556789");
+        request3.setRole(Role.SUPPLIER);
+        request3.setCategory(Category.STRUCTURAL);
+        request3.setLGA("Sabo");
+        request3.setState("Lagos");
+
+        supplierResponse = userService.register(request3);
+        supplier = supplierResponse.getUser();
+    }
+
+    @Test
+    public void testRegisterClient(){
+
+        assertThat(clientsResponse).isNotNull();
+        assertThat(clientsResponse.getMessage()).isEqualTo("Registration successful");
+        clientService.deleteAll();
+        specialistService.deleteAll();
+        supplierService.deleteAll();
+        userService.deleteAll();
     }
 
     @Test
     public void testLoginClient(){
         LoginRequest loginRequest = new LoginRequest();
-        loginRequest.setEmail("naruto@gmail.com");
-        loginRequest.setPassword("1234");
+        loginRequest.setEmail("paul@gmail.com");
+        loginRequest.setPassword("911");
         LoginResponse loginResponse = userService.login(loginRequest);
         assertThat(loginResponse).isNotNull();
+        clientService.deleteAll();
+        specialistService.deleteAll();
+        supplierService.deleteAll();
+        userService.deleteAll();
     }
 
     @Test
     @DisplayName("Test that client can be retrieved by id")
     public void testGetClientById() {
-        Client client = clientService.findById(11L);
+        Client client = clientService.findClientByUser(this.client);
         assertThat(client).isNotNull();
-        assertThat(client.getId()).isEqualTo(11L);
+        clientService.deleteAll();
+        specialistService.deleteAll();
+        supplierService.deleteAll();
+        userService.deleteAll();
     }
 
     @Test
     public void testFindAllSpecialist(){
         List<Specialist> specialistList = specialistService.findAllSpecialist();
         assertThat(specialistList).isNotEmpty();
+        clientService.deleteAll();
+        specialistService.deleteAll();
+        supplierService.deleteAll();
+        userService.deleteAll();
     }
 
     @Test
     public void testFindAllSupplier(){
-        List<User> specialistList = userService.getAllSupplier();
-        assertThat(specialistList).isNotEmpty();
+        List<User> supplierList = userService.getAllSupplier();
+        assertThat(supplierList).isNotEmpty();
+        clientService.deleteAll();
+        specialistService.deleteAll();
+        supplierService.deleteAll();
+        userService.deleteAll();
     }
 
     @Test
     public void testFindOnlyAvailableSpecialist(){
         List<Specialist> availableSpecialists = specialistService.findAllAvailableSpecialist();
-        assertThat(availableSpecialists.size()).isEqualTo(5L);
+        assertThat(availableSpecialists.size()).isEqualTo(1L);
+        clientService.deleteAll();
+        specialistService.deleteAll();
+        supplierService.deleteAll();
+        userService.deleteAll();
     }
 
     @Test
     public void testUpdateClientInfo(){
-        Client client = clientService.findById(10L);
-        assertThat(client).isNotNull();
+        Client foundClient = clientService.findClientByUser(client);
+        assertThat(foundClient).isNotNull();
         UpdateClientRequest updateClientRequest = new UpdateClientRequest();
-        updateClientRequest.setClientId(10L);
+        updateClientRequest.setClientId(foundClient.getId());
         updateClientRequest.setFirstName("Fresh");
         updateClientRequest.setLastName("Name");
         //updateClientRequest.setAddress("UpdatedAddress");
@@ -108,29 +183,44 @@ public class ClientServiceTest {
         assertThat(response).isNotNull();
         assertThat(response.getMessage()).isEqualTo("Client updated successfully");
 
-        Client updatedClient = clientService.findById(10L);
-        assertThat(updatedClient.getUser().getPhoneNumber()).isEqualTo("08123456789");
+        Client updatedClient = clientService.findClientByUser(client);
+        assertThat(updatedClient.getUser().getPhoneNumber()).isEqualTo("08133856789");
         assertThat(updatedClient.getUser().getFirstName()).isEqualTo("Fresh");
+        clientService.deleteAll();
+        specialistService.deleteAll();
+        supplierService.deleteAll();
+        userService.deleteAll();
     }
 
     @Test
     public void deleteClient(){
-        Client client = userService.findClientById(303L);
-        assertThat(client).isNotNull();
-        userService.deleteClientById(303L);
+        Client foundClient = clientService.findClientByUser(client);
+        assertThat(foundClient).isNotNull();
+        userService.deleteClientById(foundClient.getId());
 //        userService.deleteClientById(12L);
-        assertThrows(UserNotFoundException.class, ()->userService.getById(303L));
+        assertThrows(UserNotFoundException.class, ()->userService.getById(client.getId()));
+        clientService.deleteAll();
+        specialistService.deleteAll();
+        supplierService.deleteAll();
+        userService.deleteAll();
     }
 
     @Test
     public void testThatClientCanCreateServiceRequest() {
+        Client foundClient = clientService.findClientByUser(client);
+        Specialist foundSpecialist = specialistService.findSpecialistByUser(specialist);
         CreateServiceRequest serviceRequest = new CreateServiceRequest();
-        serviceRequest.setClientId(300L);
-        serviceRequest.setSpecialistId(203L);
+        serviceRequest.setClientId(foundClient.getId());
+        serviceRequest.setSpecialistId(foundSpecialist.getSpecialistId());
         serviceRequest.setServiceDescription("I am in need of plumbing service");
         ServiceRequestResponse response = requestService.create(serviceRequest);
         assertThat(response).isNotNull();
         assertThat(response.getMessage()).isEqualTo("Request sent successfully");
+        requestService.deleteAll();
+        clientService.deleteAll();
+        specialistService.deleteAll();
+        supplierService.deleteAll();
+        userService.deleteAll();
     }
 
 

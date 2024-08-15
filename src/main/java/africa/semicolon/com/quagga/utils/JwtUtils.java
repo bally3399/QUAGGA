@@ -16,7 +16,6 @@ import static org.springframework.http.HttpHeaders.AUTHORIZATION;
 
 public class JwtUtils {
 
-
     public static String generateAccessToken(Long id){
         return JWT.create()
                 .withClaim("user_id", id)

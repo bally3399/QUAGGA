@@ -38,10 +38,11 @@ public class ServiceRequestServicesImpl implements ServiceRequestServices {
         newServiceRequest.setSpecialist(specialist);
         newServiceRequest.setDescription(serviceRequest.getServiceDescription());
         newServiceRequest.setServiceRequestStatus(ServiceRequestStatus.PENDING);
-        serviceRepository.save(newServiceRequest);
+        ServiceRequest savedServiceRequest = serviceRepository.save(newServiceRequest);
 
         ServiceRequestResponse response = new ServiceRequestResponse();
         response.setMessage("Request sent successfully");
+        response.setServiceRequest(savedServiceRequest);
         return response;
     }
 
@@ -103,6 +104,11 @@ public class ServiceRequestServicesImpl implements ServiceRequestServices {
         CompleteServiceResponse response = new CompleteServiceResponse();
         response.setMessage("Service completed");
         return response;
+    }
+
+    @Override
+    public void deleteAll() {
+        serviceRepository.deleteAll();
     }
 
 }

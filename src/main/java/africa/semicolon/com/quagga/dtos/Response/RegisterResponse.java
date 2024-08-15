@@ -1,5 +1,6 @@
 package africa.semicolon.com.quagga.dtos.response;
 
+import africa.semicolon.com.quagga.data.models.User;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,4 +8,5 @@ import lombok.Setter;
 @Setter
 public class RegisterResponse {
     private String message;
+    private User user;
 }

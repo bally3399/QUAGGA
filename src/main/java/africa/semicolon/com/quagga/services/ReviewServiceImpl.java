@@ -29,10 +29,11 @@ public class ReviewServiceImpl implements ReviewService{
         newReview.setReviewReceiver(receiver);
         newReview.setRating(reviewRequest.getRating());
         newReview.setComment(reviewRequest.getComment());
-        reviewRepository.save(newReview);
+        Review savedReview =reviewRepository.save(newReview);
 
         SendReviewResponse response = new SendReviewResponse();
         response.setMessage("Review sent successfully");
+        response.setReview(savedReview);
         return response;
     }
 
@@ -46,6 +47,11 @@ public class ReviewServiceImpl implements ReviewService{
     public void deleteById(long id) {
         Review review = findById(id);
         reviewRepository.delete(review);
+    }
+
+    @Override
+    public void deleteAll() {
+        reviewRepository.deleteAll();
     }
 
 }
