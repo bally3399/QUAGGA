@@ -8,6 +8,9 @@ public interface SupplierService {
 
      Supplier createSupplier(User user, RegisterRequest request);
 
+    void deleteAll();
+
+
 
     //Supplier createSupplier(RegisterRequest request);
 }

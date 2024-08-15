@@ -1,5 +1,6 @@
 package africa.semicolon.com.quagga.data.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -28,6 +29,7 @@ public class User {
     private String lastName;
     @Column(nullable = false, unique = true)
     private String email;
+    @JsonIgnore
     private String password;
     private String address;
     private String LGA;

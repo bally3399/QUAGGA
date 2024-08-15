@@ -40,4 +40,9 @@ public interface UserService {
     DeleteUserResponse deleteSpecialistById(Long id);
 
     DeleteUserResponse deleteClientById(long id);
+
+    User save(User user);
+
+    void deleteAll();
+
 }

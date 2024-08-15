@@ -17,6 +17,7 @@ import africa.semicolon.com.quagga.exceptions.InvalidCredentialException;
 import africa.semicolon.com.quagga.exceptions.UserAlreadyExistException;
 import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
 import africa.semicolon.com.quagga.utils.JwtUtils;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -59,6 +60,7 @@ public class UserServiceImpl implements UserService {
         }
         RegisterResponse response = modelMapper.map(savedUser, RegisterResponse.class);
         response.setMessage("Registration successful");
+        response.setUser(savedUser);
         return response;
     }
 
@@ -161,19 +163,13 @@ public class UserServiceImpl implements UserService {
     public LoginResponse login(LoginRequest loginRequest) {
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
-
-
-        log.info("User name ----->{}", email);
-        log.info("Password ----->{}", password);
         return checkLoginDetail(email, password);
-
     }
 
     private LoginResponse checkLoginDetail(String email, String password) {
         Optional<User> optionalUser = userRepository.findByEmail(email);
         if (optionalUser.isPresent()){
             User user = optionalUser.get();
-//            if (passwordEncoder.matches(password, user.getPassword())){
             if (user.getPassword().equals(password)) {
                 return loginResponseMapper(user);
             } else {
@@ -237,6 +233,17 @@ public class UserServiceImpl implements UserService {
         DeleteUserResponse response = new DeleteUserResponse();
         response.setMessage("Client successfully deleted");
         return response;
+    }
+
+    @Override
+    public User save(User user) {
+        return userRepository.save(user);
+    }
+
+    @Transactional
+    @Override
+    public void deleteAll() {
+        userRepository.deleteAll();
     }
 
 //    public boolean authenticate(String username, String password){

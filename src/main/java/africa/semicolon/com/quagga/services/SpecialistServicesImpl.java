@@ -65,4 +65,14 @@ public class SpecialistServicesImpl implements SpecialistService {
         return null;
     }
 
+    @Override
+    public Specialist findSpecialistByUser(User specialist) {
+        return specialistRepository.findSpecialistByUser(specialist);
+    }
+
+    @Override
+    public void deleteAll() {
+        specialistRepository.deleteAll();
+    }
+
 }

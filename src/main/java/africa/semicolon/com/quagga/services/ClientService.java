@@ -14,4 +14,8 @@ public interface ClientService {
     void deleteById(long id);
 
     List<Client> findAll();
+
+    Client findClientByUser(User user);
+
+    void deleteAll();
 }

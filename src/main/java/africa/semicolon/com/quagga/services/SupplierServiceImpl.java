@@ -25,4 +25,9 @@ public class SupplierServiceImpl implements SupplierService {
         return supplierRepository.save(newSupplier);
     }
 
+    @Override
+    public void deleteAll() {
+        supplierRepository.deleteAll();
+    }
+
 }

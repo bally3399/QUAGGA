@@ -21,4 +21,5 @@ public interface ServiceRequestServices {
     RejectServiceResponse reject(RejectServiceRequest rejectServiceRequest);
     CompleteServiceResponse complete(CompleteServiceRequest completeServiceRequest);
 
+    void deleteAll();
 }

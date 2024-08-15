@@ -8,4 +8,7 @@ public interface NotificationService {
     NotificationResponse create(CreateNotificationRequest notificationRequest);
 
     Notification findById(long id);
+
+    void deleteAll();
+
 }
