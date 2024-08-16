@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
     private final SupplierService supplierService;
     private final ProfessionalService professionalService;
     private final AdminService adminService;
-    private final TokenService tokenService;
+//    private final TokenService tokenService;
 
     @Override
     public RegisterResponse register(RegisterRequest request) {
@@ -48,7 +48,6 @@ public class UserServiceImpl implements UserService {
         validate(email);
         validateRegistration(request);
         User newUser = modelMapper.map(request, User.class);
-//        newUser.setPassword(passwordEncoder.encode(request.getPassword()));
         User savedUser = userRepository.save(newUser);
 
         switch (savedUser.getRole()) {
@@ -92,7 +91,6 @@ public class UserServiceImpl implements UserService {
         }
         return specialists;
     }
-
 
 
     @Override
@@ -245,11 +243,6 @@ public class UserServiceImpl implements UserService {
     public void deleteAll() {
         userRepository.deleteAll();
     }
-
-//    public boolean authenticate(String username, String password){
-//        User user = getUserByUsername(username);
-//        return passwordEncoder.matches(password, user.getPassword());
-//    }
 
 
     private void validate (String email){
