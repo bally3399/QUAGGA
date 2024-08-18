@@ -12,6 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+import static org.springframework.http.ResponseEntity.ok;
+
 @RestController
 @RequestMapping("/api/v1/quagga/client")
 @CrossOrigin(origins = "*")
@@ -51,7 +55,7 @@ public class ClientController {
 
     @GetMapping("/findAll")
     public ResponseEntity<?> getAllClients(){
-        return ResponseEntity.ok(userService.findAllClient());
+        return ok(userService.findAllClient());
     }
 
     @DeleteMapping("/delete/{id}")
@@ -72,6 +76,14 @@ public class ClientController {
         }
     }
 
+    @PostMapping("/allSpecialist")
+    public ResponseEntity<?> findAllSpecialist(){
+        try {
+            return new ResponseEntity<>(new ApiResponse(true, userService.findAllSpecialist()), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.NO_CONTENT);
+        }
+    }
 
 
 }

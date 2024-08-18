@@ -3,13 +3,12 @@ import africa.semicolon.com.quagga.data.models.Client;
 import africa.semicolon.com.quagga.data.models.Specialist;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.dtos.request.LoginRequest;
+import africa.semicolon.com.quagga.dtos.request.LogoutRequest;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 import africa.semicolon.com.quagga.dtos.request.UpdateClientRequest;
-import africa.semicolon.com.quagga.dtos.response.DeleteUserResponse;
-import africa.semicolon.com.quagga.dtos.response.LoginResponse;
-import africa.semicolon.com.quagga.dtos.response.UpdateClientResponse;
-import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
+import africa.semicolon.com.quagga.dtos.response.*;
 import org.apache.http.auth.InvalidCredentialsException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
@@ -45,4 +44,7 @@ public interface UserService {
 
     void deleteAll();
 
+    LogoutResponse logout(LogoutRequest logoutRequest);
+
+    List<Specialist> findAllSpecialist();
 }
