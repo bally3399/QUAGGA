@@ -6,16 +6,11 @@ import africa.semicolon.com.quagga.data.models.Specialist;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.data.repositories.UserRepository;
 import africa.semicolon.com.quagga.dtos.request.LoginRequest;
+import africa.semicolon.com.quagga.dtos.request.LogoutRequest;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 import africa.semicolon.com.quagga.dtos.request.UpdateClientRequest;
-import africa.semicolon.com.quagga.dtos.response.DeleteUserResponse;
-import africa.semicolon.com.quagga.dtos.response.LoginResponse;
-import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
-import africa.semicolon.com.quagga.dtos.response.UpdateClientResponse;
-import africa.semicolon.com.quagga.exceptions.IncorrectPasswordException;
-import africa.semicolon.com.quagga.exceptions.InvalidCredentialException;
-import africa.semicolon.com.quagga.exceptions.UserAlreadyExistException;
-import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
+import africa.semicolon.com.quagga.dtos.response.*;
+import africa.semicolon.com.quagga.exceptions.*;
 import africa.semicolon.com.quagga.utils.JwtUtils;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -242,6 +237,18 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteAll() {
         userRepository.deleteAll();
+    }
+
+    @Override
+    public LogoutResponse logout(LogoutRequest logoutRequest) {
+        return null;
+    }
+
+    @Override
+    public List<Specialist> findAllSpecialist() {
+        List<Specialist> specialists = specialistService.findAllSpecialist();
+        if (specialists.isEmpty()) throw new NoSpecialistFoundException("No special found");
+        return specialists;
     }
 
 

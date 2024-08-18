@@ -1,14 +1,8 @@
 package africa.semicolon.com.quagga.services;
 
 import africa.semicolon.com.quagga.data.models.*;
-import africa.semicolon.com.quagga.dtos.request.CreateServiceRequest;
-import africa.semicolon.com.quagga.dtos.request.LoginRequest;
-import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
-import africa.semicolon.com.quagga.dtos.request.UpdateClientRequest;
-import africa.semicolon.com.quagga.dtos.response.LoginResponse;
-import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
-import africa.semicolon.com.quagga.dtos.response.ServiceRequestResponse;
-import africa.semicolon.com.quagga.dtos.response.UpdateClientResponse;
+import africa.semicolon.com.quagga.dtos.request.*;
+import africa.semicolon.com.quagga.dtos.response.*;
 import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -124,6 +118,14 @@ public class ClientServiceTest {
         specialistService.deleteAll();
         supplierService.deleteAll();
         userService.deleteAll();
+    }
+
+    @Test
+    public void testLogoutClient(){
+        LogoutRequest logoutRequest = new LogoutRequest();
+        logoutRequest.setEmail("paul@gmail.com");
+        LogoutResponse logoutResponse = userService.logout(logoutRequest);
+
     }
 
     @Test
