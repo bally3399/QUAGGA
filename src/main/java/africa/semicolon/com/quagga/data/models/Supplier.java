@@ -6,6 +6,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class Supplier {
     @GeneratedValue(strategy = IDENTITY)
     private Long supplierId;
     private String companyName;
-    @Column(nullable = false)
+//    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Category category;
     //@OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL, orphanRemoval = true)
