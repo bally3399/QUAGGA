@@ -5,7 +5,9 @@ import africa.semicolon.com.quagga.data.models.Category;
 import africa.semicolon.com.quagga.data.models.Role;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Column;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
