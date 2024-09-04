@@ -179,7 +179,7 @@ public class UserServiceImpl implements UserService {
         BeanUtils.copyProperties(user, loginResponse);
         loginResponse.setJwtToken(accessToken);
         loginResponse.setMessage("Login Successful");
-
+        loginResponse.setRole(user.getRole());
         return loginResponse;
     }
 
