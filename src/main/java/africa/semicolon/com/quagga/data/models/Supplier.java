@@ -21,7 +21,7 @@ public class Supplier {
     @GeneratedValue(strategy = IDENTITY)
     private Long supplierId;
     private String companyName;
-//    @Column(nullable = false)
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Category category;
     //@OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL, orphanRemoval = true)
