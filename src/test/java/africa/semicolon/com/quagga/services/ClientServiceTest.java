@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+import static africa.semicolon.com.quagga.data.models.Role.SPECIALIST;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -72,7 +73,7 @@ public class ClientServiceTest {
         request2.setEmail("seun@gmail.com");
         request2.setAddress("No 30, Helena Street, Idumota, Lagos");
         request2.setPhoneNumber("08134856789");
-        request2.setRole(Role.SPECIALIST);
+        request2.setRole(SPECIALIST);
         request2.setCategory(Category.STRUCTURAL);
         request2.setLGA("Sabo");
         request2.setState("Lagos");
@@ -223,6 +224,12 @@ public class ClientServiceTest {
         specialistService.deleteAll();
         supplierService.deleteAll();
         userService.deleteAll();
+    }
+
+    @Test
+    public void findUserByCategory(){
+        List<User> usersByCategory = userService.findUserByCategory(SPECIALIST);
+        assertThat(usersByCategory).isNotEmpty();
     }
 
 
