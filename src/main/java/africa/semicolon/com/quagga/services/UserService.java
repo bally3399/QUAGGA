@@ -1,5 +1,6 @@
 package africa.semicolon.com.quagga.services;
 import africa.semicolon.com.quagga.data.models.Client;
+import africa.semicolon.com.quagga.data.models.Role;
 import africa.semicolon.com.quagga.data.models.Specialist;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.dtos.request.LoginRequest;
@@ -47,4 +48,6 @@ public interface UserService {
     LogoutResponse logout(LogoutRequest logoutRequest);
 
     List<Specialist> findAllSpecialist();
+
+    List<User> findUserByCategory(Role category);
 }
