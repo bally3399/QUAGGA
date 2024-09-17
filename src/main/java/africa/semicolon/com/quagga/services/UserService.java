@@ -47,4 +47,6 @@ public interface UserService {
     LogoutResponse logout(LogoutRequest logoutRequest);
 
     List<Specialist> findAllSpecialist();
+
+    String emailOtp(String email);
 }
