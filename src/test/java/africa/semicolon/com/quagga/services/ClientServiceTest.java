@@ -227,6 +227,8 @@ public class ClientServiceTest {
     }
 
     @Test
+    public void testThatUserCanUseForgetPassword(){
+
     public void findUserByCategory(){
         List<User> usersByCategory = userService.findUserByCategory(SPECIALIST);
         assertThat(usersByCategory).isNotEmpty();

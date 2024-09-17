@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 @AllArgsConstructor
@@ -35,6 +36,7 @@ public class UserServiceImpl implements UserService {
     private final SupplierService supplierService;
     private final ProfessionalService professionalService;
     private final AdminService adminService;
+    private final EmailService emailService;
 //    private final TokenService tokenService;
 
     @Override
@@ -252,6 +254,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public String emailOtp(String email) {
+        Random random = new Random();
+        random.nextInt(9);
+        return "";
+    }
+
+    public static void main(String[] args) {
+        Random random = new Random();
+        for (int i = 0; i < 8; i++){
+            int number = random.nextInt(9);
+            System.out.print(number + " ");
+        }
+    }
     public List<User> findUserByCategory(Role category) {
         List<User> allUsers = findAllUsers();
         List<User> userByCategory = new ArrayList<>();

@@ -49,5 +49,6 @@ public interface UserService {
 
     List<Specialist> findAllSpecialist();
 
+    String emailOtp(String email);
     List<User> findUserByCategory(Role category);
 }

@@ -14,7 +14,6 @@ public class QuaggaApplication {
         SpringApplication.run(QuaggaApplication.class, args);
     }
 
-
 }
 
 
