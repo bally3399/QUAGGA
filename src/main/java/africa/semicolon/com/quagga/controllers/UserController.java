@@ -1,5 +1,6 @@
 package africa.semicolon.com.quagga.controllers;
 
+import africa.semicolon.com.quagga.data.models.Role;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 import africa.semicolon.com.quagga.dtos.response.ApiResponse;
 import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
@@ -26,12 +27,14 @@ public class UserController {
         }
     }
 
-//    @GetMapping("/findUser/{id}")
-//    public ResponseEntity<?> findUserById(@PathVariable("id"){
-//        try{
-//
-//        }
-//    }
+    @GetMapping("/findUserByCategory/{category}")
+    public ResponseEntity<?> findUserById(@PathVariable("category") Role category){
+        try {
+            return new ResponseEntity<>(new ApiResponse(true, userService.findUserByCategory(category)), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
 
 
 }
