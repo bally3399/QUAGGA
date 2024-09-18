@@ -27,14 +27,5 @@ public class UserController {
         }
     }
 
-    @GetMapping("/findUserByCategory/{category}")
-    public ResponseEntity<?> findUserById(@PathVariable("category") Role category){
-        try {
-            return new ResponseEntity<>(new ApiResponse(true, userService.findUserByCategory(category)), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
-        }
-    }
-
 
 }

@@ -1,5 +1,7 @@
 package africa.semicolon.com.quagga.services;
 
+import africa.semicolon.com.quagga.data.models.Category;
+import africa.semicolon.com.quagga.data.models.Specialist;
 import africa.semicolon.com.quagga.data.models.Supplier;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
@@ -10,6 +12,9 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -35,6 +40,24 @@ public class SupplierServiceImpl implements SupplierService {
     @Override
     public void deleteAll() {
         supplierRepository.deleteAll();
+    }
+
+    @Override
+    public List<Supplier> findAllSuppliers() {
+        return supplierRepository.findAll();
+    }
+
+    @Override
+    public List<Supplier> findSuppliersByCategory(Category category) {
+        List<Supplier> allSuppliers = findAllSuppliers();
+        List<Supplier> supplierByCategory = new ArrayList<>();
+
+        for (Supplier supplier : allSuppliers){
+            if (supplier.getCategory() != null &&supplier.getCategory().equals(category)){
+                supplierByCategory.add(supplier);
+            }
+        }
+            return supplierByCategory;
     }
 
 }

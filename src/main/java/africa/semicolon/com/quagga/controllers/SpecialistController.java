@@ -1,13 +1,18 @@
 package africa.semicolon.com.quagga.controllers;
 
+import africa.semicolon.com.quagga.data.models.Category;
+import africa.semicolon.com.quagga.data.models.Specialist;
 import africa.semicolon.com.quagga.dtos.request.LoginRequest;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
 import africa.semicolon.com.quagga.dtos.response.ApiResponse;
+import africa.semicolon.com.quagga.services.SpecialistService;
 import africa.semicolon.com.quagga.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/quagga/specialist")
@@ -15,6 +20,8 @@ public class SpecialistController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private SpecialistService specialistService;
 
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest){
@@ -61,5 +68,17 @@ public class SpecialistController {
         }
     }
 
+    @GetMapping("/findByCategory/{category}")
+    public ResponseEntity<?> getSpecialistsByCategory(@PathVariable("category") Category category) {
+        try{
+            List<Specialist> specialists = specialistService.findSpecialistsByCategory(category);
+            if (specialists.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT); // No specialists found
+            }
+            return new ResponseEntity<>(new ApiResponse(true, specialists), HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }

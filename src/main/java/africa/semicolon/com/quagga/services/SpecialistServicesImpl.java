@@ -1,5 +1,7 @@
 package africa.semicolon.com.quagga.services;
 
+import africa.semicolon.com.quagga.data.models.Category;
+import africa.semicolon.com.quagga.data.models.Role;
 import africa.semicolon.com.quagga.data.models.Specialist;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
@@ -74,5 +76,20 @@ public class SpecialistServicesImpl implements SpecialistService {
     public void deleteAll() {
         specialistRepository.deleteAll();
     }
+
+    @Override
+    public List<Specialist> findSpecialistsByCategory(Category category) {
+        List<Specialist> allSpecialist = findAllSpecialist();
+        List<Specialist> specialistByCategory = new ArrayList<>();
+
+        for (Specialist specialist : allSpecialist) {
+            if (specialist.getCategory() != null && specialist.getCategory().equals(category)) {
+                specialistByCategory.add(specialist);
+            }
+        }
+        return specialistByCategory;
+    }
+
+
 
 }
