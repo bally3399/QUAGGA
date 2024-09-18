@@ -226,11 +226,5 @@ public class ClientServiceTest {
         userService.deleteAll();
     }
 
-    @Test
-    public void testThatUserCanUseForgetPassword(){
-        List<User> usersByCategory = userService.findUserByCategory(SPECIALIST);
-        assertThat(usersByCategory).isNotEmpty();
-    }
-
 
 }

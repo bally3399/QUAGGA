@@ -1,8 +1,11 @@
 package africa.semicolon.com.quagga.services;
 
+import africa.semicolon.com.quagga.data.models.Category;
 import africa.semicolon.com.quagga.data.models.Supplier;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
+
+import java.util.List;
 
 public interface SupplierService {
 
@@ -10,7 +13,7 @@ public interface SupplierService {
 
     void deleteAll();
 
+    List<Supplier> findAllSuppliers();
 
-
-    //Supplier createSupplier(RegisterRequest request);
+    List<Supplier> findSuppliersByCategory(Category category);
 }

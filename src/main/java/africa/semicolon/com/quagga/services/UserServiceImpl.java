@@ -267,18 +267,6 @@ public class UserServiceImpl implements UserService {
             System.out.print(number + " ");
         }
     }
-    public List<User> findUserByCategory(Role category) {
-        List<User> allUsers = findAllUsers();
-        List<User> userByCategory = new ArrayList<>();
-
-        for (User user : allUsers){
-            if (user.getRole().equals(category)){
-                userByCategory.add(user);
-            }
-        }
-        return userByCategory;
-    }
-
 
     private void validate (String email){
             for (User user : userRepository.findAll()) {
