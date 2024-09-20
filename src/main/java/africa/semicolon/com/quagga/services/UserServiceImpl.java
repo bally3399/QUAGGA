@@ -1,14 +1,9 @@
 package africa.semicolon.com.quagga.services;
 
-import africa.semicolon.com.quagga.data.models.Client;
-import africa.semicolon.com.quagga.data.models.Role;
-import africa.semicolon.com.quagga.data.models.Specialist;
-import africa.semicolon.com.quagga.data.models.User;
+import africa.semicolon.com.quagga.data.models.*;
+import africa.semicolon.com.quagga.data.repositories.OtpRepository;
 import africa.semicolon.com.quagga.data.repositories.UserRepository;
-import africa.semicolon.com.quagga.dtos.request.LoginRequest;
-import africa.semicolon.com.quagga.dtos.request.LogoutRequest;
-import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
-import africa.semicolon.com.quagga.dtos.request.UpdateClientRequest;
+import africa.semicolon.com.quagga.dtos.request.*;
 import africa.semicolon.com.quagga.dtos.response.*;
 import africa.semicolon.com.quagga.exceptions.*;
 import africa.semicolon.com.quagga.utils.JwtUtils;
@@ -37,6 +32,7 @@ public class UserServiceImpl implements UserService {
     private final ProfessionalService professionalService;
     private final AdminService adminService;
     private final EmailService emailService;
+    private final OtpRepository otpRepository;
 //    private final TokenService tokenService;
 
     @Override
@@ -254,18 +250,42 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String emailOtp(String email) {
+    public OtpResponse generateOtp(String email) {
         Random random = new Random();
-        random.nextInt(9);
-        return "";
+        String number = "";
+        for (int i = 0; i < 4; i++){
+            number += random.nextInt(10);
+        }
+
+        Otp newOtp = new Otp();
+        newOtp.setEmail(email);
+        newOtp.setNumber(number);
+        otpRepository.save(newOtp);
+
+        emailService.sendEmail(email,"One Time Password", "Here is you otp ------> " + number);
+        OtpResponse response = new OtpResponse();
+        response.setMessage("Otp sent successfully");
+
+        return response;
     }
 
-    public static void main(String[] args) {
-        Random random = new Random();
-        for (int i = 0; i < 8; i++){
-            int number = random.nextInt(9);
-            System.out.print(number + " ");
+    @Override
+    public ForgetPasswordResponse changeForgetPassword(ForgetPasswordRequest forgetPasswordRequest) {
+        Otp otp = otpRepository.findByNumber(forgetPasswordRequest.getOtp());
+        if (otp == null){
+            throw new OtpNotFoundException("Invalid Otp");
         }
+        Optional<User> user = userRepository.findByEmail(otp.getEmail());
+        if (user.isEmpty()){
+            throw new UserNotFoundException("User not found");
+        }
+        User foundUser = user.get();
+        foundUser.setPassword(forgetPasswordRequest.getNewPassword());
+        userRepository.save(foundUser);
+        otpRepository.delete(otp);
+        ForgetPasswordResponse response = new ForgetPasswordResponse();
+        response.setMessage("Password changed successfully");
+        return response;
     }
 
     private void validate (String email){

@@ -4,6 +4,7 @@ import africa.semicolon.com.quagga.data.models.*;
 import africa.semicolon.com.quagga.dtos.request.*;
 import africa.semicolon.com.quagga.dtos.response.*;
 import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -208,6 +209,7 @@ public class ClientServiceTest {
         userService.deleteAll();
     }
 
+
     @Test
     public void testThatClientCanCreateServiceRequest() {
         Client foundClient = clientService.findClientByUser(client);
@@ -226,5 +228,23 @@ public class ClientServiceTest {
         userService.deleteAll();
     }
 
+//    @Test
+//    public void testClientForgetPassword() {
+//        ForgetPasswordRequest forgetPasswordRequest = new ForgetPasswordRequest();
+//        forgetPasswordRequest.setOtp("9987");
+//        forgetPasswordRequest.setNewPassword("4321");
+//        ForgetPasswordResponse response = userService.changeForgetPassword(forgetPasswordRequest);
+//        assertThat(response.getMessage()).isEqualTo("Password changed successfully");
+//
+//    }
+
+    @AfterEach
+    public void cleanUp() {
+        requestService.deleteAll();
+        clientService.deleteAll();
+        specialistService.deleteAll();
+        supplierService.deleteAll();
+        userService.deleteAll();
+    }
 
 }

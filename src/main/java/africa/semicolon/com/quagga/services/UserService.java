@@ -3,10 +3,7 @@ import africa.semicolon.com.quagga.data.models.Client;
 import africa.semicolon.com.quagga.data.models.Role;
 import africa.semicolon.com.quagga.data.models.Specialist;
 import africa.semicolon.com.quagga.data.models.User;
-import africa.semicolon.com.quagga.dtos.request.LoginRequest;
-import africa.semicolon.com.quagga.dtos.request.LogoutRequest;
-import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
-import africa.semicolon.com.quagga.dtos.request.UpdateClientRequest;
+import africa.semicolon.com.quagga.dtos.request.*;
 import africa.semicolon.com.quagga.dtos.response.*;
 import org.apache.http.auth.InvalidCredentialsException;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +46,6 @@ public interface UserService {
 
     List<Specialist> findAllSpecialist();
 
-    String emailOtp(String email);
-
+    OtpResponse generateOtp(String email);
+    ForgetPasswordResponse changeForgetPassword(ForgetPasswordRequest forgetPasswordRequest);
 }

@@ -8,5 +8,4 @@ import lombok.Setter;
 public class ForgetPasswordRequest {
     private String otp;
     private String newPassword;
-    private String confirmNewPassword;
 }
