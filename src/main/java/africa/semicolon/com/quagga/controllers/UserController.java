@@ -3,6 +3,8 @@ package africa.semicolon.com.quagga.controllers;
 import africa.semicolon.com.quagga.data.models.Role;
 import africa.semicolon.com.quagga.dtos.request.ForgetPasswordRequest;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
+import africa.semicolon.com.quagga.dtos.request.UpdateClientRequest;
+import africa.semicolon.com.quagga.dtos.request.UpdateUserRequest;
 import africa.semicolon.com.quagga.dtos.response.ApiResponse;
 import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 import africa.semicolon.com.quagga.services.UserService;
@@ -46,4 +48,14 @@ public class UserController {
             return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> update(@PathVariable("id") Long userId, @RequestBody UpdateUserRequest updateUserRequest){
+        try{
+            return new ResponseEntity<>(new ApiResponse(true, userService.updateUser(userId, updateUserRequest)), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

@@ -67,15 +67,6 @@ public class ClientController {
         }
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<?> updateClient(@RequestBody UpdateClientRequest updateClientRequest){
-        try {
-            return new ResponseEntity<>(new ApiResponse(true, userService.update(updateClientRequest)), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(new ApiResponse(false, e.getMessage()), HttpStatus.BAD_REQUEST);
-        }
-    }
-
     @PostMapping("/allSpecialist")
     public ResponseEntity<?> findAllSpecialist(){
         try {

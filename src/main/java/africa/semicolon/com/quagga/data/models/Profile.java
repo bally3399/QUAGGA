@@ -14,9 +14,8 @@ public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long profileId;
-    private Long firstName;
-    private Long lastName;
-    private String name;
+
+
     private String contact;
     private String profile;
     private String address;

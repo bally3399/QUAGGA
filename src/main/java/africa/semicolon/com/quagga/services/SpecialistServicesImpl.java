@@ -90,6 +90,10 @@ public class SpecialistServicesImpl implements SpecialistService {
         return specialistByCategory;
     }
 
+    @Override
+    public Specialist update(Specialist specialist) {
+        return specialistRepository.save(specialist);
+    }
 
 
 }

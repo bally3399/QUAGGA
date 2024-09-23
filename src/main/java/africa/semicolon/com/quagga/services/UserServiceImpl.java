@@ -19,6 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.function.Consumer;
+
+import static africa.semicolon.com.quagga.data.models.Role.CLIENT;
+import static africa.semicolon.com.quagga.data.models.Role.SPECIALIST;
 
 @Service
 @AllArgsConstructor
@@ -98,33 +102,72 @@ public class UserServiceImpl implements UserService {
         return suppliers;
     }
 
+    public UpdateUserResponse updateUser(Long userId, UpdateUserRequest updateUserRequest) {
+        User user = findUserById(userId);
 
-    @Override
-    public UpdateClientResponse update(UpdateClientRequest updateClientRequest) {
-        Client client = clientService.findById(updateClientRequest.getClientId());
-        User user = getById(client.getUser().getId());
-        if (updateClientRequest.getFirstName() != null){
-            user.setFirstName(updateClientRequest.getFirstName());
-        }
-        if (updateClientRequest.getLastName() != null){
-            user.setLastName(updateClientRequest.getLastName());
-        }
-        if (updateClientRequest.getAddress() != null){
-            user.setAddress(updateClientRequest.getAddress());
-        }
-        if (updateClientRequest.getPhoneNumber() != null){
-            user.setPhoneNumber(updateClientRequest.getPhoneNumber());
-        }
-        if (updateClientRequest.getPassword() != null){
-            user.setPassword(updateClientRequest.getPassword());
-        }
-        userRepository.save(user);
-        clientService.update(client);
+        updateField(updateUserRequest.getFirstName(), user::setFirstName);
+        updateField(updateUserRequest.getLastName(), user::setLastName);
+        updateField(updateUserRequest.getEmail(), user::setEmail);
+        updateField(updateUserRequest.getPassword(), user::setPassword);
+        updateField(updateUserRequest.getAddress(), user::setAddress);
+        updateField(updateUserRequest.getLGA(), user::setLGA);
+        updateField(updateUserRequest.getState(), user::setState);
+        updateField(updateUserRequest.getPhoneNumber(), user::setPhoneNumber);
 
-        UpdateClientResponse response = new UpdateClientResponse();
-        response.setMessage("Client updated successfully");
+//        shorter method above
+//        if (updateUserRequest.getFirstName() != null) {
+//            user.setFirstName(updateUserRequest.getFirstName());
+//        }
+
+        if (user.getRole().equals(CLIENT)){
+            Client client = clientService.findClientByUser(user);
+            clientService.update(client);
+        } else if (user.getRole().equals(SPECIALIST)){
+            Specialist specialist = specialistService.findSpecialistByUser(user);
+            specialistService.update(specialist);
+        }
+
+        UpdateUserResponse response = new UpdateUserResponse();
+        response.setMessage("User updated successfully");
         return response;
     }
+
+    private <T> void updateField(T value, Consumer<T> setter) {
+        if (value != null) {
+            setter.accept(value);
+        }
+    }
+
+//    @Override
+//    public UpdateClientResponse update(UpdateClientRequest updateClientRequest) {
+//        Client client = clientService.findById(updateClientRequest.getClientId());
+//        User user = getById(client.getUser().getId());
+//        if (updateClientRequest.getFirstName() != null){
+//            user.setFirstName(updateClientRequest.getFirstName());
+//        }
+//        if (updateClientRequest.getLastName() != null){
+//            user.setLastName(updateClientRequest.getLastName());
+//        }
+//        if (updateClientRequest.getAddress() != null){
+//            user.setAddress(updateClientRequest.getAddress());
+//        }
+//        if (updateClientRequest.getPhoneNumber() != null){
+//            user.setPhoneNumber(updateClientRequest.getPhoneNumber());
+//        }
+//        if (updateClientRequest.getPassword() != null){
+//            user.setPassword(updateClientRequest.getPassword());
+//        }
+//        userRepository.save(user);
+//        if (user.getRole().equals(CLIENT)){
+//            clientService.update(client);
+//        } else if (user.getRole().equals(SPECIALIST)){
+////            specialistService.update()
+//        }
+//
+//        UpdateClientResponse response = new UpdateClientResponse();
+//        response.setMessage("Client updated successfully");
+//        return response;
+//    }
 
     @Override
     public DeleteUserResponse deleteById(long id) {
