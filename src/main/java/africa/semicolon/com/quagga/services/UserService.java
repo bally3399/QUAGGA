@@ -19,7 +19,7 @@ public interface UserService {
     List<User> getAllSpecialist();
     List<User> getAllSupplier();
 
-    UpdateClientResponse update(UpdateClientRequest updateClientRequest);
+    UpdateUserResponse updateUser(Long userId, UpdateUserRequest updateUserRequest);
 
     DeleteUserResponse deleteById(long id);
     User findUserById(Long id);

@@ -24,4 +24,6 @@ public interface SpecialistService {
     void deleteAll();
 
     List<Specialist> findSpecialistsByCategory(Category category);
+
+    Specialist update(Specialist specialist);
 }
