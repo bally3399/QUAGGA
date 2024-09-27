@@ -1,8 +1,8 @@
 package africa.semicolon.com.quagga.controllers;
 
+import africa.semicolon.com.quagga.dtos.Response.ApiResponse;
+import africa.semicolon.com.quagga.dtos.Response.RegisterResponse;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
-import africa.semicolon.com.quagga.dtos.response.ApiResponse;
-import africa.semicolon.com.quagga.dtos.response.RegisterResponse;
 import africa.semicolon.com.quagga.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

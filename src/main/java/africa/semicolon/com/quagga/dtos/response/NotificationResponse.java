@@ -1,4 +1,4 @@
-package africa.semicolon.com.quagga.dtos.response;
+package africa.semicolon.com.quagga.dtos.Response;
 
 import africa.semicolon.com.quagga.data.models.Notification;
 import lombok.Getter;

@@ -1,8 +1,8 @@
 package africa.semicolon.com.quagga.services;
 
 import africa.semicolon.com.quagga.data.models.*;
+import africa.semicolon.com.quagga.dtos.Response.*;
 import africa.semicolon.com.quagga.dtos.request.*;
-import africa.semicolon.com.quagga.dtos.response.*;
 import africa.semicolon.com.quagga.exceptions.UnacceptedServiceException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

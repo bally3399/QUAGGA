@@ -1,11 +1,10 @@
 package africa.semicolon.com.quagga.services;
 
 import africa.semicolon.com.quagga.data.models.Review;
-import africa.semicolon.com.quagga.data.models.Role;
 import africa.semicolon.com.quagga.data.models.User;
 import africa.semicolon.com.quagga.data.repositories.ReviewRepository;
+import africa.semicolon.com.quagga.dtos.Response.SendReviewResponse;
 import africa.semicolon.com.quagga.dtos.request.SendReviewRequest;
-import africa.semicolon.com.quagga.dtos.response.SendReviewResponse;
 import africa.semicolon.com.quagga.exceptions.ReviewNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -2,7 +2,6 @@ package africa.semicolon.com.quagga.services;
 
 import africa.semicolon.com.quagga.data.models.Client;
 import africa.semicolon.com.quagga.data.models.User;
-import africa.semicolon.com.quagga.dtos.response.DeleteUserResponse;
 
 import java.util.List;
 

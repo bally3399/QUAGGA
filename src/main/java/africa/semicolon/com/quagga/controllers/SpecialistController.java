@@ -2,9 +2,9 @@ package africa.semicolon.com.quagga.controllers;
 
 import africa.semicolon.com.quagga.data.models.Category;
 import africa.semicolon.com.quagga.data.models.Specialist;
+import africa.semicolon.com.quagga.dtos.Response.ApiResponse;
 import africa.semicolon.com.quagga.dtos.request.LoginRequest;
 import africa.semicolon.com.quagga.dtos.request.RegisterRequest;
-import africa.semicolon.com.quagga.dtos.response.ApiResponse;
 import africa.semicolon.com.quagga.services.SpecialistService;
 import africa.semicolon.com.quagga.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

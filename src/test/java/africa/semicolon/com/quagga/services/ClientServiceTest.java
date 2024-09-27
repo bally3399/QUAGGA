@@ -1,8 +1,11 @@
 package africa.semicolon.com.quagga.services;
 
 import africa.semicolon.com.quagga.data.models.*;
+import africa.semicolon.com.quagga.dtos.Response.LoginResponse;
+import africa.semicolon.com.quagga.dtos.Response.LogoutResponse;
+import africa.semicolon.com.quagga.dtos.Response.RegisterResponse;
+import africa.semicolon.com.quagga.dtos.Response.ServiceRequestResponse;
 import africa.semicolon.com.quagga.dtos.request.*;
-import africa.semicolon.com.quagga.dtos.response.*;
 import africa.semicolon.com.quagga.exceptions.UserNotFoundException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
